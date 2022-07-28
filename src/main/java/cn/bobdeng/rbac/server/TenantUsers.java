@@ -5,11 +5,14 @@ import cn.bobdeng.rbac.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
-
-    public TenantUsers(Tenant tenant) {
+    private UserDAO userDAO;
+    public TenantUsers(Tenant tenant, UserDAO userDAO) {
         this.tenant = tenant;
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -18,13 +21,23 @@ public class TenantUsers implements Tenant.Users {
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
-        return Optional.empty();
+    public List<User> findByName(String name) {
+        return null;
     }
 
     @Override
-    public List<User> findByName(String name) {
+    public List<User> subList(int from, int to) {
         return null;
+    }
+
+    @Override
+    public Stream<User> list() {
+        return null;
+    }
+
+    @Override
+    public Optional<User> findByIdentity(Integer integer) {
+        return Optional.empty();
     }
 
     @Override

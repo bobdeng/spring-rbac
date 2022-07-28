@@ -7,9 +7,17 @@
         <id name="id" type="int" column="ID">
             <generator class="native"/>
         </id>
-        <component name="tenantDescription" class="TenantDescription">
+        <component name="description" class="TenantDescription">
             <property name="name" column="name"/>
         </component>
 
+    </class>
+    <class name="User" table="t_rbac_user">
+        <id name="id" type="int" column="id">
+            <generator class="native"></generator>
+        </id>
+        <component name="description" class="UserDescription">
+            <property name="name" column="name"/>
+        </component>
     </class>
 </hibernate-mapping>

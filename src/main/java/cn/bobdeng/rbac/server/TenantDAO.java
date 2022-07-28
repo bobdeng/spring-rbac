@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public interface TenantDAO extends CrudRepository<Tenant, Integer> {
     @Query("""
             select t from cn.bobdeng.rbac.Tenant t 
-            where t.tenantDescription.name  like :name%
+            where t.description.name  like :name%
             """)
     Stream<Tenant> findByName(String name);
 }

@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,6 +35,6 @@ class TenantRepositoryImplTest {
         List<Tenant> tenants = tenantRepository.findByName("bob", 10, 20).toList();
         assertEquals(10, tenants.size());
         System.out.println(tenants.get(0).getClass());
-        assertEquals("bob10", tenants.get(0).getTenantDescription().getName());
+        assertEquals("bob10", tenants.get(0).getDescription().getName());
     }
 }
