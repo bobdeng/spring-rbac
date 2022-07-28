@@ -12,17 +12,18 @@ import java.util.stream.Stream;
 public class TenantRepositoryImpl implements TenantRepository {
     private TenantDAO tenantDAO;
     private UserDAO userDAO;
+    private LoginNameDAO loginNameDAO;
 
-    public TenantRepositoryImpl(TenantDAO tenantDAO, UserDAO userDAO) {
+    public TenantRepositoryImpl(TenantDAO tenantDAO, UserDAO userDAO, LoginNameDAO loginNameDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
+        this.loginNameDAO = loginNameDAO;
     }
 
     @Override
     public Tenant save(Tenant tenant) {
         tenant = tenantDAO.save(tenant);
-        tenant.setUsers(new TenantUsers(tenant, userDAO));
-        return tenant;
+        return injectDependencies(tenant);
     }
 
     @Override
@@ -48,10 +49,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     @Override
     public Optional<Tenant> findByIdentity(Integer integer) {
         return tenantDAO.findById(integer)
-                .map(tenant -> {
-                    tenant.setUsers(new TenantUsers(tenant, userDAO));
-                    return tenant;
-                });
+                .map(this::injectDependencies);
+    }
+
+    private Tenant injectDependencies(Tenant tenant) {
+        tenant.setUsers(new TenantUsers(tenant, userDAO));
+        tenant.setLoginNames(new TenantLoginNames(tenant, loginNameDAO));
+        return tenant;
     }
 
     @Override
