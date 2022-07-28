@@ -3,11 +3,12 @@ package cn.bobdeng.rbac.server;
 import cn.bobdeng.rbac.Tenant;
 import cn.bobdeng.rbac.User;
 import cn.bobdeng.rbac.UserDescription;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import java.util.Objects;
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public final class UserDO {
@@ -24,5 +25,18 @@ public final class UserDO {
 
     public User toUser() {
         return new User(id, new UserDescription(name));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDO userDO = (UserDO) o;
+        return Objects.equals(id, userDO.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

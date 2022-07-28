@@ -4,15 +4,18 @@ import cn.bobdeng.rbac.LoginName;
 import cn.bobdeng.rbac.LoginNameDescription;
 import cn.bobdeng.rbac.Tenant;
 import cn.bobdeng.rbac.User;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "t_rbac_login_name")
-@NoArgsConstructor
 public class LoginNameDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +27,26 @@ public class LoginNameDO {
     public LoginNameDO(LoginName entity, Tenant tenant) {
         this.id = entity.identity();
         this.tenantId = tenant.identity();
-        LoginNameDescription description = (LoginNameDescription) entity.description();
-        this.userId = description.getUser().identity();
-        this.loginName = description.getName();
+        this.userId = entity.description().getUser().identity();
+        this.loginName = entity.description().getName();
     }
 
     public LoginName toEntity() {
         User user = new User(userId, null);
         LoginNameDescription description = new LoginNameDescription(loginName, user);
         return new LoginName(id, description);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        LoginNameDO that = (LoginNameDO) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
