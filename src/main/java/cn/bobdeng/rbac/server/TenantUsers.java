@@ -5,7 +5,6 @@ import cn.bobdeng.rbac.User;
 
 import java.util.List;
 import java.util.Optional;
-
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
 

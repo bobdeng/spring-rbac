@@ -10,5 +10,6 @@
         <component name="tenantDescription" class="TenantDescription">
             <property name="name" column="name"/>
         </component>
+
     </class>
 </hibernate-mapping>
