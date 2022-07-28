@@ -12,12 +12,12 @@
         </component>
 
     </class>
-    <class name="User" table="t_rbac_user">
+    <class name="cn.bobdeng.rbac.server.UserDO" table="t_rbac_user">
         <id name="id" type="int" column="id">
             <generator class="native"></generator>
         </id>
-        <component name="description" class="UserDescription">
-            <property name="name" column="name"/>
-        </component>
+        <property name="name" column="name"/>
+        <property name="tenantId" column="tenant_id"/>
+
     </class>
 </hibernate-mapping>

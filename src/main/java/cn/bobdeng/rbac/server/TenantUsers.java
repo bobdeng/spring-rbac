@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
     private UserDAO userDAO;
+
     public TenantUsers(Tenant tenant, UserDAO userDAO) {
         this.tenant = tenant;
         this.userDAO = userDAO;
@@ -17,12 +18,17 @@ public class TenantUsers implements Tenant.Users {
 
     @Override
     public User save(User user) {
-        return null;
+        return userDAO.save(new UserDO(user, tenant)).toUser();
     }
 
     @Override
     public List<User> findByName(String name) {
         return null;
+    }
+
+    @Override
+    public Optional<User> findByAccount(String account) {
+        return Optional.empty();
     }
 
     @Override

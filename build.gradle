@@ -23,7 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jersey'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation('org.flywaydb:flyway-mysql:8.5.12')
-    api 'com.github.bobdeng:rbac-tenant-domain:0.12'
+    api 'com.github.bobdeng:rbac-tenant-domain:0.14'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
