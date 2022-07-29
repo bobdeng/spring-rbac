@@ -17,10 +17,16 @@ public class User implements Entity<Integer, UserDescription> {
     @Setter
     @Getter
     private UserPassword userPassword;
+    @Setter
+    private HasOne<Tenant> tenant;
 
     public User(Integer id, UserDescription description) {
         this.id = id;
         this.description = description;
+    }
+
+    public Tenant tenant() {
+        return tenant.get();
     }
 
     public User(UserDescription userDescription) {

@@ -33,7 +33,7 @@ public class LoginNameDO {
         User user = new User(userId, null);
         LoginNameDescription description = new LoginNameDescription(loginName, user);
         LoginName loginName = new LoginName(id, description);
-        loginName.setUser(() -> users.findByIdentity(userId));
+        loginName.setUser(() -> users.findByIdentity(userId).orElseThrow());
         return loginName;
     }
 

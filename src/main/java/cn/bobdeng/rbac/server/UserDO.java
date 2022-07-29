@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.*;
 import lombok.*;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -24,6 +25,7 @@ public final class UserDO {
     public User toUser(TenantRepository tenantRepository) {
         User user = new User(id, new UserDescription(name));
         user.setUserPassword(tenantRepository.userPassword(user));
+        user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElseThrow());
         return user;
     }
 

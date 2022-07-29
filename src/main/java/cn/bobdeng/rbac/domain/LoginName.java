@@ -1,11 +1,8 @@
 package cn.bobdeng.rbac.domain;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Optional;
 
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -20,7 +17,7 @@ public class LoginName implements Entity<Integer, LoginNameDescription> {
         this.description = description;
     }
 
-    public Optional<User> user() {
+    public User user() {
         return user.get();
     }
 

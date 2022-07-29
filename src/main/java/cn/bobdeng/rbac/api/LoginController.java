@@ -1,8 +1,7 @@
 package cn.bobdeng.rbac.api;
 
-import cn.bobdeng.rbac.domain.LoginName;
-import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.Tenants;
+import cn.bobdeng.rbac.domain.*;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 public class LoginController {
@@ -20,16 +20,28 @@ public class LoginController {
     }
 
     @PostMapping("/rbac/sessions")
-    public void login(@RequestBody @Valid LoginForm form, HttpServletResponse response) {
+    public String login(@RequestBody @Valid LoginForm form, HttpServletResponse response) {
+        Optional<User> optionalUser = checkUserLogin(form);
+        optionalUser.ifPresent(user -> setLoginResponse(response, user));
+        if (optionalUser.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "登录失败";
+        }
+        return "登录成功";
+    }
 
-        tenantRepository.findByName(form.getTenant())
+    @NotNull
+    private Optional<User> checkUserLogin(LoginForm form) {
+        return tenantRepository.findByName(form.getTenant())
                 .flatMap(tenant -> tenant.getLoginNames().findByLoginName(form.getLoginName()))
-                .flatMap(LoginName::user)
-                .filter(user -> user.verifyPassword(form.getPassword()))
-                .ifPresent(loginName -> {
-                    String token = "123";
-                    Cookie authorization = new Cookie("Authorization", token);
-                    response.addCookie(authorization);
-                });
+                .map(LoginName::user)
+                .filter(user -> user.verifyPassword(form.getPassword()));
+    }
+
+    private void setLoginResponse(HttpServletResponse response, User user) {
+        Tenant tenant = user.tenant();
+        String token = new LoginToken(user).toString();
+        Cookie authorization = new Cookie("Authorization", token);
+        response.addCookie(authorization);
     }
 }
