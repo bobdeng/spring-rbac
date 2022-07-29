@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.Tenant;
-import cn.bobdeng.rbac.TenantDescription;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantDescription;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

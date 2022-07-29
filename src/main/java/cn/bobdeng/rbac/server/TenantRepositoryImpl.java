@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.Tenant;
-import cn.bobdeng.rbac.TenantRepository;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.Tenant;
-import cn.bobdeng.rbac.User;
-import cn.bobdeng.rbac.UserDescription;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.UserDescription;
 import lombok.*;
 
 import java.util.Objects;

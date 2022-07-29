@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="cn.bobdeng.rbac">
+<hibernate-mapping package="cn.bobdeng.rbac.domain">
     <class name="Tenant" table="t_rbac_tenant">
         <id name="id" type="int" column="ID">
             <generator class="native"/>
@@ -19,5 +19,13 @@
         <property name="name" column="name"/>
         <property name="tenantId" column="tenant_id"/>
 
+    </class>
+    <class name="Password" table="t_rbac_password">
+        <id name="id" type="int" column="id">
+            <generator class="native"></generator>
+        </id>
+        <component name="description" class="PasswordDescription">
+            <property name="password" column="password"/>
+        </component>
     </class>
 </hibernate-mapping>

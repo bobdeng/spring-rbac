@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.LoginName;
-import cn.bobdeng.rbac.Tenant;
+import cn.bobdeng.rbac.domain.LoginName;
+import cn.bobdeng.rbac.domain.Tenant;
 
 import java.util.List;
 import java.util.Optional;

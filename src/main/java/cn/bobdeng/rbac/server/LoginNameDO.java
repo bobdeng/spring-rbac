@@ -1,9 +1,9 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.LoginName;
-import cn.bobdeng.rbac.LoginNameDescription;
-import cn.bobdeng.rbac.Tenant;
-import cn.bobdeng.rbac.User;
+import cn.bobdeng.rbac.domain.LoginName;
+import cn.bobdeng.rbac.domain.LoginNameDescription;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.User;
 import lombok.*;
 import org.hibernate.Hibernate;
 
