@@ -13,6 +13,7 @@ public class TenantUsers implements Tenant.Users {
     private UserDAO userDAO;
     private PasswordDAO passwordDAO;
     private TenantRepository tenantRepository;
+
     public TenantUsers(Tenant tenant, UserDAO userDAO, PasswordDAO passwordDAO, TenantRepositoryImpl tenantRepository) {
         this.tenant = tenant;
         this.userDAO = userDAO;
@@ -47,7 +48,7 @@ public class TenantUsers implements Tenant.Users {
 
     @Override
     public Optional<User> findByIdentity(Integer integer) {
-        return Optional.empty();
+        return userDAO.findById(integer).map(userDO -> userDO.toUser(tenantRepository));
     }
 
     @Override

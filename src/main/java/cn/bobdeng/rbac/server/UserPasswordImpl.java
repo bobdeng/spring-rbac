@@ -29,7 +29,7 @@ public class UserPasswordImpl implements User.UserPassword {
 
     @Override
     public Optional<Password> findByIdentity(Integer integer) {
-        return Optional.empty();
+        return passwordDAO.findById(integer);
     }
 
     @Override

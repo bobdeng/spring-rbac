@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.domain.LoginName;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.Tenants;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,8 @@ public class LoginController {
 
         tenantRepository.findByName(form.getTenant())
                 .flatMap(tenant -> tenant.getLoginNames().findByLoginName(form.getLoginName()))
-                .filter(loginName -> loginName.description().getUser().verifyPassword(form.getPassword()))
+                .flatMap(LoginName::user)
+                .filter(user -> user.verifyPassword(form.getPassword()))
                 .ifPresent(loginName -> {
                     String token = "123";
                     Cookie authorization = new Cookie("Authorization", token);
