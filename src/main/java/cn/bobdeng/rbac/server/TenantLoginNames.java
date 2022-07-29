@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server;
 
 import cn.bobdeng.rbac.domain.LoginName;
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,16 +11,18 @@ import java.util.stream.Stream;
 public class TenantLoginNames implements Tenant.LoginNames {
     private Tenant tenant;
     private LoginNameDAO loginNameDAO;
+    private TenantRepository tenantRepository;
 
-    public TenantLoginNames(Tenant tenant, LoginNameDAO loginNameDAO) {
+    public TenantLoginNames(Tenant tenant, LoginNameDAO loginNameDAO, TenantRepository tenantRepository) {
         this.tenant = tenant;
         this.loginNameDAO = loginNameDAO;
+        this.tenantRepository = tenantRepository;
     }
 
     @Override
     public Optional<LoginName> findByLoginName(String name) {
         return loginNameDAO.findByLoginNameAndTenantId(name, tenant.identity())
-                .map(LoginNameDO::toEntity);
+                .map((loginNameDO) -> loginNameDO.toEntity(tenantRepository.users(tenant)));
     }
 
     @Override
@@ -39,7 +42,7 @@ public class TenantLoginNames implements Tenant.LoginNames {
 
     @Override
     public LoginName save(LoginName entity) {
-        return loginNameDAO.save(new LoginNameDO(entity, tenant)).toEntity();
+        return loginNameDAO.save(new LoginNameDO(entity, tenant)).toEntity(tenantRepository.users(tenant));
     }
 
     @Override

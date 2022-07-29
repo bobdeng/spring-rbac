@@ -22,7 +22,7 @@
     </class>
     <class name="Password" table="t_rbac_password">
         <id name="id" type="int" column="id">
-            <generator class="native"></generator>
+            <generator class="assigned"></generator>
         </id>
         <component name="description" class="PasswordDescription">
             <property name="password" column="password"/>

@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private TenantDAO tenantDAO;
     private UserDAO userDAO;
     private LoginNameDAO loginNameDAO;
+    private PasswordDAO passwordDAO;
 
-    public TenantRepositoryImpl(TenantDAO tenantDAO, UserDAO userDAO, LoginNameDAO loginNameDAO) {
+    public TenantRepositoryImpl(TenantDAO tenantDAO, UserDAO userDAO, LoginNameDAO loginNameDAO, PasswordDAO passwordDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
+        this.passwordDAO = passwordDAO;
     }
 
     @Override
@@ -37,6 +40,28 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
+    public Optional<Tenant> findByName(String tenantName) {
+        return tenantDAO.findByDescriptionName(tenantName)
+                .map(this::injectDependencies)
+                .findFirst();
+    }
+
+    @Override
+    public Tenant.Users users(Tenant tenant) {
+        return new TenantUsers(tenant, userDAO, passwordDAO, this);
+    }
+
+    @Override
+    public Tenant.LoginNames loginNames(Tenant tenant) {
+        return new TenantLoginNames(tenant, loginNameDAO, this);
+    }
+
+    @Override
+    public User.UserPassword userPassword(User user) {
+        return new UserPasswordImpl(user, this, passwordDAO);
+    }
+
+    @Override
     public List<Tenant> subList(int from, int to) {
         return null;
     }
@@ -53,8 +78,8 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     private Tenant injectDependencies(Tenant tenant) {
-        tenant.setUsers(new TenantUsers(tenant, userDAO));
-        tenant.setLoginNames(new TenantLoginNames(tenant, loginNameDAO));
+        tenant.setUsers(this.users(tenant));
+        tenant.setLoginNames(this.loginNames(tenant));
         return tenant;
     }
 

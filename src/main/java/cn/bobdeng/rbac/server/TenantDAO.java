@@ -12,4 +12,5 @@ public interface TenantDAO extends CrudRepository<Tenant, Integer> {
             where t.description.name  like :name%
             """)
     Stream<Tenant> findByName(String name);
+    Stream<Tenant> findByDescriptionName(String name);
 }

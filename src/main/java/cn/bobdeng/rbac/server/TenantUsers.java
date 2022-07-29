@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.server;
 
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
 
 import java.util.List;
@@ -10,15 +11,18 @@ import java.util.stream.Stream;
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
     private UserDAO userDAO;
-
-    public TenantUsers(Tenant tenant, UserDAO userDAO) {
+    private PasswordDAO passwordDAO;
+    private TenantRepository tenantRepository;
+    public TenantUsers(Tenant tenant, UserDAO userDAO, PasswordDAO passwordDAO, TenantRepositoryImpl tenantRepository) {
         this.tenant = tenant;
         this.userDAO = userDAO;
+        this.passwordDAO = passwordDAO;
+        this.tenantRepository = tenantRepository;
     }
 
     @Override
     public User save(User user) {
-        return userDAO.save(new UserDO(user, tenant)).toUser();
+        return userDAO.save(new UserDO(user, tenant)).toUser(tenantRepository);
     }
 
     @Override

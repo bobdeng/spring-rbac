@@ -1,13 +1,11 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.domain.LoginName;
-import cn.bobdeng.rbac.domain.LoginNameDescription;
-import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.Objects;
 
 @Getter
@@ -31,10 +29,12 @@ public class LoginNameDO {
         this.loginName = entity.description().getName();
     }
 
-    public LoginName toEntity() {
+    public LoginName toEntity(Tenant.Users users) {
         User user = new User(userId, null);
         LoginNameDescription description = new LoginNameDescription(loginName, user);
-        return new LoginName(id, description);
+        LoginName loginName = new LoginName(id, description);
+        loginName.setUser(() -> users.findByIdentity(userId));
+        return loginName;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class User implements Entity<Integer, UserDescription> {
         return description;
     }
 
-    public void setPassword(RawPassword rawPassword) {
+    public void savePassword(RawPassword rawPassword) {
         Password password = new Password(this.identity(), new PasswordDescription(rawPassword, userPassword));
         userPassword.save(password);
     }

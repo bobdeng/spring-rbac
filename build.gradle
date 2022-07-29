@@ -19,16 +19,19 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-jersey'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation("org.springframework.security:spring-security-core:5.3.2.RELEASE")
     implementation('org.flywaydb:flyway-mysql:8.5.12')
+    implementation 'com.google.code.gson:gson:2.9.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.testcontainers:mysql:1.17.2'
-    testImplementation 'org.testcontainers:testcontainers:1.17.2'
+    implementation 'org.testcontainers:mysql:1.17.2'
+    implementation 'org.testcontainers:testcontainers:1.17.2'
 }
 
 tasks.named('test') {

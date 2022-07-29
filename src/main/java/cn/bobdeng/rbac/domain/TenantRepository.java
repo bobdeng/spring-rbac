@@ -9,4 +9,12 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
     Stream<Tenant> findByName(String name, int from, int to);
 
     Optional<Tenant> findById(Integer id);
+
+    Optional<Tenant> findByName(String tenantName);
+
+    Tenant.Users users(Tenant tenant);
+
+    Tenant.LoginNames loginNames(Tenant tenant);
+
+    User.UserPassword userPassword(User user);
 }

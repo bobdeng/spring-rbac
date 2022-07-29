@@ -1,8 +1,6 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.User;
-import cn.bobdeng.rbac.domain.UserDescription;
+import cn.bobdeng.rbac.domain.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -23,8 +21,10 @@ public final class UserDO {
         this.tenantId = tenant.identity();
     }
 
-    public User toUser() {
-        return new User(id, new UserDescription(name));
+    public User toUser(TenantRepository tenantRepository) {
+        User user = new User(id, new UserDescription(name));
+        user.setUserPassword(tenantRepository.userPassword(user));
+        return user;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class UserPasswordTest {
         User user = new User(1, null);
         user.setUserPassword(userPassword);
 
-        user.setPassword(new RawPassword("123456"));
+        user.savePassword(new RawPassword("123456"));
 
         Password password = new Password(1, new PasswordDescription("654321"));
         verify(userPassword).save(password);
