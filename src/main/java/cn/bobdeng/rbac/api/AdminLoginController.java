@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.domain.AdminPassword;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +11,12 @@ import javax.transaction.Transactional;
 
 @Controller
 public class AdminLoginController {
-    private final AdminPasswordNotifier adminPasswordNotifier;
+    private final AdminPassword.Notifier adminPasswordNotifier;
+    private final AdminPassword.Store store;
 
-    public AdminLoginController(AdminPasswordNotifier adminPasswordNotifier) {
+    public AdminLoginController(AdminPassword.Notifier adminPasswordNotifier, AdminPassword.Store store) {
         this.adminPasswordNotifier = adminPasswordNotifier;
+        this.store = store;
     }
 
     @GetMapping("/rbac/admin/login")
@@ -26,8 +29,11 @@ public class AdminLoginController {
     @Transactional
     public String adminLogin(@ModelAttribute("loginForm") AdminLoginForm adminLoginForm,
                              Model model) {
-        adminPasswordNotifier.notify("123345");
-        model.addAttribute("error", "密码已发出");
-        return "admin/login";
+        AdminPassword adminPassword = new AdminPassword(adminPasswordNotifier, store);
+        if (!adminPassword.verify(adminLoginForm.getPassword())) {
+            model.addAttribute("error", "密码已发出");
+            return "admin/login";
+        }
+        return "/admin/login_success";
     }
 }

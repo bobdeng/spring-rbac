@@ -31,11 +31,11 @@ public class AdminPassword {
         return true;
     }
 
-    interface Notifier {
+    public interface Notifier {
         void notify(String password);
     }
 
-    interface Store {
+    public interface Store {
         void save(String password);
 
         Optional<String> get();
