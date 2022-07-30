@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -53,6 +54,7 @@ public class LoginPageTest {
         domainRepository.save(new Domain(new DomainDescription("localhost", tenant.getId())));
         assertNotNull(webDriverHandler.WEBDRIVER);
         loginPage = new LoginPage(webDriverHandler);
+        webDriverHandler.removeAllCookies();
     }
 
     @Test
@@ -91,6 +93,10 @@ public class LoginPageTest {
         loginPage.submit();
         assertEquals("登录成功", loginPage.error());
         assertEquals("1; url=/", loginPage.refreshUrl());
+        Cookie authorization = webDriverHandler.getCookie("Authorization");
+        assertNotNull(authorization);
+        LoginToken loginToken = LoginToken.decode(authorization.getValue());
+        assertEquals(new LoginToken(user.toUser(tenantRepository)), loginToken);
     }
 
     @AfterAll

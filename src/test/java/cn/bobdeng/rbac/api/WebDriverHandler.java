@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,4 +60,11 @@ public class WebDriverHandler {
         WEBDRIVER.navigate().to(baseUrl + url);
     }
 
+    public void removeAllCookies() {
+        WEBDRIVER.manage().deleteAllCookies();
+    }
+
+    public Cookie getCookie(String cookieName) {
+        return WEBDRIVER.manage().getCookieNamed(cookieName);
+    }
 }
