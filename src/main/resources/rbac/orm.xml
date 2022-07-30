@@ -12,7 +12,7 @@
         </component>
 
     </class>
-    <class name="cn.bobdeng.rbac.server.UserDO" table="t_rbac_user">
+    <class name="cn.bobdeng.rbac.server.dao.UserDO" table="t_rbac_user">
         <id name="id" type="int" column="id">
             <generator class="native"></generator>
         </id>
@@ -26,6 +26,17 @@
         </id>
         <component name="description" class="PasswordDescription">
             <property name="password" column="password"/>
+        </component>
+    </class>
+    <class name="Domain" table="t_rbac_domain">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native"></generator>
+        </id>
+        <component name="description" class="DomainDescription">
+            <property name="tenantId" column="tenant_id">
+
+            </property>
+            <property name="domain" column="domain"/>
         </component>
     </class>
 </hibernate-mapping>

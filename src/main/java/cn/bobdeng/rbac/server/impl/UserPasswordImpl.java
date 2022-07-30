@@ -1,7 +1,8 @@
-package cn.bobdeng.rbac.server;
+package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Password;
 import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.server.dao.PasswordDAO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;

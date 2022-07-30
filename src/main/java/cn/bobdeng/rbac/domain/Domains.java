@@ -8,10 +8,10 @@ public class Domains {
         this.domainRepository = domainRepository;
     }
 
-    public void newDomain(DomainDescription description) {
+    public Domain newDomain(DomainDescription description) {
         if (this.domainRepository.findByDomain(description.getDomain()).isPresent()) {
             throw new DuplicateDomainException();
         }
-        this.domainRepository.save(new Domain(description));
+        return this.domainRepository.save(new Domain(description));
     }
 }

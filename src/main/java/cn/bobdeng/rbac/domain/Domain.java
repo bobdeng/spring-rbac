@@ -28,4 +28,8 @@ public class Domain implements Entity<Integer, DomainDescription> {
     public DomainDescription description() {
         return description;
     }
+
+    public Tenant tenant() {
+        return tenant.get();
+    }
 }

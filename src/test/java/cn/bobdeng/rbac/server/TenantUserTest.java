@@ -4,6 +4,8 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantDescription;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.UserDescription;
+import cn.bobdeng.rbac.server.dao.UserDAO;
+import cn.bobdeng.rbac.server.dao.UserDO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

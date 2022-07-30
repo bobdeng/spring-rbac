@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.domain.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
@@ -17,13 +19,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class LoginPageTest {
     @Autowired
     WebDriverHandler webDriverHandler;
+    @Autowired
+    DomainRepository domainRepository;
+    @Autowired
+    TenantRepository tenantRepository;
     private LoginPage loginPage;
 
     @Test
-    public void test() {
+    public void should_show_tenant_name() {
+        Tenant tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
+        domainRepository.save(new Domain(new DomainDescription("localhost", tenant.getId())));
         assertNotNull(webDriverHandler.WEBDRIVER);
         loginPage = new LoginPage(webDriverHandler);
         loginPage.open();
+        assertEquals("登录", loginPage.title());
+        assertEquals("租户1", loginPage.tenantName());
     }
 
     @AfterAll

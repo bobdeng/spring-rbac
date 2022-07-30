@@ -2,21 +2,36 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.domain.*;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.net.MalformedURLException;
 import java.util.Optional;
 
-@RestController
+@Controller
 public class LoginController {
     private TenantRepository tenantRepository;
+    private DomainRepository domainRepository;
 
-    public LoginController(TenantRepository tenantRepository) {
+    public LoginController(TenantRepository tenantRepository, DomainRepository domainRepository) {
         this.tenantRepository = tenantRepository;
+        this.domainRepository = domainRepository;
+    }
+
+    @GetMapping("/rbac/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @ModelAttribute("tenant")
+    public Tenant tenant(HttpServletRequest request) throws MalformedURLException {
+        String host = RequestUtils.getHost(request);
+        return domainRepository.findByDomain(host)
+                .map(Domain::tenant).orElse(null);
     }
 
     @PostMapping("/rbac/sessions")

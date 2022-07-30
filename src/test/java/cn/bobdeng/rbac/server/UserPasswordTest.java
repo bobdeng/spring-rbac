@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.server;
 
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.server.dao.PasswordDAO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

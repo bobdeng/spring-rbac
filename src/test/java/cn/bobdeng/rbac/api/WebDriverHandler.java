@@ -18,13 +18,15 @@ import java.util.stream.Stream;
 public class WebDriverHandler {
     public static WebDriver WEBDRIVER;
     private int port = 8080;
-    @Autowired
+    @Autowired(required = false)
     private ServletWebServerApplicationContext webServerAppCtxt;
 
     @PostConstruct
     private void init() {
-        WEBDRIVER = createWebDriver();
-        this.port = webServerAppCtxt.getWebServer().getPort();
+        if (webServerAppCtxt != null) {
+            WEBDRIVER = createWebDriver();
+            this.port = webServerAppCtxt.getWebServer().getPort();
+        }
     }
 
 

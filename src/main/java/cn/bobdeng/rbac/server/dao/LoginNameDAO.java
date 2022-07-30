@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.server;
+package cn.bobdeng.rbac.server.dao;
 
 import org.springframework.data.repository.CrudRepository;
 

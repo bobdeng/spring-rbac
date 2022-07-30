@@ -1,8 +1,10 @@
-package cn.bobdeng.rbac.server;
+package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.LoginName;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.server.dao.LoginNameDAO;
+import cn.bobdeng.rbac.server.dao.LoginNameDO;
 
 import java.util.List;
 import java.util.Optional;
