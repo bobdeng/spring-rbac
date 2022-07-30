@@ -41,6 +41,6 @@ public class AdminLoginController {
         String value = new AdminToken().toString();
         Cookie cookie = new Cookie(Cookies.ADMIN_AUTHORIZATION, value);
         response.addCookie(cookie);
-        return "/admin/login_success";
+        return "admin/login_success";
     }
 }

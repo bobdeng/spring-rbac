@@ -2,14 +2,9 @@ package cn.bobdeng.rbac.api;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.Extensions;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,6 +38,13 @@ public class AdminLoginTest extends E2ETest {
         assertEquals("登录成功", adminLoginPage.error());
         Cookie authorization = webDriverHandler.getCookie("AdminAuthorization");
         assertNotNull(authorization);
+    }
+
+    @Test
+    public void not_allowed_other_when_not_login() {
+        AdminConsolePage adminConsolePage = new AdminConsolePage(webDriverHandler);
+        adminConsolePage.open();
+        assertTrue(adminConsolePage.content().contains("HTTP ERROR 403"));
     }
 
 }
