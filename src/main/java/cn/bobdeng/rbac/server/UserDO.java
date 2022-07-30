@@ -25,7 +25,7 @@ public final class UserDO {
     public User toUser(TenantRepository tenantRepository) {
         User user = new User(id, new UserDescription(name));
         user.setUserPassword(tenantRepository.userPassword(user));
-        user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElseThrow());
+        user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
         return user;
     }
 

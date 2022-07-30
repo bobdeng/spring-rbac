@@ -23,7 +23,7 @@ public class LoginController {
     public String login(@RequestBody @Valid LoginForm form, HttpServletResponse response) {
         Optional<User> optionalUser = checkUserLogin(form);
         optionalUser.ifPresent(user -> setLoginResponse(response, user));
-        if (optionalUser.isEmpty()) {
+        if (!optionalUser.isPresent()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "登录失败";
         }

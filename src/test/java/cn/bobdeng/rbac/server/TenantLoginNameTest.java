@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +27,7 @@ public class TenantLoginNameTest {
         tenant = tenantRepository.save(tenant);
         User bob = tenant.addUser(new UserDescription("bob"));
         tenant.addLoginName(new LoginNameDescription("bob", bob));
-        List<LoginNameDO> loginNames = StreamSupport.stream(loginNameDAO.findAll().spliterator(), false).toList();
+        List<LoginNameDO> loginNames = StreamSupport.stream(loginNameDAO.findAll().spliterator(), false).collect(Collectors.toList());
         assertEquals(1, loginNames.size());
     }
 
@@ -37,7 +38,7 @@ public class TenantLoginNameTest {
         User bob = tenant.addUser(new UserDescription("bob"));
         tenant.addLoginName(new LoginNameDescription("bob", bob));
 
-        LoginName loginName = tenant.getLoginNames().findByLoginName("bob").orElseThrow();
+        LoginName loginName = tenant.getLoginNames().findByLoginName("bob").orElseThrow(RuntimeException::new);
         assertEquals("bob", loginName.description().getName());
     }
 }

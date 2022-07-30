@@ -27,7 +27,7 @@ public class UserPasswordTest {
 
         bob.savePassword(new RawPassword("123456"));
 
-        Password password = passwordDAO.findById(bob.getId()).orElseThrow();
+        Password password = passwordDAO.findById(bob.getId()).orElseThrow(RuntimeException::new);
         assertTrue(new BCryptPasswordEncoder().matches("123456", password.description().getPassword()));
         assertEquals(password.identity(), bob.identity());
     }

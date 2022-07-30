@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +29,7 @@ public class TenantUserTest {
         tenant = tenantRepository.save(tenant);
         tenant.addUser(new UserDescription("bob"));
 
-        List<UserDO> users = StreamSupport.stream(userDAO.findAll().spliterator(), false).toList();
+        List<UserDO> users = StreamSupport.stream(userDAO.findAll().spliterator(), false).collect(Collectors.toList());
         assertEquals(1, users.size());
         UserDO userDO = users.get(0);
         assertEquals(tenant.identity(), userDO.getTenantId());
