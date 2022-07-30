@@ -27,22 +27,11 @@ public class LoginToken {
     }
 
     public static LoginToken decode(String token) {
-        try {
-            Jws<Claims> jws = Jwts.parser()
-                    .setSigningKey(JwtConfig.token)
-                    .parseClaimsJws(token.replace(JwtConfig.prefix, ""));
-            return new Gson().fromJson(jws.getBody().getSubject(), LoginToken.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return JwtToken.decode(token, LoginToken.class);
     }
 
     @Override
     public String toString() {
-        return JwtConfig.prefix + Jwts.builder()
-                .setSubject(new Gson().toJson(this))
-                .setExpiration(new Date(System.currentTimeMillis() + JwtConfig.expire))
-                .signWith(SignatureAlgorithm.HS256, JwtConfig.token)
-                .compact();
+        return new JwtToken<>(this).toString();
     }
 }

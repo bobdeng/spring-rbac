@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.domain.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
@@ -61,7 +62,7 @@ public class LoginController {
 
     private void setLoginResponse(HttpServletResponse response, User user) {
         String token = new LoginToken(user).toString();
-        Cookie authorization = new Cookie("Authorization", token);
+        Cookie authorization = new Cookie(Cookies.AUTHORIZATION, token);
         response.addCookie(authorization);
     }
 }
