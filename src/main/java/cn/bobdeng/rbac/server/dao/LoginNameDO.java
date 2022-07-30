@@ -14,6 +14,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "t_rbac_login_name")
+@Builder
+@AllArgsConstructor
 public class LoginNameDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public final class UserDO {
     private Integer id;
     private String name;

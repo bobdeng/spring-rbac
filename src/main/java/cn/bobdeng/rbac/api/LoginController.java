@@ -3,12 +3,13 @@ package cn.bobdeng.rbac.api;
 import cn.bobdeng.rbac.domain.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import javax.transaction.Transactional;
 import java.net.MalformedURLException;
 import java.util.Optional;
 
@@ -23,7 +24,9 @@ public class LoginController {
     }
 
     @GetMapping("/rbac/login")
-    public String loginPage() {
+    public String loginPage(HttpServletRequest request, Model model) throws MalformedURLException {
+        Tenant tenant = tenant(request);
+        model.addAttribute("loginForm", new LoginForm(tenant, request.getParameter("from")));
         return "login";
     }
 
@@ -35,14 +38,15 @@ public class LoginController {
     }
 
     @PostMapping("/rbac/sessions")
-    public String login(@RequestBody @Valid LoginForm form, HttpServletResponse response) {
-        Optional<User> optionalUser = checkUserLogin(form);
-        optionalUser.ifPresent(user -> setLoginResponse(response, user));
-        if (!optionalUser.isPresent()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return "登录失败";
+    @Transactional
+    public String login(Model model, @ModelAttribute("loginForm") LoginForm loginForm, HttpServletResponse response) {
+        Optional<User> user = checkUserLogin(loginForm);
+        if (user.isPresent()) {
+            setLoginResponse(response, user.get());
+            return "login_success";
         }
-        return "登录成功";
+        model.addAttribute("error", "登录失败");
+        return "login";
     }
 
     @NotNull
@@ -54,7 +58,6 @@ public class LoginController {
     }
 
     private void setLoginResponse(HttpServletResponse response, User user) {
-        Tenant tenant = user.tenant();
         String token = new LoginToken(user).toString();
         Cookie authorization = new Cookie("Authorization", token);
         response.addCookie(authorization);
