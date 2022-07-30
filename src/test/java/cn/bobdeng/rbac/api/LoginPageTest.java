@@ -13,15 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoginPageTest {
+public class LoginPageTest extends E2ETest {
     @Autowired
     WebDriverHandler webDriverHandler;
     @Autowired
@@ -99,8 +96,5 @@ public class LoginPageTest {
         assertEquals(new LoginToken(user.toUser(tenantRepository)), loginToken);
     }
 
-    @AfterAll
-    public static void tearDown() {
-        WebDriverHandler.WEBDRIVER.close();
-    }
+
 }

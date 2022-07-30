@@ -39,7 +39,9 @@ public class LoginController {
 
     @PostMapping("/rbac/sessions")
     @Transactional
-    public String login(Model model, @ModelAttribute("loginForm") LoginForm loginForm, HttpServletResponse response) {
+    public String login(Model model,
+                        @ModelAttribute("loginForm") LoginForm loginForm,
+                        HttpServletResponse response) {
         Optional<User> user = checkUserLogin(loginForm);
         if (user.isPresent()) {
             setLoginResponse(response, user.get());
