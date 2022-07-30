@@ -2,8 +2,6 @@ package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.DomainRepository;
-import cn.bobdeng.rbac.domain.HasOne;
-import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.server.dao.DomainDAO;
 import cn.bobdeng.rbac.server.dao.TenantDAO;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,8 @@ public class DomainRepositoryImpl implements DomainRepository {
 
     @Override
     public Optional<Domain> findByDomain(String domain) {
-        return Optional.empty();
+        return domainDAO.findByDescriptionDomain(domain)
+                .map(this::inject);
     }
 
     @Override
@@ -44,9 +43,12 @@ public class DomainRepositoryImpl implements DomainRepository {
 
     @Override
     public Domain save(Domain entity) {
-        Domain saved = domainDAO.save(entity);
-        saved.setTenant(() -> tenantDAO.findById(saved.getDescription().getTenantId()).orElse(null));
-        return saved;
+        return inject(domainDAO.save(entity));
+    }
+
+    private Domain inject(Domain domain) {
+        domain.setTenant(() -> tenantDAO.findById(domain.getDescription().getTenantId()).orElse(null));
+        return domain;
     }
 
     @Override

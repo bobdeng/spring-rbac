@@ -2,9 +2,11 @@ package cn.bobdeng.rbac.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Domain implements Entity<Integer, DomainDescription> {
     private Integer id;
     private DomainDescription description;
