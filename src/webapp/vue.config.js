@@ -1,6 +1,7 @@
 const {defineConfig} = require('@vue/cli-service')
 module.exports = defineConfig({
     transpileDependencies: true,
-    outputDir: "../main/webapp/WEB-INF/templates/admin",
+    filenameHashing: false,
+    outputDir: "../main/resources/static/admin",
     publicPath: "/admin/"
 })
