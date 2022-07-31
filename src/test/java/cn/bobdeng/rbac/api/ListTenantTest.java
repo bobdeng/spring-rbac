@@ -47,6 +47,23 @@ public class ListTenantTest extends E2ETest {
     }
 
     @Test
+    public void should_search_tenant() {
+        Tenant tenant = new Tenant(new TenantDescription("张三"));
+        Tenant tenant1 = new Tenant(new TenantDescription("李四"));
+        tenantRepository.save(tenant);
+        tenantRepository.save(tenant1);
+        ListTenantPage listTenantPage = new ListTenantPage(webDriverHandler);
+        listTenantPage.open();
+        listTenantPage.search("张三");
+        List<Map<String, String>> tenants = listTenantPage.tenants();
+        assertEquals(1, tenants.size());
+        assertEquals("张三", tenants.get(0).get("租户名"));
+        assertEquals(webDriverHandler.getBaseUrl() + "/rbac/admin/console/tenants/" + tenant.identity() + "/domains", tenants.get(0).get("域名链接"));
+        assertEquals("1", listTenantPage.totalElements());
+        assertEquals("1/1", listTenantPage.page());
+    }
+
+    @Test
     public void should_show_paged_tenant() {
 
     }

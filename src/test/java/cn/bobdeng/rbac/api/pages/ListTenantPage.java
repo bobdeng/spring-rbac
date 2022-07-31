@@ -45,4 +45,9 @@ public class ListTenantPage extends BasePage {
         return WEBDRIVER.findElement(By.id("linkNewTenant")).getAttribute("href");
 
     }
+
+    public void search(String name) {
+        WEBDRIVER.findElement(By.id("inputSearchName")).sendKeys(name);
+        WEBDRIVER.findElement(By.id("buttonSubmit")).submit();
+    }
 }

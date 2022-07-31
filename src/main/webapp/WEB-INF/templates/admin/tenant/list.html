@@ -6,6 +6,10 @@
 </head>
 <body>
 <a href="new_tenant" id="linkNewTenant">新增租户</a>
+<form th:action="@{tenants}" method="get" th:object="${searchForm}">
+    <input type="text" th:field="*{name}" id="inputSearchName"/>
+    <button type="submit" id="buttonSubmit">查询</button>
+</form>
 <table id="tableTenants">
     <thead>
     <tr>

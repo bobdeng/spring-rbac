@@ -30,8 +30,8 @@ public class TenantController {
     }
 
     @GetMapping("/tenants")
-    public String listTenants(Model model) {
-        final Page<Tenant> tenants = tenantRepository.findByName1("", 0, 100);
+    public String listTenants(Model model, @ModelAttribute("searchForm") SearchTenantForm form) {
+        final Page<Tenant> tenants = tenantRepository.findByName1(form.getName(), 0, 100);
         model.addAttribute("tenants", tenants);
         return "admin/tenant/list";
     }
