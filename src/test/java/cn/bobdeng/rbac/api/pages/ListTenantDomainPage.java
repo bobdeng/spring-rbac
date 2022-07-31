@@ -30,4 +30,8 @@ public class ListTenantDomainPage extends BasePage {
                     return result;
                 }).collect(Collectors.toList());
     }
+
+    public String newDomainLink() {
+        return WEBDRIVER.findElement(By.id("linkNewDomain")).getAttribute("href");
+    }
 }

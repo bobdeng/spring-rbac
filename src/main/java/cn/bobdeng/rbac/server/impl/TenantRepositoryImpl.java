@@ -47,7 +47,8 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Optional<Tenant> findById(Integer id) {
-        return Optional.empty();
+        return tenantDAO.findById(id)
+                .map(this::injectDependencies);
     }
 
     @Override

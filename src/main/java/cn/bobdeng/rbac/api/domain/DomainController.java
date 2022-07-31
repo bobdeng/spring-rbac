@@ -27,6 +27,7 @@ public class DomainController {
                 .map(Tenant::domains)
                 .orElseGet(Collections::emptyList);
         model.addAttribute("domains", domains);
+        model.addAttribute("tenant", tenantRepository.findById(tenantId).orElse(null));
         return "admin/tenant/domain/list";
     }
 }
