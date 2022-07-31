@@ -5,21 +5,42 @@
     <title>租户域名</title>
 </head>
 <body>
-<a th:href="'/rbac/admin/console/domain/new_domain?tenantId='+${tenant.id}" id="linkNewDomain">新增域名</a>
-<table id="tableDomains">
-    <thead>
-    <tr>
-        <th>域名</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="domain: ${domains}">
-        <td th:text="${domain.description.domain}">
-            name
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div id="app">
+    <a th:href="'/rbac/admin/console/domain/new_domain?tenantId='+${tenant.id}" id="linkNewDomain">新增域名</a>
+    <table id="tableDomains">
+        <thead>
+        <tr>
+            <th>域名</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="domain: ${domains}">
+            <td th:text="${domain.description.domain}">
+                name
+            </td>
+            <td>
+                <a th:@click="'deleteDomain('+${domain.id}+')'">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragments/public :: script"/>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        },
+        methods: {
+            deleteDomain(id) {
+                if (window.confirm("确定删除吗？")) {
+                    document.location.href = "/rbac/admin/console/domains/" + id + "/delete";
+                }
+            }
+        }
+    })
+</script>
 </body>
 </html>

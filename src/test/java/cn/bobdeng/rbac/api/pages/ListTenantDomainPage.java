@@ -35,4 +35,15 @@ public class ListTenantDomainPage extends BasePage {
     public String newDomainLink() {
         return WEBDRIVER.findElement(By.id("linkNewDomain")).getAttribute("href");
     }
+
+    public void delete(int index) {
+        WEBDRIVER.findElement(By.id("tableDomains"))
+                .findElement(By.tagName("tbody"))
+                .findElements(By.tagName("tr"))
+                .get(index)
+                .findElements(By.tagName("td"))
+                .get(1)
+                .findElement(By.tagName("a"))
+                .click();
+    }
 }

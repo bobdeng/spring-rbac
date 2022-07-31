@@ -27,6 +27,11 @@ public class DomainRepositoryImpl implements DomainRepository {
     }
 
     @Override
+    public void delete(Integer id) {
+        domainDAO.deleteById(id);
+    }
+
+    @Override
     public List<Domain> subList(int from, int to) {
         return null;
     }
@@ -38,7 +43,7 @@ public class DomainRepositoryImpl implements DomainRepository {
 
     @Override
     public Optional<Domain> findByIdentity(Integer integer) {
-        return Optional.empty();
+        return domainDAO.findById(integer).map(this::inject);
     }
 
     @Override

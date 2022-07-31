@@ -50,4 +50,13 @@ public class DomainController {
         new Domains(domainRepository).newDomain(new DomainDescription(form.getDomain(), form.getTenantId()));
         return "redirect:/rbac/admin/console/domains?tenantId=" + form.getTenantId();
     }
+
+    @GetMapping("/rbac/admin/console/domains/{id}/delete")
+    public String deleteDomain(@PathVariable Integer id) {
+        Tenant tenant = domainRepository.findByIdentity(id)
+                .map(Domain::tenant)
+                .orElse(null);
+        new Domains(domainRepository).delete(id);
+        return "redirect:/rbac/admin/console/domains?tenantId=" + tenant.identity();
+    }
 }

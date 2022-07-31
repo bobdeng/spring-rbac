@@ -14,4 +14,8 @@ public class Domains {
         }
         return this.domainRepository.save(new Domain(description));
     }
+
+    public void delete(Integer id) {
+        domainRepository.delete(id);
+    }
 }
