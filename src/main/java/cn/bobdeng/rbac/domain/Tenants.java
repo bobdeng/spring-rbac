@@ -8,7 +8,7 @@ public class Tenants {
         this.tenantRepository = tenantRepository;
     }
 
-    public void add(TenantDescription tenantDescription) {
-        this.tenantRepository.save(new Tenant(tenantDescription));
+    public Tenant add(TenantDescription tenantDescription) {
+        return this.tenantRepository.save(new Tenant(tenantDescription));
     }
 }

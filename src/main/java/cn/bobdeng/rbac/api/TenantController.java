@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantDescription;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.Tenants;
@@ -27,8 +28,8 @@ public class TenantController {
 
     @PostMapping("/tenants")
     public String newTenant(@ModelAttribute("newTenantForm") NewTenantForm form) {
-        new Tenants(tenantRepository).add(new TenantDescription(form.getName()));
-        return "redirect:/rbac/admin/console/tenants";
+        Tenant tenant = new Tenants(tenantRepository).add(new TenantDescription(form.getName()));
+        return "redirect:/rbac/admin/console/tenant/domain?tenantId=" + tenant.identity();
     }
 
     @GetMapping("/tenants")

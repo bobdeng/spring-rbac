@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NewTenantTest extends E2ETest {
     @Autowired
@@ -36,5 +38,6 @@ public class NewTenantTest extends E2ETest {
 
         List<Tenant> tenants = StreamSupport.stream(tenantDAO.findAll().spliterator(), false).collect(Collectors.toList());
         assertEquals(1, tenants.size());
+        assertTrue(WEBDRIVER.getCurrentUrl().endsWith("console/tenant/domain?tenantId=" + tenants.get(0).identity()));
     }
 }
