@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +33,7 @@ class TenantRepositoryImplTest {
             Tenant tenant = new Tenant(new TenantDescription("bob" + i));
             tenantRepository.save(tenant);
         }
-        Page<Tenant> tenantPage = tenantRepository.findByName1("bob", 1, 10);
+        Page<Tenant> tenantPage = tenantRepository.findByName("bob", 1, 10);
         List<Tenant> tenants = tenantPage.getElements();
         assertEquals(2, tenantPage.getTotalPage());
         assertEquals("bob10", tenants.get(0).getDescription().getName());

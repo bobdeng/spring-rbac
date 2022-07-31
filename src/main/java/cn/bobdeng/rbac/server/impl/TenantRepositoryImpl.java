@@ -1,32 +1,35 @@
 package cn.bobdeng.rbac.server.impl;
 
-import cn.bobdeng.rbac.domain.Page;
-import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.User;
-import cn.bobdeng.rbac.server.dao.LoginNameDAO;
-import cn.bobdeng.rbac.server.dao.PasswordDAO;
-import cn.bobdeng.rbac.server.dao.TenantDAO;
-import cn.bobdeng.rbac.server.dao.UserDAO;
+import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.server.dao.*;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class TenantRepositoryImpl implements TenantRepository {
-    private TenantDAO tenantDAO;
-    private UserDAO userDAO;
-    private LoginNameDAO loginNameDAO;
-    private PasswordDAO passwordDAO;
+    private final TenantDAO tenantDAO;
+    private final UserDAO userDAO;
+    private final LoginNameDAO loginNameDAO;
+    private final PasswordDAO passwordDAO;
+    private final DomainDAO domainDAO;
 
-    public TenantRepositoryImpl(TenantDAO tenantDAO, UserDAO userDAO, LoginNameDAO loginNameDAO, PasswordDAO passwordDAO) {
+    public TenantRepositoryImpl(TenantDAO tenantDAO,
+                                UserDAO userDAO,
+                                LoginNameDAO loginNameDAO,
+                                PasswordDAO passwordDAO,
+                                DomainDAO domainDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
         this.passwordDAO = passwordDAO;
+        this.domainDAO = domainDAO;
     }
 
     @Override
@@ -36,17 +39,9 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public List<Tenant> findByName(String name, int page, int size) {
+    public Page<Tenant> findByName(String name, int page, int size) {
         PageRequest pageable = PageRequest.of(page, size);
-        List<Tenant> byDescriptionNameContaining = tenantDAO.findByDescriptionNameContaining(name, pageable).getContent();
-        System.out.println(pageable);
-        return byDescriptionNameContaining;
-    }
-
-    @Override
-    public Page<Tenant> findByName1(String name, int page, int size) {
-        PageRequest pageable = PageRequest.of(page, size);
-        org.springframework.data.domain.Page<Tenant> result = tenantDAO.findByDescriptionNameContaining(name, pageable);
+        org.springframework.data.domain.Page<Tenant> result = tenantDAO.findByDescriptionNameContaining(Optional.ofNullable(name).orElse(""), pageable);
         return new Page<>(result.getContent(), result.getTotalPages(), result.getTotalElements(), result.getNumber());
     }
 
@@ -96,7 +91,45 @@ public class TenantRepositoryImpl implements TenantRepository {
     private Tenant injectDependencies(Tenant tenant) {
         tenant.setUsers(this.users(tenant));
         tenant.setLoginNames(this.loginNames(tenant));
+        tenant.setDomains(getDomains(tenant));
         return tenant;
+    }
+
+    @NotNull
+    private HasMany<Integer, Domain> getDomains(Tenant tenant) {
+        return new HasMany<Integer, Domain>() {
+            @Override
+            public Many<Domain> findAll() {
+                return getManyDomains(tenant);
+            }
+
+            @Override
+            public Optional<Domain> findByIdentity(Integer identifier) {
+                return Optional.empty();
+            }
+        };
+    }
+
+    @NotNull
+    private Many<Domain> getManyDomains(Tenant tenant) {
+        List<Domain> domains = domainDAO.findAllByDescriptionTenantId(tenant.identity()).collect(Collectors.toList());
+        return new Many<Domain>() {
+            @Override
+            public int size() {
+                return domains.size();
+            }
+
+            @Override
+            public Many<Domain> subCollection(int from, int to) {
+                return null;
+            }
+
+            @NotNull
+            @Override
+            public Iterator<Domain> iterator() {
+                return domains.iterator();
+            }
+        };
     }
 
     @Override

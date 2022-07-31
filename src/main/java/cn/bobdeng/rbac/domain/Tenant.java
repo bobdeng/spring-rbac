@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -15,6 +16,7 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private TenantDescription description;
     private Users users;
     private LoginNames loginNames;
+    private HasMany<Integer, Domain> domains;
 
     public Tenant(TenantDescription tenantDescription) {
 
@@ -45,6 +47,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
             throw new DuplicateLoginNameException();
         }
         return loginNames.save(new LoginName(description));
+    }
+
+    public List<Domain> domains() {
+        return domains.findAll().stream().collect(Collectors.toList());
     }
 
 
