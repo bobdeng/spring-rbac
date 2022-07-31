@@ -5,6 +5,27 @@
     <title>租户管理</title>
 </head>
 <body>
-<a href="../new_tenant" id="linkNewTenant">新增租户</a>
+<a href="new_tenant" id="linkNewTenant">新增租户</a>
+<table id="tableTenants">
+    <thead>
+    <tr>
+        <th>租户名</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tenant: ${tenants.elements}">
+        <td th:text="${tenant.description.name}">
+            name
+        </td>
+        <td>
+            <a th:href="'tenants/'+${tenant.id}+'/domains'">域名</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+总数
+<div id="textTotalElements" th:text="${tenants.totalElements}">0</div>
+<div th:text="${tenants.number+1}+'/'+${tenants.totalPage}" id="textPage"></div>
 </body>
 </html>

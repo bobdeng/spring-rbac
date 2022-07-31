@@ -1,9 +1,6 @@
 package cn.bobdeng.rbac.api;
 
-import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.TenantDescription;
-import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.Tenants;
+import cn.bobdeng.rbac.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +30,9 @@ public class TenantController {
     }
 
     @GetMapping("/tenants")
-    public String listTenants() {
+    public String listTenants(Model model) {
+        final Page<Tenant> tenants = tenantRepository.findByName1("", 0, 100);
+        model.addAttribute("tenants", tenants);
         return "admin/tenant/list";
     }
 }

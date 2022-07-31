@@ -62,7 +62,7 @@ public class WebDriverHandler {
     }
 
     @NotNull
-    private String getBaseUrl() {
+    protected String getBaseUrl() {
         return "http://" + getDomain();
     }
 

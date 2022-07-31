@@ -4,12 +4,10 @@ import cn.bobdeng.rbac.api.WebDriverHandler;
 
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 
-public class AdminConsolePage {
-    private WebDriverHandler webDriverHandler;
+public class AdminConsolePage extends BasePage{
 
     public AdminConsolePage(WebDriverHandler webDriverHandler) {
-
-        this.webDriverHandler = webDriverHandler;
+        super(webDriverHandler);
     }
 
     public void open() {

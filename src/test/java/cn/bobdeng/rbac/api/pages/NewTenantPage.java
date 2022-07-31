@@ -5,12 +5,10 @@ import org.openqa.selenium.By;
 
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 
-public class NewTenantPage {
-    private WebDriverHandler webDriverHandler;
+public class NewTenantPage extends BasePage {
 
     public NewTenantPage(WebDriverHandler webDriverHandler) {
-
-        this.webDriverHandler = webDriverHandler;
+        super(webDriverHandler);
     }
 
     public void open() {

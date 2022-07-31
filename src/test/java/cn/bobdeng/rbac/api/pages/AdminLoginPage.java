@@ -5,13 +5,12 @@ import org.openqa.selenium.By;
 
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 
-public class AdminLoginPage {
-    private WebDriverHandler webDriverHandler;
+public class AdminLoginPage extends BasePage{
 
     public AdminLoginPage(WebDriverHandler webDriverHandler) {
-
-        this.webDriverHandler = webDriverHandler;
+        super(webDriverHandler);
     }
+
 
     public void open() {
         this.webDriverHandler.open("/rbac/admin/login");

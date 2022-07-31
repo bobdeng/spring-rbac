@@ -1,12 +1,14 @@
 package cn.bobdeng.rbac.domain;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public interface TenantRepository extends EntityList<Integer, Tenant> {
     Tenant save(Tenant tenant);
 
-    Stream<Tenant> findByName(String name, int from, int to);
+    List<Tenant> findByName(String name, int page, int size);
+
+    Page<Tenant> findByName1(String name, int page, int size);
 
     Optional<Tenant> findById(Integer id);
 

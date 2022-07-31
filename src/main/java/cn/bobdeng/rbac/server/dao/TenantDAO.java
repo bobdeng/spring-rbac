@@ -1,9 +1,13 @@
 package cn.bobdeng.rbac.server.dao;
 
 import cn.bobdeng.rbac.domain.Tenant;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public interface TenantDAO extends CrudRepository<Tenant, Integer> {
@@ -11,4 +15,7 @@ public interface TenantDAO extends CrudRepository<Tenant, Integer> {
     Stream<Tenant> findByName(String name);
 
     Stream<Tenant> findByDescriptionName(String name);
+
+    Page<Tenant> findByDescriptionNameContaining(String name, Pageable pageable);
+
 }

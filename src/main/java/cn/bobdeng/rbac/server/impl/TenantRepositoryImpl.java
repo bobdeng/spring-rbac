@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.server.impl;
 
+import cn.bobdeng.rbac.domain.Page;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
@@ -7,6 +8,7 @@ import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.PasswordDAO;
 import cn.bobdeng.rbac.server.dao.TenantDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,8 +36,18 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public Stream<Tenant> findByName(String name, int from, int to) {
-        return tenantDAO.findByName(name).skip(from).limit(to - from);
+    public List<Tenant> findByName(String name, int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        List<Tenant> byDescriptionNameContaining = tenantDAO.findByDescriptionNameContaining(name, pageable).getContent();
+        System.out.println(pageable);
+        return byDescriptionNameContaining;
+    }
+
+    @Override
+    public Page<Tenant> findByName1(String name, int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        org.springframework.data.domain.Page<Tenant> result = tenantDAO.findByDescriptionNameContaining(name, pageable);
+        return new Page<>(result.getContent(), result.getTotalPages(), result.getTotalElements(), result.getNumber());
     }
 
     @Override
