@@ -5,9 +5,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
+@Slf4j
 public class JwtToken<T> {
     T object;
 
@@ -22,6 +24,7 @@ public class JwtToken<T> {
                     .parseClaimsJws(token.replace(JwtConfig.prefix, ""));
             return new Gson().fromJson(jws.getBody().getSubject(), clz);
         } catch (Exception e) {
+            log.info(token);
             throw new RuntimeException(e);
         }
     }

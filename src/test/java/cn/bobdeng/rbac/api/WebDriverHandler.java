@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.stream.Stream;
 
 @Service
@@ -56,8 +58,17 @@ public class WebDriverHandler {
     }
 
     public void open(String url) {
-        String baseUrl = "http://localhost:" + port;
-        WEBDRIVER.navigate().to(baseUrl + url);
+        WEBDRIVER.get(getBaseUrl() + url);
+    }
+
+    @NotNull
+    private String getBaseUrl() {
+        return "http://" + getDomain();
+    }
+
+    @NotNull
+    private String getDomain() {
+        return "localhost:" + port;
     }
 
     public void removeAllCookies() {
@@ -66,5 +77,9 @@ public class WebDriverHandler {
 
     public Cookie getCookie(String cookieName) {
         return WEBDRIVER.manage().getCookieNamed(cookieName);
+    }
+
+    public void addCookie(String cookieName, String cookieValue) {
+        WEBDRIVER.manage().addCookie(new Cookie(cookieName, cookieValue));
     }
 }

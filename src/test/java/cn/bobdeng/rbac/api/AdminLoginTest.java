@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.Cookies;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
@@ -16,6 +17,7 @@ public class AdminLoginTest extends E2ETest {
 
     @BeforeEach
     public void setup() {
+        webDriverHandler.removeAllCookies();
         adminPasswordNotifier.clear();
     }
 
@@ -45,6 +47,17 @@ public class AdminLoginTest extends E2ETest {
         AdminConsolePage adminConsolePage = new AdminConsolePage(webDriverHandler);
         adminConsolePage.open();
         assertTrue(adminConsolePage.content().contains("HTTP ERROR 403"));
+    }
+
+    @Test
+    public void should_visit_when_logon_and_no_page() {
+        AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
+        adminLoginPage.open();
+        adminLoginPage.setCookie(Cookies.ADMIN_AUTHORIZATION, new AdminToken().toString());
+
+        AdminConsolePage adminConsolePage = new AdminConsolePage(webDriverHandler);
+        adminConsolePage.open();
+        assertEquals("管理台", adminConsolePage.title());
     }
 
 }

@@ -13,20 +13,23 @@ import java.util.Arrays;
 public class AdminPermissionCheckFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (hasAdminAuth((HttpServletRequest) request)) {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        if (hasAdminAuth(httpRequest)) {
             chain.doFilter(request, response);
             return;
         }
-        ((HttpServletResponse) response).setStatus(HttpStatus.FORBIDDEN.value());
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
     }
 
     private boolean hasAdminAuth(HttpServletRequest request) {
+        System.out.println(request.getCookies());
         if (request.getCookies() == null) {
             return false;
         }
         return Arrays.stream(request.getCookies()).filter(
                         cookie -> cookie.getName().equals(Cookies.ADMIN_AUTHORIZATION)
-                ).map(cookie -> JwtToken.decode(cookie.getName(), AdminToken.class))
+                ).map(cookie -> JwtToken.decode(cookie.getValue(), AdminToken.class))
                 .findFirst().isPresent();
     }
 }

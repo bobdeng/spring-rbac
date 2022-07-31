@@ -11,10 +11,14 @@ public class AdminConsolePage {
     }
 
     public void open() {
-        webDriverHandler.open("/admin/console/home");
+        webDriverHandler.open("/rbac/admin/console/home");
     }
 
     public String content() {
         return WEBDRIVER.getPageSource();
+    }
+
+    public String title() {
+        return WEBDRIVER.getTitle();
     }
 }

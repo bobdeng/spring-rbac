@@ -24,4 +24,8 @@ public class AdminLoginPage {
     public String error() {
         return WEBDRIVER.findElement(By.id("error")).getText();
     }
+
+    public void setCookie(String name, String value) {
+        webDriverHandler.addCookie(name, value);
+    }
 }
