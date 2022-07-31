@@ -1,5 +1,6 @@
-package cn.bobdeng.rbac.api;
+package cn.bobdeng.rbac.api.pages;
 
+import cn.bobdeng.rbac.api.WebDriverHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

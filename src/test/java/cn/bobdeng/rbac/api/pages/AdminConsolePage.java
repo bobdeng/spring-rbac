@@ -1,4 +1,6 @@
-package cn.bobdeng.rbac.api;
+package cn.bobdeng.rbac.api.pages;
+
+import cn.bobdeng.rbac.api.WebDriverHandler;
 
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 

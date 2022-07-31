@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.api.pages.LoginPage;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.server.dao.*;
 import org.junit.jupiter.api.BeforeEach;

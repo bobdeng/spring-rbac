@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.Cookies;
+import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

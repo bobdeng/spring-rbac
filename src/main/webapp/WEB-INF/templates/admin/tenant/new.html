@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增租户</title>
+</head>
+<body>
+<form th:object="${newTenantForm}" method="post" th:action="@{/rbac/admin/console/tenants}">
+    <label>租户名</label>
+    <input type="text" th:field="*{name}" id="inputName">
+    <input type="submit" id="buttonSubmit">提交</input>
+</form>
+</body>
+</html>
