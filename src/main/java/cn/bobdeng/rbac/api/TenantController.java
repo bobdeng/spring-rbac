@@ -26,7 +26,7 @@ public class TenantController {
     @PostMapping("/tenants")
     public String newTenant(@ModelAttribute("newTenantForm") NewTenantForm form) {
         Tenant tenant = new Tenants(tenantRepository).add(new TenantDescription(form.getName()));
-        return "redirect:/rbac/admin/console/tenant/domain?tenantId=" + tenant.identity();
+        return "redirect:/rbac/admin/console/domains?tenantId=" + tenant.identity();
     }
 
     @GetMapping("/tenants")

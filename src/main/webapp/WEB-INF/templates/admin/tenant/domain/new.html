@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增域名</title>
+</head>
+<body>
+<form th:object="${newDomainForm}" method="post" th:action="@{/rbac/admin/console/domains}">
+    <label>租户名</label>
+    <input type="text" th:field="*{domain}" id="inputName">
+    <input type="hidden" th:field="*{tenantId}"/>
+    <input type="submit" id="buttonSubmit">提交</input>
+</form>
+</body>
+</html>

@@ -17,10 +17,11 @@ public class ListTenantDomainPage extends BasePage {
     }
 
     public void open(Tenant tenant) {
-        webDriverHandler.open("/rbac/admin/console/tenant/" + tenant.identity() + "/domains");
+        webDriverHandler.open("/rbac/admin/console/domains?tenantId=" + tenant.identity());
     }
 
     public List<Map<String, String>> domains() {
+        System.out.println(WEBDRIVER.getPageSource());
         return WEBDRIVER.findElement(By.id("tableDomains"))
                 .findElement(By.tagName("tbody"))
                 .findElements(By.tagName("tr"))

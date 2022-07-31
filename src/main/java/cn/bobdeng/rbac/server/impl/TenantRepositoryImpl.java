@@ -113,7 +113,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @NotNull
     private Many<Domain> getManyDomains(Tenant tenant) {
-        List<Domain> domains = domainDAO.findAllByDescriptionTenantId(tenant.identity()).collect(Collectors.toList());
+        List<Domain> domains = domainDAO.findAllByDescriptionTenantId(tenant.identity());
         return new Many<Domain>() {
             @Override
             public int size() {

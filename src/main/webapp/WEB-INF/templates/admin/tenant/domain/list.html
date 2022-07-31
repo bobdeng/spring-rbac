@@ -5,7 +5,7 @@
     <title>租户域名</title>
 </head>
 <body>
-<a th:href="'new_domain'" id="linkNewDomain">新增域名</a>
+<a th:href="'/rbac/admin/console/domain/new_domain?tenantId='+${tenant.id}" id="linkNewDomain">新增域名</a>
 <table id="tableDomains">
     <thead>
     <tr>

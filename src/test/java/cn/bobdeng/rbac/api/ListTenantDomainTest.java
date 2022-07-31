@@ -33,6 +33,6 @@ public class ListTenantDomainTest extends E2ETest {
         List<Map<String, String>> domains = page.domains();
         assertEquals(1, domains.size());
         assertEquals("localhost", domains.get(0).get("域名"));
-        assertEquals(webDriverHandler.getBaseUrl() + "/rbac/admin/console/tenant/" + tenant.identity() + "/new_domain", page.newDomainLink());
+        assertEquals(webDriverHandler.getBaseUrl() + "/rbac/admin/console/domain/new_domain?tenantId=" + tenant.identity(), page.newDomainLink());
     }
 }
