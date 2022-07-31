@@ -23,7 +23,6 @@ public class AdminPermissionCheckFilter implements Filter {
     }
 
     private boolean hasAdminAuth(HttpServletRequest request) {
-        System.out.println(request.getCookies());
         if (request.getCookies() == null) {
             return false;
         }

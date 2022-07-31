@@ -1,6 +1,5 @@
 package cn.bobdeng.rbac.api;
 
-import cn.bobdeng.rbac.Cookies;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
@@ -10,8 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminLoginTest extends E2ETest {
-    @Autowired
-    WebDriverHandler webDriverHandler;
     @Autowired
     AdminPasswordNotifierImpl adminPasswordNotifier;
 
@@ -46,14 +43,15 @@ public class AdminLoginTest extends E2ETest {
     public void not_allowed_other_when_not_login() {
         AdminConsolePage adminConsolePage = new AdminConsolePage(webDriverHandler);
         adminConsolePage.open();
+        webDriverHandler.removeAllCookies();
+        adminConsolePage.open();
+        System.out.println(adminConsolePage.content());
         assertTrue(adminConsolePage.content().contains("HTTP ERROR 403"));
     }
 
     @Test
     public void should_visit_when_logon_and_no_page() {
-        AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
-        adminLoginPage.open();
-        adminLoginPage.setCookie(Cookies.ADMIN_AUTHORIZATION, new AdminToken().toString());
+        adminLogin();
 
         AdminConsolePage adminConsolePage = new AdminConsolePage(webDriverHandler);
         adminConsolePage.open();

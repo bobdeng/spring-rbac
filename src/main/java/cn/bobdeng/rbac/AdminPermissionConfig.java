@@ -13,7 +13,7 @@ public class AdminPermissionConfig {
         AdminPermissionCheckFilter loginFilter = new AdminPermissionCheckFilter();
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         registration.setFilter(loginFilter);
-        registration.addUrlPatterns("/admin/console/*");
+        registration.addUrlPatterns("/rbac/admin/console/*");
         registration.setName("adminFilter");
         registration.setOrder(1);
         return registration;
