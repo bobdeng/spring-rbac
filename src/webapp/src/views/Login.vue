@@ -3,10 +3,10 @@
     <Card title="管理员登录">
       <Form>
         <FormItem label="密码">
-          <InputPassword v-model:value="password"/>
+          <InputPassword v-model:value="password" id="inputPassword" maxlength="20"/>
         </FormItem>
         <FormItem>
-          <Button type="primary">登录</Button>
+          <Button type="primary" @click="login" id="buttonLogin">登录</Button>
         </FormItem>
       </Form>
     </Card>
@@ -19,6 +19,10 @@ import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 
 const password = ref("")
+
+function login() {
+  password.value = ""
+}
 </script>
 
 <style scoped></style>

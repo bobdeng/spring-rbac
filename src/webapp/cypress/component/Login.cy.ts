@@ -1,7 +1,14 @@
 import Login from '../../src/views/Login.vue'
 
 describe('Login.cy.ts', () => {
-    it('playground', () => {
+    beforeEach(()=>{
         cy.mount(Login)
     })
+    it('playground', () => {
+        cy.get("#buttonLogin").should("exist")
+        cy.get("#inputPassword").should("exist")
+    })
+    it('should login when login success', () => {
+        
+    });
 })
