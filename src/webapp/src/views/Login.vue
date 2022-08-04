@@ -19,9 +19,11 @@ import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {LoginForm, server} from "../HttpServer";
 
+const emit = defineEmits(['login'])
 const password = ref("")
 
 function login() {
+  emit("login")
   server.login(new LoginForm(password.value))
 }
 </script>
