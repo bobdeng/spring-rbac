@@ -9,7 +9,7 @@
           <InputPassword v-model:value="password" id="inputPassword" :maxlength="20"/>
         </FormItem>
         <FormItem>
-          <Button type="primary" @click="login" id="buttonLogin">登录</Button>
+          <Button type="primary" @click="login" id="buttonLogin" :loading="loading">登录</Button>
         </FormItem>
       </Form>
     </Card>
@@ -25,13 +25,17 @@ import {LoginForm, server} from "../model/HttpServer";
 const emit = defineEmits(['login'])
 const password = ref("")
 const error = ref("")
+const loading = ref(false)
 
 async function login() {
+  loading.value = true;
   try {
     await server.login(new LoginForm(password.value))
     emit("login")
   } catch (e) {
     error.value = e + "";
+  } finally {
+    loading.value = false;
   }
 }
 </script>
