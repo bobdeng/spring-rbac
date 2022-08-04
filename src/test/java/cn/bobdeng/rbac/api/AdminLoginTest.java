@@ -5,6 +5,7 @@ import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.domain.AdminPassword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminLoginTest extends E2ETest {
-    AdminPasswordNotifierImpl adminPasswordNotifier = new AdminPasswordNotifierImpl();
+    @Autowired
+    AdminPasswordNotifierImpl adminPasswordNotifier;
+
     @BeforeEach
     public void setup() {
         webDriverHandler.removeAllCookies();
@@ -20,22 +23,21 @@ public class AdminLoginTest extends E2ETest {
     }
 
     @Test
-    public void should_send_admin_password_when_fail() {
+    public void should_send_admin_password_when_fail() throws InterruptedException {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         adminLoginPage.loginWith("123");
-        assertEquals("密码已发出", adminLoginPage.error());
+        assertEquals("密码已经发出", adminLoginPage.error());
         assertNotNull(adminPasswordNotifier.getPassword());
         assertTrue(new BCryptPasswordEncoder().matches(adminPasswordNotifier.getPassword(), adminPasswordNotifier.getEncodedPassword()));
     }
 
     @Test
-    public void should_success_when_match() {
+    public void should_success_when_match() throws InterruptedException {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         adminPasswordNotifier.setEncodedPassword(new BCryptPasswordEncoder().encode("123456"));
         adminLoginPage.loginWith("123456");
-        assertEquals("登录成功", adminLoginPage.error());
         Cookie authorization = webDriverHandler.getCookie("AdminAuthorization");
         assertNotNull(authorization);
     }
@@ -46,17 +48,15 @@ public class AdminLoginTest extends E2ETest {
         adminConsolePage.open();
         webDriverHandler.removeAllCookies();
         adminConsolePage.open();
-        System.out.println(adminConsolePage.content());
         assertTrue(adminConsolePage.content().contains("HTTP ERROR 403"));
     }
 
     @Test
     public void should_visit_when_logon_and_no_page() {
         adminLogin();
-
         AdminConsolePage adminConsolePage = new AdminConsolePage(webDriverHandler);
         adminConsolePage.open();
-        assertEquals("管理台", adminConsolePage.title());
+        assertTrue(adminConsolePage.content().contains("HTTP ERROR 404"));
     }
 
 }

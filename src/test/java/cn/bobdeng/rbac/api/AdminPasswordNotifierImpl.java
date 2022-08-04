@@ -4,7 +4,7 @@ import cn.bobdeng.rbac.domain.AdminPassword;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class AdminPasswordNotifierImpl implements AdminPassword.Notifier, AdminPassword.Store {
     private String password;
     private String encodedPassword;

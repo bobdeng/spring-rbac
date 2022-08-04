@@ -11,7 +11,7 @@ public class AdminConsolePage extends BasePage{
     }
 
     public void open() {
-        webDriverHandler.open("/rbac/admin/console/home");
+        webDriverHandler.open("/api/rbac/admin/console/home");
     }
 
     public String content() {

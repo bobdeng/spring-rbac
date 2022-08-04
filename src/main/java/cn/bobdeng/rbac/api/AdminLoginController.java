@@ -4,16 +4,15 @@ import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.domain.AdminPassword;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.io.IOException;
 
-@Controller
-public class AdminLoginController {
+@RestController
+public class AdminLoginController extends BaseController {
     private final AdminPassword.Notifier adminPasswordNotifier;
     private final AdminPassword.Store store;
 
@@ -28,19 +27,21 @@ public class AdminLoginController {
         return "admin/login";
     }
 
-    @PostMapping("/rbac/admin/sessions")
+    @PostMapping("/admin/sessions")
     @Transactional
-    public String adminLogin(@ModelAttribute("loginForm") AdminLoginForm adminLoginForm,
-                             Model model,
-                             HttpServletResponse response) {
+    public void adminLogin(@RequestBody AdminLoginForm adminLoginForm,
+                           HttpServletResponse response) throws IOException {
         AdminPassword adminPassword = new AdminPassword(adminPasswordNotifier, store);
         if (!adminPassword.verify(adminLoginForm.getPassword())) {
-            model.addAttribute("error", "密码已发出");
-            return "admin/login";
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json;charset=utf-8");
+            response.getWriter().println("密码已经发出");
+            return;
         }
         String value = new AdminToken().toString();
         Cookie cookie = new Cookie(Cookies.ADMIN_AUTHORIZATION, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400 * 1000);
         response.addCookie(cookie);
-        return "admin/login_success";
     }
 }

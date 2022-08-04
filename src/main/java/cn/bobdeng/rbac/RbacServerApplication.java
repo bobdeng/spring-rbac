@@ -30,11 +30,6 @@ public class RbacServerApplication {
     }
 
     @Bean
-    public NotifierImpl notifier() {
-        return new NotifierImpl();
-    }
-
-    @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(this.applicationContext);
