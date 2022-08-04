@@ -14,6 +14,12 @@ describe('Login.cy.ts', () => {
     it('should login when login success', () => {
         server.login = () => Promise.resolve()
         cy.get("#buttonLogin").click();
-        cy.get('@onLoginSpy').should('have.been.called', 1)
+        cy.get('@onLoginSpy').should('have.been.called')
+    });
+    it('should not emit when login fail', function () {
+        server.login = () => Promise.reject("登录失败")
+        cy.get("#buttonLogin").click();
+        cy.get('@onLoginSpy').should('not.been.called')
+        cy.get("#error").should("have.text", "登录失败")
     });
 })
