@@ -1,5 +1,5 @@
 import Login from '../../src/views/Login.vue'
-import {server} from "../../src/HttpServer";
+import {server} from "../../src/model/HttpServer";
 
 let onLoginSpy
 describe('Login.cy.ts', () => {

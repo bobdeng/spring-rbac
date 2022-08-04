@@ -1,8 +1,10 @@
 <template>
   <div>
-    <Card title="管理员登录">
+    <Card title="管理员登录" style="width: 480px;">
       <Form>
-        <Alert v-if="error" id="error" :message="error" type="error"/>
+        <FormItem>
+          <Alert v-if="error" id="error" :message="error" type="error"/>
+        </FormItem>
         <FormItem label="密码">
           <InputPassword v-model:value="password" id="inputPassword" :maxlength="20"/>
         </FormItem>
@@ -18,7 +20,7 @@
 import {Card, Form, FormItem, InputPassword, Button, Alert} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
-import {LoginForm, server} from "../HttpServer";
+import {LoginForm, server} from "../model/HttpServer";
 
 const emit = defineEmits(['login'])
 const password = ref("")
@@ -29,9 +31,10 @@ async function login() {
     await server.login(new LoginForm(password.value))
     emit("login")
   } catch (e) {
-    error.value = e as string;
+    error.value = e + "";
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
