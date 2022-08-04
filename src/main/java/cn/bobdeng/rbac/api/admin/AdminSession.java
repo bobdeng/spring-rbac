@@ -1,2 +1,7 @@
-package cn.bobdeng.rbac.api.admin;public class AdminSession {
+package cn.bobdeng.rbac.api.admin;
+
+import lombok.Data;
+
+@Data
+public class AdminSession {
 }

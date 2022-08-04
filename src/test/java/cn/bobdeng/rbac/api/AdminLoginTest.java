@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.api.pages.AdminConsolePage;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
+import cn.bobdeng.rbac.domain.AdminPassword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
@@ -11,9 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminLoginTest extends E2ETest {
-    @Autowired
-    AdminPasswordNotifierImpl adminPasswordNotifier;
-
+    AdminPasswordNotifierImpl adminPasswordNotifier = new AdminPasswordNotifierImpl();
     @BeforeEach
     public void setup() {
         webDriverHandler.removeAllCookies();

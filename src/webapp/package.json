@@ -9,10 +9,11 @@
     "preview": "vite preview",
     "test": "vitest",
     "test-e2e": "cypress open --e2e",
-    "test-component":"cypress open --component"
+    "test-component": "cypress open --component"
   },
   "dependencies": {
     "ant-design-vue": "^3.2.10",
+    "axios": "^0.27.2",
     "pinia": "^2.0.17",
     "vue": "^3.2.37",
     "vue-router": "4"

@@ -26,10 +26,6 @@ class RbacServerApplicationTests {
     @Test
     void contextLoads() {
         assertNotNull(jdbcTemplate);
-        tenantDAO.save(new Tenant(new TenantDescription("bob deng")));
-        List<Map<String, Object>> result = jdbcTemplate.query("select * from t_rbac_tenant", new ColumnMapRowMapper());
-        assertEquals(1, result.size());
-        assertEquals("bob deng", result.get(0).get("name"));
     }
 
 }
