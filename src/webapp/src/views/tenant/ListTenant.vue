@@ -1,8 +1,11 @@
 <template>
   <div>
-    <InputSearch placeholder="输入名称查询" style="width:200px;" id="search"
-                 @search="onLoad"
-                 v-model:value="keyword"/>
+    <div style="display: flex;">
+      <InputSearch placeholder="输入名称查询" style="width:200px;" id="search"
+                   @search="onLoad"
+                   v-model:value="keyword"/>
+      <AddTenantDialog/>
+    </div>
     <Table :dataSource="tenants" :columns="columns" :pagination="false" id="tableTenants">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key==='action'">
@@ -19,6 +22,7 @@ import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server, TenantListItem} from "../../model/HttpServer";
 import {useRouter} from "vue-router";
+import AddTenantDialog from "./AddTenantDialog.vue";
 
 const keyword = ref("")
 const columns = ref([
