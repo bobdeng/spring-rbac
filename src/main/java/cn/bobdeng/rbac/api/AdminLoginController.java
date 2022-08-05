@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 
 @RestController
-public class AdminLoginController extends BaseController {
+public class AdminLoginController {
     private final AdminPassword.Notifier adminPasswordNotifier;
     private final AdminPassword.Store store;
 
@@ -21,13 +21,7 @@ public class AdminLoginController extends BaseController {
         this.store = store;
     }
 
-    @GetMapping("/rbac/admin/login")
-    public String loginPage(Model model) {
-        model.addAttribute("loginForm", new AdminLoginForm());
-        return "admin/login";
-    }
-
-    @PostMapping("/admin/sessions")
+    @PostMapping("/admin_sessions")
     @Transactional
     public void adminLogin(@RequestBody AdminLoginForm adminLoginForm,
                            HttpServletResponse response) throws IOException {

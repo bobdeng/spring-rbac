@@ -1,10 +1,12 @@
 package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.domain.AdminPassword;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
+@Primary
 public class AdminPasswordNotifierImpl implements AdminPassword.Notifier, AdminPassword.Store {
     private String password;
     private String encodedPassword;
