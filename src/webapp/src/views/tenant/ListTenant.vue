@@ -41,8 +41,8 @@ async function onLoad() {
 }
 
 function onDomainClick(record: TenantListItem) {
-  router.push({
-    path: `tenant/${record.id}/domains`
+  router.replace({
+    path: `/tenants/${record.id}/domains`
   })
 }
 

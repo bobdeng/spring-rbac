@@ -33,7 +33,6 @@ export async function ajax(fun: any) {
     if (response.status !== 200) {
         return Promise.reject(response.data || response.status)
     }
-    console.log(response.data)
     return Promise.resolve(response.data);
 }
 

@@ -1,5 +1,7 @@
 import ListTenant from '../../src/views/tenant/ListTenant.vue'
-import {server, TenantListItem} from "../../src/model/HttpServer";
+import {createMemoryHistory, createRouter, Router, useRouter} from 'vue-router'
+import {routes} from "../../src/router";
+import flushPromises from "flush-promises";
 
 describe('Tenants.cy.ts', () => {
     it('show no data when no tenants', () => {
@@ -34,17 +36,22 @@ describe('Tenants.cy.ts', () => {
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
     });
 
-    it('should emit listDomain event when click domain link', function () {
+    it('should goto list tenants domain when click domain link', async function () {
         cy.intercept({
             method: "GET", url: "/api/rbac/tenants?name="
         }, [{id: 101, name: "租户1"}]).as("listTenantsNameEmpty")
-        cy.mount(ListTenant, {
-            router: {
-                push: () => {
-                }
-            }
+        let router = createRouter({
+            routes: [],
+            history: createMemoryHistory(),
         })
+        cy.stub(router, 'replace')
+        cy.mount(ListTenant, {router: router});
+        cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
         cy.get("#tableTenants").find("tbody").find("tr")
             .find("button").trigger("click")
+            .then(() => {
+                expect(router.replace).to.be.calledWith({path:"/tenants/101/domains"})
+            })
+
     });
 })

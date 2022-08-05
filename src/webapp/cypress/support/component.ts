@@ -25,15 +25,17 @@ import {mount} from 'cypress/vue'
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts
 // with a <reference path="./component" /> at the top of your spec.
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1] & { router?: Router }
 declare global {
     namespace Cypress {
         interface Chainable {
-            mount: typeof mount
+            mount(component: any, options?: OptionsParam): Chainable<any>
         }
     }
 }
 
-import {createMemoryHistory, createRouter} from 'vue-router'
+import {createMemoryHistory, createRouter, Router} from 'vue-router'
 import {routes} from '../../src/router'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
