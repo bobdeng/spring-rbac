@@ -1,0 +1,61 @@
+;FFMETADATA1
+[CHAPTER]
+TIMEBASE=1/1000
+START=1767
+END=3166
+title=Cypress.Commands .add() - create a custom command
+[CHAPTER]
+TIMEBASE=1/1000
+START=4213
+END=4569
+title=Cypress.Cookies .debug() - enable or disable debugging
+[CHAPTER]
+TIMEBASE=1/1000
+START=4601
+END=4926
+title=Cypress.Cookies .preserveOnce() - preserve cookies by key
+[CHAPTER]
+TIMEBASE=1/1000
+START=4934
+END=5253
+title=Cypress.Cookies .defaults() - set defaults for all cookies
+[CHAPTER]
+TIMEBASE=1/1000
+START=5259
+END=5574
+title=Cypress.arch Get CPU architecture name of underlying OS
+[CHAPTER]
+TIMEBASE=1/1000
+START=5526
+END=5891
+title=Cypress.config() Get and set configuration options
+[CHAPTER]
+TIMEBASE=1/1000
+START=5902
+END=6258
+title=Cypress.dom .isHidden() - determine if a DOM element is hidden
+[CHAPTER]
+TIMEBASE=1/1000
+START=6289
+END=6616
+title=Cypress.env() Get environment variables
+[CHAPTER]
+TIMEBASE=1/1000
+START=6641
+END=6944
+title=Cypress.log Control what is printed to the Command Log
+[CHAPTER]
+TIMEBASE=1/1000
+START=6936
+END=7248
+title=Cypress.platform Get underlying OS name
+[CHAPTER]
+TIMEBASE=1/1000
+START=7241
+END=7562
+title=Cypress.version Get current version of Cypress being run
+[CHAPTER]
+TIMEBASE=1/1000
+START=7529
+END=7885
+title=Cypress.spec Get current spec information

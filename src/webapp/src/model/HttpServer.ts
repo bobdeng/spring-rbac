@@ -8,6 +8,16 @@ export class LoginForm {
     }
 }
 
+export class TenantListItem {
+    id: number;
+    name: string;
+
+    constructor(id: number, name: string) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
 const config: AxiosRequestConfig = {
     validateStatus: () => true
 }
@@ -23,5 +33,8 @@ export async function ajax(fun: any) {
 export const server = {
     login: async (loginForm: LoginForm) => {
         return await ajax(() => axios.post("/api/rbac/admin/sessions", {password: loginForm.password}, config));
+    },
+    listTenants: async () => {
+        return await ajax(() => axios.get("/api/rbac/tenants", config));
     }
 }
