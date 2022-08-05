@@ -28,6 +28,7 @@ const loading = ref(false)
 const form = ref({
   name: ""
 })
+const emit = defineEmits(['success'])
 const show = () => {
   visible.value = true
   form.value.name = ''
@@ -37,6 +38,7 @@ const newTenant = () => {
   server.newTenant({name: form.value.name})
       .then(() => {
         visible.value = false
+        emit("success")
       })
       .catch((e) => {
         notification.error({

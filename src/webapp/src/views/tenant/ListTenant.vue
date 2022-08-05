@@ -5,7 +5,7 @@
         <InputSearch placeholder="输入名称查询" style="width:200px;" id="search"
                      @search="onLoad"
                      v-model:value="keyword"/>
-        <AddTenantDialog/>
+        <AddTenantDialog @success="onLoad"/>
       </div>
       <Table :dataSource="tenants" :columns="columns" :pagination="false" id="tableTenants">
         <template #bodyCell="{ column, record }">

@@ -23,15 +23,17 @@ describe('AddTenantDialog.cy.ts', () => {
         })
     })
     it('should save tenant', function () {
+        let onSuccessSpy = cy.spy().as('onSuccessSpy')
         cy.intercept('POST', "/tenants", {
             statusCode: 200, body: undefined
         }).as("newTenant")
-        cy.mount(AddTenantDialog)
+        cy.mount(AddTenantDialog, {props: {onSuccess: onSuccessSpy}})
         cy.get("#buttonShow").click().then(() => {
             cy.get("#inputName").type("租户1")
             cy.contains('确 定').click()
             cy.wait("@newTenant")
             cy.get(".ant-modal").should("not.exist")
+            cy.get('@onSuccessSpy').should('have.been.called')
         })
     });
 
