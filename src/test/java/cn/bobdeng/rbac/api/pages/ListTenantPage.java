@@ -47,8 +47,8 @@ public class ListTenantPage extends BasePage {
     }
 
     public void search(String name) {
-        WEBDRIVER.findElement(By.id("inputSearchName")).sendKeys(name);
-        WEBDRIVER.findElement(By.id("buttonSubmit")).submit();
+        WEBDRIVER.findElement(By.id("search")).sendKeys(name);
+        WEBDRIVER.findElement(By.id("search")).sendKeys("\n");
     }
 
     public boolean hasNoData() {

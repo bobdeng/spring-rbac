@@ -42,9 +42,6 @@ public class ListTenantTest extends E2ETest {
         List<Map<String, String>> tenants = listTenantPage.tenants();
         assertEquals(1, tenants.size());
         assertEquals("租户1", tenants.get(0).get("租户名"));
-        assertEquals(webDriverHandler.getBaseUrl() + "/rbac/admin/console/tenants/" + tenant.identity() + "/domains", tenants.get(0).get("域名链接"));
-        assertEquals("1", listTenantPage.totalElements());
-        assertEquals("1/1", listTenantPage.page());
     }
 
     @Test
@@ -55,17 +52,13 @@ public class ListTenantTest extends E2ETest {
         tenantRepository.save(tenant1);
         ListTenantPage listTenantPage = new ListTenantPage(webDriverHandler);
         listTenantPage.open();
+        listTenantPage.waitUntilNoSpin();
         listTenantPage.search("张三");
+        listTenantPage.waitUntilNoSpin();
         List<Map<String, String>> tenants = listTenantPage.tenants();
         assertEquals(1, tenants.size());
         assertEquals("张三", tenants.get(0).get("租户名"));
-        assertEquals(webDriverHandler.getBaseUrl() + "/rbac/admin/console/tenants/" + tenant.identity() + "/domains", tenants.get(0).get("域名链接"));
-        assertEquals("1", listTenantPage.totalElements());
-        assertEquals("1/1", listTenantPage.page());
     }
 
-    @Test
-    public void should_show_paged_tenant() {
 
-    }
 }
