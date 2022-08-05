@@ -47,11 +47,17 @@ public class ListTenantPage extends BasePage {
     }
 
     public void search(String name) {
-        WEBDRIVER.findElement(By.id("search")).sendKeys(name);
-        WEBDRIVER.findElement(By.id("search")).sendKeys("\n");
+        inputById(name, "search");
+        inputById("\n", "search");
     }
 
     public boolean hasNoData() {
         return WEBDRIVER.getPageSource().contains("No Data");
     }
+
+    public void openAdd() {
+        String id = "buttonShow";
+        clickById(id);
+    }
+
 }

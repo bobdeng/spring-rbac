@@ -16,7 +16,7 @@ public class NewDomainPage extends BasePage {
     }
 
     public void inputDomain(String domain) {
-        WEBDRIVER.findElement(By.id("inputName")).sendKeys(domain);
+        inputById(domain, "inputName");
     }
 
     public void submit() {

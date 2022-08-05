@@ -3,6 +3,8 @@ package cn.bobdeng.rbac.api.pages;
 import cn.bobdeng.rbac.api.WebDriverHandler;
 import org.openqa.selenium.By;
 
+import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
+
 public class BasePage {
     protected WebDriverHandler webDriverHandler;
 
@@ -27,5 +29,18 @@ public class BasePage {
                 break;
             }
         }
+    }
+
+    public void clickButton(String title) {
+        WEBDRIVER.findElement(By.xpath("//button//span[normalize-space()='" + title + "']"))
+                .click();
+    }
+
+    public void clickById(String id) {
+        WEBDRIVER.findElement(By.id(id)).click();
+    }
+
+    protected void inputById(String password, String id) {
+        WEBDRIVER.findElement(By.id(id)).sendKeys(password);
     }
 }

@@ -11,15 +11,14 @@ public class NewTenantPage extends BasePage {
         super(webDriverHandler);
     }
 
-    public void open() {
-        webDriverHandler.open("/rbac/admin/console/new_tenant");
-    }
 
     public void inputTenantName(String name) {
-        WEBDRIVER.findElement(By.id("inputName")).sendKeys(name);
+        inputById(name, "inputName");
     }
 
     public void submit() {
-        WEBDRIVER.findElement(By.id("buttonSubmit")).submit();
+        String title = "确 定";
+        clickButton(title);
     }
+
 }

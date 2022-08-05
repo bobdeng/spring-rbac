@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
     public LoginPage(WebDriverHandler webDriverHandler) {
         super(webDriverHandler);
@@ -28,11 +28,11 @@ public class LoginPage extends BasePage{
     }
 
     public void inputLoginName(String loginName) {
-        WEBDRIVER.findElement(By.id("inputLoginName")).sendKeys(loginName);
+        inputById(loginName, "inputLoginName");
     }
 
     public void inputPassword(String password) {
-        WEBDRIVER.findElement(By.id("inputPassword")).sendKeys(password);
+        inputById(password, "inputPassword");
     }
 
     public void submit() {

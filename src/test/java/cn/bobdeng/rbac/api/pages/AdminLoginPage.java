@@ -17,8 +17,9 @@ public class AdminLoginPage extends BasePage {
     }
 
     public void loginWith(String password) {
-        WEBDRIVER.findElement(By.id("inputPassword")).sendKeys(password);
-        WEBDRIVER.findElement(By.id("buttonLogin")).click();
+        String id = "inputPassword";
+        inputById(password, id);
+        clickById("buttonLogin");
         waitUntilNoButtonSpin();
     }
 

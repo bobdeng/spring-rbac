@@ -2,8 +2,6 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.security.Admin;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +16,10 @@ public class TenantController {
 
 
     @PostMapping("/tenants")
-    public String newTenant(@ModelAttribute("newTenantForm") NewTenantForm form) {
+    @Admin
+    public Integer newTenant(@RequestBody() NewTenantForm form) {
         Tenant tenant = new Tenants(tenantRepository).add(new TenantDescription(form.getName()));
-        return "redirect:/rbac/admin/console/domains?tenantId=" + tenant.identity();
+        return tenant.identity();
     }
 
     @GetMapping("/tenants")
