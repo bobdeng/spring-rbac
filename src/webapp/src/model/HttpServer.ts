@@ -46,5 +46,8 @@ export const server = {
             name: name
         }
         return await ajax(() => axios.get(`/api/rbac/tenants`, requestConfig));
+    },
+    async newTenant(param: { name: string }) {
+       return await ajax(()=>axios.post("/api/tenants",param,config))
     }
 }
