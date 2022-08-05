@@ -4,6 +4,7 @@
     <Modal v-if="visible" id="dialog" v-model:visible="visible"
            cancelText="取消"
            okText="确定"
+           :ok-button-props="{ loading:loading}"
            :maskClosable="false"
            @ok="newTenant"
     >
@@ -23,6 +24,7 @@ import 'ant-design-vue/dist/antd.css';
 import {server} from "../../model/HttpServer";
 
 const visible = ref(false)
+const loading = ref(false)
 const form = ref({
   name: ""
 })
@@ -31,6 +33,7 @@ const show = () => {
   form.value.name = ''
 }
 const newTenant = () => {
+  loading.value = true
   server.newTenant({name: form.value.name})
       .then(() => {
         visible.value = false
@@ -40,6 +43,9 @@ const newTenant = () => {
           message: '错误',
           description: e
         });
+      })
+      .finally(() => {
+        loading.value = false
       })
 }
 defineExpose({
