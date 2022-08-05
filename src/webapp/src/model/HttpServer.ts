@@ -7,6 +7,7 @@ export class LoginForm {
         this.password = password;
     }
 }
+
 const config: AxiosRequestConfig = {
     validateStatus: () => true
 }
@@ -38,5 +39,11 @@ export const server = {
     },
     async newTenant(param: { name: string }) {
         return await ajax(() => axios.post("/tenants", param, config))
+    },
+    async listDomains(id: string) {
+        return await ajax(() => axios.get(`/tenants/${id}/domains`, config))
+    },
+    async newTenantDomain(param: { name: string; tenant: any }) {
+        return await ajax(() => axios.post("/domains", param, config))
     }
 }
