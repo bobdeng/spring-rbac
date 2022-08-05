@@ -6,6 +6,7 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.UserDescription;
 import cn.bobdeng.rbac.server.dao.UserDAO;
 import cn.bobdeng.rbac.server.dao.UserDO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,14 +18,16 @@ import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@Transactional
-public class TenantUserTest {
+public class TenantUserTest extends BaseTest{
     @Autowired
     TenantRepository tenantRepository;
     @Autowired
     UserDAO userDAO;
-
+    @BeforeEach
+    public void setup(){
+        clearTable("t_rbac_tenant");
+        clearTable("t_rbac_user");
+    }
     @Test
     public void new_user() {
         Tenant tenant = new Tenant(new TenantDescription("租户1"));

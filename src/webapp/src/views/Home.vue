@@ -1,7 +1,6 @@
 <template>
   <div>
     <Login @login="onLogin"/>
-    <button @click="onLogin">进入</button>
   </div>
 </template>
 

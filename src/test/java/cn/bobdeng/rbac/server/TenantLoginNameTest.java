@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.server;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.LoginNameDO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +16,17 @@ import java.util.stream.StreamSupport;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
-@Transactional
-public class TenantLoginNameTest {
+public class TenantLoginNameTest extends BaseTest{
     @Autowired
     TenantRepository tenantRepository;
     @Autowired
     LoginNameDAO loginNameDAO;
+
+    @BeforeEach
+    public void setup() {
+        clearTable("t_rbac_tenant");
+        clearTable("t_rbac_login_name");
+    }
 
     @Test
     public void new_loginName() {
