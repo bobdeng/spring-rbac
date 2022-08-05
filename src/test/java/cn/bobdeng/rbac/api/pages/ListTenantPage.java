@@ -16,7 +16,7 @@ public class ListTenantPage extends BasePage {
     }
 
     public void open() {
-        webDriverHandler.open("/rbac/admin/console/tenants");
+        webDriverHandler.open("/admin/#/tenants");
     }
 
     public List<Map<String, String>> tenants() {
@@ -27,7 +27,7 @@ public class ListTenantPage extends BasePage {
                 .map(element -> {
                     Map<String, String> values = new HashMap<>();
                     values.put("租户名", element.findElements(By.tagName("td")).get(0).getText());
-                    values.put("域名链接", element.findElements(By.tagName("td")).get(1).findElement(By.tagName("a")).getAttribute("href"));
+                    //values.put("域名链接", element.findElements(By.tagName("td")).get(1).findElement(By.tagName("a")).getAttribute("href"));
                     return values;
                 })
                 .collect(Collectors.toList());
@@ -49,5 +49,9 @@ public class ListTenantPage extends BasePage {
     public void search(String name) {
         WEBDRIVER.findElement(By.id("inputSearchName")).sendKeys(name);
         WEBDRIVER.findElement(By.id("buttonSubmit")).submit();
+    }
+
+    public boolean hasNoData() {
+        return WEBDRIVER.getPageSource().contains("No Data");
     }
 }

@@ -16,17 +16,10 @@ public class AdminLoginPage extends BasePage {
         this.webDriverHandler.open("/admin/");
     }
 
-    public void loginWith(String password) throws InterruptedException {
+    public void loginWith(String password) {
         WEBDRIVER.findElement(By.id("inputPassword")).sendKeys(password);
         WEBDRIVER.findElement(By.id("buttonLogin")).click();
-        while (true) {
-            Thread.sleep(10);
-            try {
-                WebDriverHandler.WEBDRIVER.findElement(By.className("anticon-spin"));
-            } catch (Exception e) {
-                break;
-            }
-        }
+        waitUntilNoButtonSpin();
     }
 
     public String error() {

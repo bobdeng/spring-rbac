@@ -1,15 +1,14 @@
 package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.security.Admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/rbac/admin/console")
+import java.util.List;
+
+@RestController
 public class TenantController {
     private final TenantRepository tenantRepository;
 
@@ -17,11 +16,6 @@ public class TenantController {
         this.tenantRepository = tenantRepository;
     }
 
-    @GetMapping("/new_tenant")
-    public String newTenantPage(Model model) {
-        model.addAttribute("newTenantForm", new NewTenantForm());
-        return "admin/tenant/new";
-    }
 
     @PostMapping("/tenants")
     public String newTenant(@ModelAttribute("newTenantForm") NewTenantForm form) {
@@ -30,9 +24,9 @@ public class TenantController {
     }
 
     @GetMapping("/tenants")
-    public String listTenants(Model model, @ModelAttribute("searchForm") SearchTenantForm form) {
-        final Page<Tenant> tenants = tenantRepository.findByName(form.getName(), 0, 100);
-        model.addAttribute("tenants", tenants);
-        return "admin/tenant/list";
+    @Admin
+    public List<Tenant> listTenants(@RequestParam(value = "name", required = false) String name) {
+        final Page<Tenant> tenants = tenantRepository.findByName(name, 0, 100);
+        return tenants.getElements();
     }
 }

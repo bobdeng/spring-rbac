@@ -7,17 +7,6 @@ export class LoginForm {
         this.password = password;
     }
 }
-
-export class TenantListItem {
-    id: number;
-    name: string;
-
-    constructor(id: number, name: string) {
-        this.id = id;
-        this.name = name;
-    }
-}
-
 const config: AxiosRequestConfig = {
     validateStatus: () => true
 }

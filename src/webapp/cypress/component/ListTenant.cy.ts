@@ -16,7 +16,7 @@ describe('Tenants.cy.ts', () => {
     it('show  data when has tenants', () => {
         cy.intercept({
             method: "GET", url: "/tenants?name="
-        }, [{id: 101, name: "租户1"}]).as("listTenantsNameEmpty")
+        }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
         cy.mount(ListTenant)
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
     })
@@ -26,7 +26,7 @@ describe('Tenants.cy.ts', () => {
         }, []).as("listTenantsNameEmpty")
         cy.intercept({
             method: "GET", url: "/tenants?name=%E7%A7%9F%E6%88%B7"
-        }, [{id: 101, name: "租户1"}]).as("listTenants")
+        }, [{id: 101, description: {name: "租户1"}}]).as("listTenants")
         cy.mount(ListTenant)
         cy.get(".ant-empty").should("exist")
         cy.get("#search").type("租户")
@@ -34,12 +34,13 @@ describe('Tenants.cy.ts', () => {
         cy.get("#search").trigger("search")
         cy.get(".ant-empty").should("not.exist")
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
+        cy.contains("租户1").should("exist")
     });
 
     it('should goto list tenants domain when click domain link', async function () {
         cy.intercept({
             method: "GET", url: "/tenants?name="
-        }, [{id: 101, name: "租户1"}]).as("listTenantsNameEmpty")
+        }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
         let router = createRouter({
             routes: [],
             history: createMemoryHistory(),
@@ -50,7 +51,7 @@ describe('Tenants.cy.ts', () => {
         cy.get("#tableTenants").find("tbody").find("tr")
             .find("button").trigger("click")
             .then(() => {
-                expect(router.replace).to.be.calledWith({path:"/tenants/101/domains"})
+                expect(router.replace).to.be.calledWith({path: "/tenants/101/domains"})
             })
 
     });

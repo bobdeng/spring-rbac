@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ListTenantTest extends E2ETest {
     @Autowired
@@ -27,9 +28,7 @@ public class ListTenantTest extends E2ETest {
     public void should_show_empty_when_no_tenant() {
         ListTenantPage listTenantPage = new ListTenantPage(webDriverHandler);
         listTenantPage.open();
-        List tenants = listTenantPage.tenants();
-        assertEquals(0, tenants.size());
-        assertEquals(webDriverHandler.getBaseUrl() + "/rbac/admin/console/new_tenant", listTenantPage.newLink());
+        assertTrue(listTenantPage.hasNoData());
     }
 
     @Test
@@ -38,6 +37,8 @@ public class ListTenantTest extends E2ETest {
         tenantRepository.save(tenant);
         ListTenantPage listTenantPage = new ListTenantPage(webDriverHandler);
         listTenantPage.open();
+        listTenantPage.waitUntilNoSpin();
+
         List<Map<String, String>> tenants = listTenantPage.tenants();
         assertEquals(1, tenants.size());
         assertEquals("租户1", tenants.get(0).get("租户名"));
