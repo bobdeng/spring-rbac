@@ -7,7 +7,9 @@
         </MenuItem>
       </Menu>
     </div>
-    <RouterView></RouterView>
+    <div style="padding: 5px;">
+      <RouterView></RouterView>
+    </div>
   </div>
 </template>
 

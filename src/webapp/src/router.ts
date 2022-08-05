@@ -1,7 +1,7 @@
 import {Home, Tenants, Console} from "./views";
 import {createRouter, createWebHashHistory} from "vue-router";
 
-const routes = [
+export const routes = [
     {path: "/", component: Home, name: "home"},
     {
         path: "/console", component: Console, name: "console",
