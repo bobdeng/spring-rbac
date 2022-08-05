@@ -38,16 +38,16 @@ export async function ajax(fun: any) {
 
 export const server = {
     login: async (loginForm: LoginForm) => {
-        return await ajax(() => axios.post("/api/rbac/admin/sessions", {password: loginForm.password}, config));
+        return await ajax(() => axios.post("/admin_sessions", {password: loginForm.password}, config));
     },
     listTenants: async (name: string) => {
         let requestConfig = getConfig();
         requestConfig.params = {
             name: name
         }
-        return await ajax(() => axios.get(`/api/rbac/tenants`, requestConfig));
+        return await ajax(() => axios.get(`/tenants`, requestConfig));
     },
     async newTenant(param: { name: string }) {
-       return await ajax(()=>axios.post("/api/tenants",param,config))
+        return await ajax(() => axios.post("/tenants", param, config))
     }
 }

@@ -15,17 +15,17 @@ describe('Tenants.cy.ts', () => {
 
     it('show  data when has tenants', () => {
         cy.intercept({
-            method: "GET", url: "/api/rbac/tenants?name="
+            method: "GET", url: "/tenants?name="
         }, [{id: 101, name: "租户1"}]).as("listTenantsNameEmpty")
         cy.mount(ListTenant)
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
     })
     it('should search', function () {
         cy.intercept({
-            method: "GET", url: "/api/rbac/tenants?name="
+            method: "GET", url: "/tenants?name="
         }, []).as("listTenantsNameEmpty")
         cy.intercept({
-            method: "GET", url: "/api/rbac/tenants?name=%E7%A7%9F%E6%88%B7"
+            method: "GET", url: "/tenants?name=%E7%A7%9F%E6%88%B7"
         }, [{id: 101, name: "租户1"}]).as("listTenants")
         cy.mount(ListTenant)
         cy.get(".ant-empty").should("exist")
@@ -38,7 +38,7 @@ describe('Tenants.cy.ts', () => {
 
     it('should goto list tenants domain when click domain link', async function () {
         cy.intercept({
-            method: "GET", url: "/api/rbac/tenants?name="
+            method: "GET", url: "/tenants?name="
         }, [{id: 101, name: "租户1"}]).as("listTenantsNameEmpty")
         let router = createRouter({
             routes: [],

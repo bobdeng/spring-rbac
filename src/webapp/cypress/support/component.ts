@@ -52,7 +52,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 
     // Add router plugin
     options.global.plugins.push({
-        install(app) {
+        install(app:any) {
             app.use(options.router)
         },
     })

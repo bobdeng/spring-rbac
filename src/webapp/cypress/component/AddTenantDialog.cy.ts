@@ -23,7 +23,7 @@ describe('AddTenantDialog.cy.ts', () => {
         })
     })
     it('should save tenant', function () {
-        cy.intercept('POST', "/api/tenants", {
+        cy.intercept('POST', "/tenants", {
             statusCode: 200, body: undefined
         }).as("newTenant")
         cy.mount(AddTenantDialog)
@@ -36,7 +36,7 @@ describe('AddTenantDialog.cy.ts', () => {
     });
 
     it('should error when save fail', function () {
-        cy.intercept('POST', "/api/tenants", {
+        cy.intercept('POST', "/tenants", {
             statusCode: 400, body: "租户名重复"
         }).as("newTenant")
         cy.mount(AddTenantDialog)

@@ -12,12 +12,18 @@ describe('Login.cy.ts', () => {
         cy.get("#inputPassword").should("exist")
     })
     it('should login when login success', () => {
-        server.login = () => Promise.resolve()
+        cy.intercept("POST", "/admin_sessions", {
+            statusCode: 200,
+            data: undefined
+        })
         cy.get("#buttonLogin").click();
         cy.get('@onLoginSpy').should('have.been.called')
     });
     it('should not emit when login fail', function () {
-        server.login = () => Promise.reject("登录失败")
+        cy.intercept("POST", "/admin_sessions", {
+            statusCode: 400,
+            body: "登录失败"
+        })
         cy.get("#buttonLogin").click();
         cy.get('@onLoginSpy').should('not.been.called')
         cy.get("#error").should("have.text", "登录失败")
