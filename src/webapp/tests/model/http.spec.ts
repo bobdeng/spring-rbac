@@ -13,7 +13,7 @@ describe("ajax test", () => {
     })
     test("axios返回错误,无内容", async (当) => {
         try {
-            const result = await ajax(() => Promise.resolve({data: "", status: 400}))
+            await ajax(() => Promise.resolve({data: "", status: 400}))
             assert.fail("")
         } catch (e) {
             expect(e).toEqual(400);

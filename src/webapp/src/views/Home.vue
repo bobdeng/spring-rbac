@@ -1,6 +1,7 @@
 <template>
   <div>
     <Login @login="onLogin"/>
+    <button @click="onLogin">进入</button>
   </div>
 </template>
 
@@ -8,8 +9,9 @@
 import {useRouter} from "vue-router";
 import Login from "./Login.vue";
 
+const router = useRouter();
 const onLogin = () => {
-  useRouter().push({
+  router.push({
     name: "console",
   });
 };
