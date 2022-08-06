@@ -43,4 +43,8 @@ public class BasePage {
     protected void inputById(String password, String id) {
         WEBDRIVER.findElement(By.id(id)).sendKeys(password);
     }
+
+    public boolean hasNoData() {
+        return WEBDRIVER.getPageSource().contains("No Data");
+    }
 }

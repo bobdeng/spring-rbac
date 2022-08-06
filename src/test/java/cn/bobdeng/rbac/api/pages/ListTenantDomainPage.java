@@ -17,7 +17,7 @@ public class ListTenantDomainPage extends BasePage {
     }
 
     public void open(Tenant tenant) {
-        webDriverHandler.open("/rbac/admin/console/domains?tenantId=" + tenant.identity());
+        webDriverHandler.open("/admin/#/tenants/"+tenant.identity()+"/domains");
     }
 
     public List<Map<String, String>> domains() {

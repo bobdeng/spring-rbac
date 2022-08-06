@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class NewDomainForm {
-    private String domain;
-    private Integer tenantId;
+    private String name;
+    private Integer tenant;
 }

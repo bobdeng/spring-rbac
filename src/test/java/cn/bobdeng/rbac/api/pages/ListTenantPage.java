@@ -51,10 +51,6 @@ public class ListTenantPage extends BasePage {
         inputById("\n", "search");
     }
 
-    public boolean hasNoData() {
-        return WEBDRIVER.getPageSource().contains("No Data");
-    }
-
     public void openAdd() {
         String id = "buttonShow";
         clickById(id);
