@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AdminLoginTest extends E2ETest {
     @Autowired
     AdminPasswordNotifierImpl adminPasswordNotifier;
+    @Autowired
+    TestController testController;
 
     @BeforeEach
     public void setup() {
@@ -49,6 +51,7 @@ public class AdminLoginTest extends E2ETest {
         adminConsolePage.open();
         webDriverHandler.removeAllCookies();
         adminConsolePage.open();
+        System.out.println(adminConsolePage.content());
         assertTrue(adminConsolePage.content().contains("无权限"));
     }
 
@@ -58,6 +61,7 @@ public class AdminLoginTest extends E2ETest {
         TestNeedAdminPage adminConsolePage = new TestNeedAdminPage(webDriverHandler);
         adminConsolePage.open();
         assertTrue(adminConsolePage.content().contains("hello"));
+        assertNotNull(testController.session);
     }
 
 }

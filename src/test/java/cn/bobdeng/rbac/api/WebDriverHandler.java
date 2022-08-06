@@ -80,6 +80,7 @@ public class WebDriverHandler {
     }
 
     public void addCookie(String cookieName, String cookieValue) {
-        WEBDRIVER.manage().addCookie(new Cookie(cookieName, cookieValue));
+        Cookie cookie = new Cookie(cookieName, cookieValue, "/");
+        WEBDRIVER.manage().addCookie(cookie);
     }
 }

@@ -22,11 +22,11 @@ public class SessionCheckFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         checkAdminSession(httpRequest);
         try {
+            sessionStore.get().ifPresent(session -> httpRequest.setAttribute("session", session));
             chain.doFilter(request, response);
         } finally {
             sessionStore.clear();
         }
-
     }
 
     private void checkAdminSession(HttpServletRequest request) {
