@@ -35,13 +35,13 @@ export async function ajax(fun: any) {
     if (response.status === 200) {
         return Promise.resolve(response.data);
     }
-    if (response.data === undefined) {
+    if (!response.data) {
         return Promise.reject(response.status)
     }
     if (Array.isArray(response.data)) {
-        return Promise.reject(response.data.map((error: any) => error.message).join("\n"))
+        return Promise.reject(response.data.map((error: any) => error.error).join("\n"))
     }
-    return Promise.reject(response.status)
+    return Promise.reject(response.data)
 }
 
 export const server = {
