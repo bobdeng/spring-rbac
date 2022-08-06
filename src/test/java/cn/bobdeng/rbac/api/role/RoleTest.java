@@ -78,4 +78,17 @@ public class RoleTest extends E2ETest {
                 Arrays.asList("role", "role.create", "role.del", "role.edit")
         );
     }
+
+    @Test
+    public void should_delete_role() {
+        roleDAO.save(new RoleDO(new Role(null, new RoleDescription("角色1", Arrays.asList("role.create"))), tenant));
+        ListTenantRolePage listTenantRolePage = new ListTenantRolePage(webDriverHandler);
+        listTenantRolePage.open(tenant);
+        listTenantRolePage.waitUntilNoSpin();
+        listTenantRolePage.clickButton("删除");
+        listTenantRolePage.clickButton("OK");
+        listTenantRolePage.waitUntilNoSpin();
+        List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
+        assertEquals(0, roles.size());
+    }
 }

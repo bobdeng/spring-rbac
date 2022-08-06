@@ -37,4 +37,12 @@ public class RoleController {
         tenantRepository.findByIdentity(tenantId)
                 .ifPresent(tenant -> tenant.saveRole(new Role(roleId, form.getDescription())));
     }
+
+    @DeleteMapping("/tenants/{tenantId}/roles/{roleId}")
+    @Permission(allows = "role.del")
+    public void delete(@PathVariable Integer tenantId, @PathVariable Integer roleId) {
+        tenantRepository.findByIdentity(tenantId)
+                .ifPresent(tenant -> tenant.deleteRole(roleId));
+    }
+
 }

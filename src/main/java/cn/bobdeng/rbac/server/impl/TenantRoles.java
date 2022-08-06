@@ -31,7 +31,7 @@ public class TenantRoles implements Tenant.Roles {
 
     @Override
     public Optional<Role> findByIdentity(Integer integer) {
-        return Optional.empty();
+        return roleDAO.findByTenantIdAndId(tenant.identity(), integer).map(RoleDO::toEntity);
     }
 
     @Override
@@ -42,5 +42,10 @@ public class TenantRoles implements Tenant.Roles {
     @Override
     public int size() {
         return 0;
+    }
+
+    @Override
+    public void delete(Role role) {
+        roleDAO.deleteById(role.getId());
     }
 }
