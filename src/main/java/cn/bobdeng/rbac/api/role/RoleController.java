@@ -30,8 +30,6 @@ public class RoleController {
     @Permission(allows = "role.create")
     public void newRole(@RequestBody NewRoleForm form, @PathVariable int id) {
         tenantRepository.findByIdentity(id)
-                .ifPresent(tenant -> {
-                    tenant.newRole(new RoleDescription(form.getName(), form.getAllows()));
-                });
+                .ifPresent(tenant -> tenant.newRole(new RoleDescription(form.getName(), form.getAllows())));
     }
 }
