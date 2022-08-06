@@ -9,6 +9,18 @@
           "description": {
             "name": "新增角色"
           }
+        },
+        {
+          "key": "role.edit",
+          "description": {
+            "name": "修改角色"
+          }
+        },
+        {
+          "key": "role.del",
+          "description": {
+            "name": "删除角色"
+          }
         }
       ]
     }
