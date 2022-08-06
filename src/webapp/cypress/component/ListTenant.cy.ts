@@ -1,7 +1,5 @@
 import ListTenant from '../../src/views/tenant/ListTenant.vue'
 import {createMemoryHistory, createRouter, Router, useRouter} from 'vue-router'
-import {routes} from "../../src/router";
-import flushPromises from "flush-promises";
 
 describe('Tenants.cy.ts', () => {
     it('show no data when no tenants', () => {
@@ -37,7 +35,7 @@ describe('Tenants.cy.ts', () => {
         cy.contains("租户1").should("exist")
     });
 
-    it('should goto list tenants domain when click domain link', async function () {
+    it('should goto list tenants domain when click domain link', function () {
         cy.intercept({
             method: "GET", url: "/tenants?name="
         }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
@@ -49,10 +47,27 @@ describe('Tenants.cy.ts', () => {
         cy.mount(ListTenant, {router: router});
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
         cy.get("#tableTenants").find("tbody").find("tr")
-            .find("button").trigger("click")
+            .contains("域名").trigger("click")
             .then(() => {
                 expect(router.replace).to.be.calledWith({path: "/tenants/101/domains"})
             })
+    });
 
+    it('should goto roles when click 角色 link',  function () {
+        cy.intercept({
+            method: "GET", url: "/tenants?name="
+        }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
+        let router = createRouter({
+            routes: [],
+            history: createMemoryHistory(),
+        })
+        cy.stub(router, 'replace')
+        cy.mount(ListTenant, {router: router});
+        cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
+        cy.get("#tableTenants").find("tbody").find("tr")
+            .contains("角色").trigger("click")
+            .then(() => {
+                expect(router.replace).to.be.calledWith({path: "/tenants/101/roles"})
+            })
     });
 })

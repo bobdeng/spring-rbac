@@ -11,6 +11,7 @@
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
             <Button type="link" @click="()=>onDomainClick(record)">域名</Button>
+            <Button type="link" @click="()=>onRoleClick(record)">角色</Button>
           </template>
         </template>
       </Table>
@@ -55,6 +56,12 @@ async function onLoad() {
 function onDomainClick(record: any) {
   router.replace({
     path: `/tenants/${record.id}/domains`
+  })
+}
+
+const onRoleClick = (record: any) => {
+  router.replace({
+    path: `/tenants/${record.id}/roles`
   })
 }
 
