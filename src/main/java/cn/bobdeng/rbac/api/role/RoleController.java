@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.Role;
 import cn.bobdeng.rbac.domain.RoleDescription;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -24,11 +25,13 @@ public class RoleController {
                 .map(Tenant::roles)
                 .orElse(Collections.emptyList());
     }
+
     @PostMapping("/tenants/{id}/roles")
-    public void newRole(@RequestBody NewRoleForm form,@PathVariable int id){
+    @Permission(allows = "role.create")
+    public void newRole(@RequestBody NewRoleForm form, @PathVariable int id) {
         tenantRepository.findByIdentity(id)
                 .ifPresent(tenant -> {
-                    tenant.newRole(new RoleDescription(form.getName(),form.getAllows()));
+                    tenant.newRole(new RoleDescription(form.getName(), form.getAllows()));
                 });
     }
 }

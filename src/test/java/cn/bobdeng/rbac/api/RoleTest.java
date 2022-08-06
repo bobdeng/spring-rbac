@@ -23,6 +23,7 @@ public class RoleTest extends E2ETest {
 
     @BeforeEach
     public void setup() {
+        adminLogin();
         clearTable("t_rbac_tenant");
         clearTable("t_rbac_role");
         tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
