@@ -1,5 +1,4 @@
 import AddTenantDomain from '../../src/views/tenant/domain/AddTenantDomain.vue'
-import AddTenantDialog from "../../src/views/tenant/AddTenantDialog.vue";
 
 const tenant = "100"
 describe('AddTenantDomain.cy.ts', () => {

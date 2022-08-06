@@ -8,6 +8,18 @@ export class LoginForm {
     }
 }
 
+export class Function {
+    name: string;
+    key: string;
+    children: Function[];
+
+    constructor(name: string, key: string, children: Function[]) {
+        this.name = name;
+        this.key = key;
+        this.children = children;
+    }
+}
+
 const config: AxiosRequestConfig = {
     validateStatus: () => true
 }
@@ -40,13 +52,19 @@ export const server = {
     async newTenant(param: { name: string }) {
         return await ajax(() => axios.post("/tenants", param, config))
     },
-    async listDomains(id: string) {
-        return await ajax(() => axios.get(`/tenants/${id}/domains`, config))
+    async listDomains(tenantId: string) {
+        return await ajax(() => axios.get(`/tenants/${tenantId}/domains`, config))
     },
     async newTenantDomain(param: { name: string; tenant: any }) {
         return await ajax(() => axios.post("/domains", param, config))
     },
-    async deleteDomain(id: any) {
-        return await ajax(() => axios.delete(`/domains/${id}`, config))
+    async deleteDomain(tenantId: any) {
+        return await ajax(() => axios.delete(`/domains/${tenantId}`, config))
+    },
+    async listRoles(tenantId: any) {
+        return await ajax(() => axios.get(`/tenants/${tenantId}/roles`, config));
+    },
+    async listFunctions(): Promise<Function[]> {
+        return await ajax(() => axios.get("/functions", config)) as Function[];
     }
 }
