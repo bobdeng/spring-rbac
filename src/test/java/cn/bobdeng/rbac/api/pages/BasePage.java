@@ -36,15 +36,25 @@ public class BasePage {
                 .click();
     }
 
+    public void clickContent(String content) {
+        WEBDRIVER.findElement(By.xpath("//span[normalize-space()='" + content + "']"))
+                .click();
+    }
+
     public void clickById(String id) {
         WEBDRIVER.findElement(By.id(id)).click();
     }
 
-    protected void inputById(String password, String id) {
-        WEBDRIVER.findElement(By.id(id)).sendKeys(password);
+    public void inputById(String content, String id) {
+        WEBDRIVER.findElement(By.id(id)).sendKeys(content);
     }
 
     public boolean hasNoData() {
         return WEBDRIVER.getPageSource().contains("No Data");
     }
+
+    public boolean hasText(String text) {
+        return WEBDRIVER.getPageSource().contains(text);
+    }
+
 }

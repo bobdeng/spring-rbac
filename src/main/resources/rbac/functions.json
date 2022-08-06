@@ -1,0 +1,16 @@
+[
+  {
+    "key": "role",
+    "description": {
+      "name": "角色管理",
+      "children": [
+        {
+          "key": "role.create",
+          "description": {
+            "name": "新增角色"
+          }
+        }
+      ]
+    }
+  }
+]

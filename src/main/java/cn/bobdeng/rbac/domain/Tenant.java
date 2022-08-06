@@ -54,6 +54,14 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return domains.findAll().stream().collect(Collectors.toList());
     }
 
+    public List<Role> roles() {
+        return roles.list().collect(Collectors.toList());
+    }
+
+    public void newRole(RoleDescription roleDescription) {
+        roles.save(new Role(roleDescription));
+    }
+
 
     public interface Users extends EntityList<Integer, User> {
         User save(User user);

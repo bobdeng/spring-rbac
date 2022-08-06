@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public class TenantRoles implements Tenant.Roles {
     private final RoleDAO roleDAO;
     private final Tenant tenant;
+
     public TenantRoles(RoleDAO roleDAO, Tenant tenant) {
         this.roleDAO = roleDAO;
         this.tenant = tenant;
@@ -24,7 +25,8 @@ public class TenantRoles implements Tenant.Roles {
 
     @Override
     public Stream<Role> list() {
-        return null;
+        return roleDAO.findAllByTenantId(tenant.identity())
+                .stream().map(RoleDO::toEntity);
     }
 
     @Override
@@ -34,7 +36,7 @@ public class TenantRoles implements Tenant.Roles {
 
     @Override
     public Role save(Role entity) {
-        return roleDAO.save(new RoleDO(entity,tenant)).toEntity();
+        return roleDAO.save(new RoleDO(entity, tenant)).toEntity();
     }
 
     @Override

@@ -12,6 +12,10 @@ public class Role implements Entity<Integer, RoleDescription> {
         this.description = description;
     }
 
+    public Role(RoleDescription description) {
+        this.description = description;
+    }
+
     @Override
     public Integer identity() {
         return id;
