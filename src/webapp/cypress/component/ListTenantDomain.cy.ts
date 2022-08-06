@@ -18,7 +18,7 @@ describe('ListTenantDomain.cy.ts', () => {
         cy.wait("@listDomain")
         cy.get(".ant-empty").should("not.exist")
     })
-    it('should go back1', () => {
+    it('should go back', () => {
         showOneDomain();
         cy.get("#buttonBack").click().then(() => {
             expect(router.go).to.be.calledWith(-1)
