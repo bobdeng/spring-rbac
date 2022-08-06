@@ -10,4 +10,8 @@ public class Session {
 
         this.adminToken = adminToken;
     }
+
+    public boolean isAdmin() {
+        return adminToken != null;
+    }
 }

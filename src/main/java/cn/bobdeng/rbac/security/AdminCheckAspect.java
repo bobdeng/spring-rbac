@@ -16,6 +16,8 @@ public class AdminCheckAspect {
 
     @Before("@annotation(admin)")
     public void before(JoinPoint joinPoint, Admin admin) {
-        sessionStore.get().orElseThrow(PermissionDeniedException::new);
+        sessionStore.get()
+                .filter(Session::isAdmin)
+                .orElseThrow(PermissionDeniedException::new);
     }
 }

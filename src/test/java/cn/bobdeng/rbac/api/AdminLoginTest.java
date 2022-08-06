@@ -26,7 +26,7 @@ public class AdminLoginTest extends E2ETest {
     }
 
     @Test
-    public void should_send_admin_password_when_fail() throws InterruptedException {
+    public void should_send_admin_password_when_fail() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         adminLoginPage.loginWith("123");
