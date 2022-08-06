@@ -6,7 +6,7 @@
       <Table :dataSource="roles" :columns="columns" :pagination="false" id="tableDomains">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
-            <Button type="link" @click="()=>confirmDeleteDomain(record)">删除</Button>
+            <Button type="link" @click="()=>confirmDeleteRole(record)">删除</Button>
             <Button type="link" @click="()=>showEdit(record)">修改</Button>
           </template>
         </template>
@@ -55,14 +55,14 @@ const showEdit = (role: any) => {
   edit.value.show(role.id)
 }
 
-const confirmDeleteDomain = (domain: any) => {
+const confirmDeleteRole = (role: any) => {
   Modal.confirm({
     title: "确认",
     content: "你确定要删除吗？",
     onOk: async () => {
       loading.value = true;
       try {
-        await server.deleteDomain(domain.id);
+        await server.deleteRole({tenant: tenant.value, role: role.id});
         await onLoad();
       } catch (e) {
 

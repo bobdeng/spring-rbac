@@ -81,5 +81,8 @@ export const server = {
     },
     async saveTenantRole(param: { allows: string[], role: string; name: string; tenant: any }) {
         return await ajax(() => axios.patch(`/tenants/${param.tenant}/roles/${param.role}`, param, config))
+    },
+    async deleteRole(param: { role: any; tenant: any }) {
+        return await ajax(() => axios.delete(`/tenants/${param.tenant}/roles/${param.role}`, config))
     }
 }
