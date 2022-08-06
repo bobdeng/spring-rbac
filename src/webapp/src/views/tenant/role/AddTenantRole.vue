@@ -6,7 +6,7 @@
            okText="确定"
            :ok-button-props="{ loading:loading}"
            :maskClosable="false"
-           @ok="newTenant"
+           @ok="save"
     >
       <Form v-model:value="form">
         <FormItem label="租户名">
@@ -48,12 +48,13 @@ const show = () => {
   visible.value = true
   form.value.name = ''
 }
-const newTenant = () => {
+const save = () => {
   loading.value = true
-  server.newTenantDomain({name: form.value.name, tenant: props.tenant})
+  server.newTenantRole({name: form.value.name, allows: form.value.allows, tenant: props.tenant})
       .then(() => {
         visible.value = false
         emit("success")
+        notification.success({message:"新增成功"})
       })
       .catch((e) => {
         notification.error({
