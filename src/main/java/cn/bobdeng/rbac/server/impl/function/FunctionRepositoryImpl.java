@@ -14,6 +14,12 @@ import java.util.stream.Stream;
 
 @Service
 public class FunctionRepositoryImpl implements FunctionRepository {
+    private final ExternalFunctionReader externalFunctionReader;
+
+    public FunctionRepositoryImpl(ExternalFunctionReader externalFunctionReader) {
+        this.externalFunctionReader = externalFunctionReader;
+    }
+
     @Override
     public List<Function> subList(int from, int to) {
         return null;
@@ -23,7 +29,7 @@ public class FunctionRepositoryImpl implements FunctionRepository {
     @Override
     public Stream<Function> list() {
         String content = Resources.toString(Resources.getResource("rbac/functions.json"), StandardCharsets.UTF_8);
-        return Stream.of(new Gson().fromJson(content, Function[].class));
+        return Stream.concat(Stream.of(new Gson().fromJson(content, Function[].class)), externalFunctionReader.read().stream());
     }
 
     @Override
