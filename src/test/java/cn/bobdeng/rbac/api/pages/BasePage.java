@@ -57,4 +57,7 @@ public class BasePage {
         return WEBDRIVER.getPageSource().contains(text);
     }
 
+    protected String getInputValueById(String id) {
+        return WEBDRIVER.findElement(By.id(id)).getAttribute("value");
+    }
 }

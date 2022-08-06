@@ -67,6 +67,7 @@ public class RoleTest extends E2ETest {
         listTenantRolePage.waitUntilNoSpin();
         listTenantRolePage.clickButton("修改");
         EditRolePage editRolePage = new EditRolePage(webDriverHandler);
+        assertEquals("角色1", editRolePage.name());
         editRolePage.inputById("角色2", "inputName");
         editRolePage.clickContent("角色管理");
         editRolePage.clickButton("确 定");

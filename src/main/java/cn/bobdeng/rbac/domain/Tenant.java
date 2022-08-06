@@ -72,6 +72,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         roles.findByIdentity(roleId).ifPresent(roles::delete);
     }
 
+    public Optional<Role> getRole(Integer roleId) {
+        return roles.findByIdentity(roleId);
+    }
+
 
     public interface Users extends EntityList<Integer, User> {
         User save(User user);

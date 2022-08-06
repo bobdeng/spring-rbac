@@ -18,9 +18,18 @@ import java.util.List;
 public class BaseController {
     @ExceptionHandler(PermissionDeniedException.class)
     public void onPermissionDenied(HttpServletResponse response) throws IOException {
+        sendResponseError(response, HttpServletResponse.SC_FORBIDDEN, "无权限");
+    }
+
+    private void sendResponseError(HttpServletResponse response, int status, String message) throws IOException {
         response.setContentType("application/json;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.getWriter().println("无权限");
+        response.setStatus(status);
+        response.getWriter().println(message);
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public void onObjectNotFound(HttpServletResponse response) throws IOException {
+        sendResponseError(response, HttpServletResponse.SC_NOT_FOUND, "找不到对象");
     }
 
     @ExceptionHandler(FieldIllegalException.class)

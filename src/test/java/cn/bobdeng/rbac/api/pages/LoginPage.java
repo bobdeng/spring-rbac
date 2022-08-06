@@ -24,7 +24,7 @@ public class LoginPage extends BasePage {
     }
 
     public String tenantNameInputValue() {
-        return WEBDRIVER.findElement(By.id("inputTenantName")).getAttribute("value");
+        return getInputValueById("inputTenantName");
     }
 
     public void inputLoginName(String loginName) {
@@ -52,6 +52,6 @@ public class LoginPage extends BasePage {
     }
 
     public String fromValue() {
-        return WEBDRIVER.findElement(By.id("inputFrom")).getAttribute("value");
+        return getInputValueById("inputFrom");
     }
 }

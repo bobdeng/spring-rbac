@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api.role;
 
+import cn.bobdeng.rbac.api.ObjectNotFoundException;
 import cn.bobdeng.rbac.domain.Role;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
@@ -43,6 +44,13 @@ public class RoleController {
     public void delete(@PathVariable Integer tenantId, @PathVariable Integer roleId) {
         tenantRepository.findByIdentity(tenantId)
                 .ifPresent(tenant -> tenant.deleteRole(roleId));
+    }
+
+    @GetMapping("/tenants/{tenantId}/roles/{roleId}")
+    public Role get(@PathVariable Integer tenantId, @PathVariable Integer roleId) {
+        return tenantRepository.findByIdentity(tenantId)
+                .flatMap(tenant -> tenant.getRole(roleId))
+                .orElseThrow(ObjectNotFoundException::new);
     }
 
 }

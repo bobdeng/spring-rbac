@@ -7,4 +7,9 @@ public class EditRolePage extends BasePage {
     public EditRolePage(WebDriverHandler webDriverHandler) {
         super(webDriverHandler);
     }
+
+    public String name() {
+        return getInputValueById("inputName");
+    }
+
 }
