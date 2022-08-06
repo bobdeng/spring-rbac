@@ -43,13 +43,13 @@ describe('Tenants.cy.ts', () => {
             routes: [],
             history: createMemoryHistory(),
         })
-        cy.stub(router, 'replace')
+        cy.stub(router, 'push')
         cy.mount(ListTenant, {router: router});
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
         cy.get("#tableTenants").find("tbody").find("tr")
             .contains("域名").trigger("click")
             .then(() => {
-                expect(router.replace).to.be.calledWith({path: "/tenants/101/domains"})
+                expect(router.push).to.be.calledWith({path: "/tenants/101/domains"})
             })
     });
 
@@ -61,13 +61,13 @@ describe('Tenants.cy.ts', () => {
             routes: [],
             history: createMemoryHistory(),
         })
-        cy.stub(router, 'replace')
+        cy.stub(router, 'push')
         cy.mount(ListTenant, {router: router});
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
         cy.get("#tableTenants").find("tbody").find("tr")
             .contains("角色").trigger("click")
             .then(() => {
-                expect(router.replace).to.be.calledWith({path: "/tenants/101/roles"})
+                expect(router.push).to.be.calledWith({path: "/tenants/101/roles"})
             })
     });
 })

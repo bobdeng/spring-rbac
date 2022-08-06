@@ -54,13 +54,13 @@ async function onLoad() {
 }
 
 function onDomainClick(record: any) {
-  router.replace({
+  router.push({
     path: `/tenants/${record.id}/domains`
   })
 }
 
 const onRoleClick = (record: any) => {
-  router.replace({
+  router.push({
     path: `/tenants/${record.id}/roles`
   })
 }

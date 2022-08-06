@@ -1,7 +1,10 @@
 <template>
   <div>
     <Spin :spinning="loading">
-      <AddTenantDomain @success="onLoad" :tenant="tenant"/>
+      <Space>
+        <AddTenantDomain @success="onLoad" :tenant="tenant"/>
+        <Button @click="router.go(-1)" id="buttonBack">返回</Button>
+      </Space>
       <Table :dataSource="domains" :columns="columns" :pagination="false" id="tableDomains">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
@@ -14,11 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import {Table, InputSearch, Button, Spin, Modal} from "ant-design-vue";
+import {Table, Space, Button, Spin, Modal} from "ant-design-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import AddTenantDomain from "./AddTenantDomain.vue";
 
 const columns = ref([
@@ -37,6 +40,7 @@ const domains = ref([])
 const route = useRoute()
 const loading = ref(false)
 const tenant = ref('')
+const router = useRouter();
 
 async function onLoad() {
   loading.value = true

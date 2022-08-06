@@ -1,7 +1,12 @@
 <template>
   <div>
     <Spin :spinning="loading">
-      <AddTenantRole @success="onLoad" :tenant="tenant"/>
+      <div style="display: flex">
+        <Space>
+          <AddTenantRole @success="onLoad" :tenant="tenant"/>
+          <Button id="buttonBack" @click="router.go(-1)">返回</Button>
+        </Space>
+      </div>
       <EditTenantRole ref="edit" :tenant="tenant"/>
       <Table :dataSource="roles" :columns="columns" :pagination="false" id="tableDomains">
         <template #bodyCell="{ column, record }">
@@ -16,11 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import {Table, InputSearch, Button, Spin, Modal} from "ant-design-vue";
+import {Table, InputSearch, Button, Spin, Modal, Space} from "ant-design-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import AddTenantRole from "./AddTenantRole.vue";
 import EditTenantRole from "./EditTenantRole.vue";
 
@@ -41,6 +46,7 @@ const route = useRoute()
 const loading = ref(false)
 const tenant = ref('')
 const edit = ref({} as any)
+const router = useRouter()
 
 async function onLoad() {
   loading.value = true
