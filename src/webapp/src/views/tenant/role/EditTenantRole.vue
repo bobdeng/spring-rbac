@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Button type="primary" @click="show" id="buttonShow">新增</Button>
     <Modal v-if="visible" id="dialog" v-model:visible="visible"
            cancelText="取消"
            okText="确定"
@@ -9,7 +8,7 @@
            @ok="save"
     >
       <Form v-model:value="form">
-        <FormItem label="租户名">
+        <FormItem label="角色名">
           <Input v-model:value="form.name" id="inputName"/>
         </FormItem>
         <FormItem label="功能">
@@ -39,6 +38,7 @@ import {Functions} from "./Functions";
 const visible = ref(false)
 const loading = ref(false)
 const props = defineProps(['tenant'])
+const roleId = ref("")
 const form = ref({
   name: "",
   allows: []
@@ -46,17 +46,22 @@ const form = ref({
 const emit = defineEmits(['success'])
 const functions = ref([] as Function[])
 const expandedKeys = ref([] as string[])
-const show = () => {
+const show = (role: any) => {
+  roleId.value = role;
   visible.value = true
-  form.value.name = ''
+  server.getRole({tenant: props.tenant, role: role})
+      .then(resp => {
+        form.value.name = resp.description.name;
+        form.value.allows = resp.description.allows;
+      })
 }
 const save = () => {
   loading.value = true
-  server.newTenantRole({name: form.value.name, allows: form.value.allows, tenant: props.tenant})
+  server.saveTenantRole({name: form.value.name, allows: form.value.allows, tenant: props.tenant, role: roleId.value})
       .then(() => {
         visible.value = false
         emit("success")
-        notification.success({message: "新增成功"})
+        notification.success({message: "保存成功"})
       })
       .catch((e) => {
         notification.error({
@@ -73,6 +78,9 @@ const onLoad = async () => {
   expandedKeys.value = new Functions(functions.value).allModules()
 }
 onLoad();
+defineExpose({
+  show
+})
 </script>
 
 <style scoped></style>
