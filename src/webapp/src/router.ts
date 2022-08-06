@@ -1,4 +1,4 @@
-import {Home, Tenants, Console} from "./views";
+import {Home, Tenants, Console, Domain} from "./views";
 import {createRouter, createWebHashHistory} from "vue-router";
 
 export const routes = [
@@ -6,7 +6,8 @@ export const routes = [
     {
         path: "/console", component: Console, name: "console",
         children: [
-            {path: "/tenants", component: Tenants, name: "tenants"}
+            {path: "/tenants", component: Tenants, name: "tenants"},
+            {path: "/tenants/:id/domains", component: Domain, name: "tenantDomains"}
         ]
     }
 
