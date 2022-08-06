@@ -4,6 +4,7 @@
     <Modal v-if="visible" id="dialog" v-model:visible="visible"
            cancelText="取消"
            okText="确定"
+           title="新增角色"
            :ok-button-props="{ loading:loading}"
            :maskClosable="false"
            @ok="save"

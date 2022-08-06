@@ -6,6 +6,7 @@
            okText="确定"
            :ok-button-props="{ loading:loading}"
            :maskClosable="false"
+           title="新增域名"
            @ok="newTenant"
     >
       <Form v-model:value="form">

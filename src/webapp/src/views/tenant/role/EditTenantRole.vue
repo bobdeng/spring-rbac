@@ -5,6 +5,7 @@
            okText="确定"
            :ok-button-props="{ loading:loading}"
            :maskClosable="false"
+           title="修改角色"
            @ok="save"
     >
       <Form v-model:value="form">
