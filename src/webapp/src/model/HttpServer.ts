@@ -33,6 +33,12 @@ function getConfig(): AxiosRequestConfig {
 export async function ajax(fun: any) {
     const response = await fun();
     if (response.status !== 200) {
+        if (response.data === undefined) {
+            return Promise.reject(response.status)
+        }
+        if (Array.isArray(response.data)) {
+            return Promise.reject(response.data.map((error: any) => error.message).join("\n"))
+        }
         return Promise.reject(response.data || response.status)
     }
     return Promise.resolve(response.data);
