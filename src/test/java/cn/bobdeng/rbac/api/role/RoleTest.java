@@ -1,5 +1,6 @@
-package cn.bobdeng.rbac.api;
+package cn.bobdeng.rbac.api.role;
 
+import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.pages.ListTenantRolePage;
 import cn.bobdeng.rbac.api.pages.NewTenantRolePage;
 import cn.bobdeng.rbac.domain.*;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RoleTest extends E2ETest {
@@ -52,5 +54,28 @@ public class RoleTest extends E2ETest {
         newTenantRolePage.waitUntilNoButtonSpin();
         List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
         assertEquals(1, roles.size());
+        assertThat(roles.get(0).toEntity().description().getAllows()).hasSameElementsAs(
+                Arrays.asList("role", "role.create", "role.del", "role.edit")
+        );
+    }
+
+    @Test
+    public void should_edit_role() {
+        roleDAO.save(new RoleDO(new Role(null, new RoleDescription("角色1", Arrays.asList("role.create"))), tenant));
+        ListTenantRolePage listTenantRolePage = new ListTenantRolePage(webDriverHandler);
+        listTenantRolePage.open(tenant);
+        listTenantRolePage.waitUntilNoSpin();
+        listTenantRolePage.clickButton("修改");
+        EditRolePage editRolePage = new EditRolePage(webDriverHandler);
+        editRolePage.inputById("角色2", "inputName");
+        editRolePage.clickContent("角色管理");
+        editRolePage.clickButton("确 定");
+        editRolePage.waitUntilNoButtonSpin();
+        assertTrue(editRolePage.hasText("保存成功"));
+        List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
+        assertEquals(1, roles.size());
+        assertThat(roles.get(0).toEntity().description().getAllows()).hasSameElementsAs(
+                Arrays.asList("role", "role.create", "role.del", "role.edit")
+        );
     }
 }

@@ -63,6 +63,11 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         roles.save(new Role(description));
     }
 
+    public void saveRole(Role role) {
+        role.description().validate();
+        roles.save(role);
+    }
+
 
     public interface Users extends EntityList<Integer, User> {
         User save(User user);

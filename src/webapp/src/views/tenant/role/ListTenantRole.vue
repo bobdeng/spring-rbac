@@ -2,10 +2,12 @@
   <div>
     <Spin :spinning="loading">
       <AddTenantRole @success="onLoad" :tenant="tenant"/>
+      <EditTenantRole ref="edit" :tenant="tenant"/>
       <Table :dataSource="roles" :columns="columns" :pagination="false" id="tableDomains">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
             <Button type="link" @click="()=>confirmDeleteDomain(record)">删除</Button>
+            <Button type="link" @click="()=>showEdit(record)">修改</Button>
           </template>
         </template>
       </Table>
@@ -20,6 +22,7 @@ import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
 import {useRoute} from "vue-router";
 import AddTenantRole from "./AddTenantRole.vue";
+import EditTenantRole from "./EditTenantRole.vue";
 
 const columns = ref([
   {
@@ -37,6 +40,7 @@ const roles = ref([])
 const route = useRoute()
 const loading = ref(false)
 const tenant = ref('')
+const edit = ref({} as any)
 
 async function onLoad() {
   loading.value = true
@@ -45,7 +49,10 @@ async function onLoad() {
   } finally {
     loading.value = false
   }
+}
 
+const showEdit = (role: any) => {
+  edit.value.show(role.id)
 }
 
 const confirmDeleteDomain = (domain: any) => {

@@ -15,11 +15,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public abstract class E2ETest {
     @Autowired
-    WebDriverHandler webDriverHandler;
+    protected WebDriverHandler webDriverHandler;
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
     @Autowired
-    MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     protected void clearTable(String tableName) {
         jdbcTemplate.execute("truncate table " + tableName);

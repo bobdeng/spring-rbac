@@ -1,13 +1,11 @@
 package cn.bobdeng.rbac.api.role;
 
 import cn.bobdeng.rbac.domain.Role;
-import cn.bobdeng.rbac.domain.RoleDescription;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +28,13 @@ public class RoleController {
     @Permission(allows = "role.create")
     public void newRole(@RequestBody NewRoleForm form, @PathVariable int id) {
         tenantRepository.findByIdentity(id)
-                .ifPresent(tenant -> tenant.newRole(new RoleDescription(form.getName(), form.getAllows())));
+                .ifPresent(tenant -> tenant.newRole(form.getDescription()));
+    }
+
+    @PatchMapping("/tenants/{tenantId}/roles/{roleId}")
+    @Permission(allows = "role.edit")
+    public void save(@RequestBody NewRoleForm form, @PathVariable Integer tenantId, @PathVariable Integer roleId) {
+        tenantRepository.findByIdentity(tenantId)
+                .ifPresent(tenant -> tenant.saveRole(new Role(roleId, form.getDescription())));
     }
 }
