@@ -4,6 +4,7 @@
       <Table :dataSource="domains" :columns="columns" :pagination="false" id="tableDomains">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
+            <Button type="link" @click="()=>confirmDeleteDomain(record)">删除</Button>
           </template>
         </template>
       </Table>
@@ -12,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import {Table, InputSearch, Button, Spin} from "ant-design-vue";
+import {Table, InputSearch, Button, Spin, Modal} from "ant-design-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
@@ -33,17 +34,38 @@ const columns = ref([
 const domains = ref([])
 const route = useRoute()
 const loading = ref(false)
+const tenant = ref('')
 
 async function onLoad() {
   loading.value = true
   try {
-    domains.value = await server.listDomains(route.params.id as string);
+    domains.value = await server.listDomains(tenant.value);
   } finally {
     loading.value = false
   }
+
+}
+
+const confirmDeleteDomain = (domain: any) => {
+  Modal.confirm({
+    title: "确认",
+    content: "你确定要删除吗？",
+    onOk: async () => {
+      loading.value = true;
+      try {
+        await server.deleteDomain(domain.id);
+        await onLoad();
+      } catch (e) {
+
+      } finally {
+        loading.value = false;
+      }
+    }
+  })
 }
 
 
+tenant.value = route.params.id as string;
 onLoad();
 </script>
 

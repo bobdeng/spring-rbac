@@ -45,5 +45,8 @@ export const server = {
     },
     async newTenantDomain(param: { name: string; tenant: any }) {
         return await ajax(() => axios.post("/domains", param, config))
+    },
+    async deleteDomain(id: any) {
+        return await ajax(() => axios.delete(`/domains/${id}`, config))
     }
 }
