@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -20,16 +19,19 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final PasswordDAO passwordDAO;
     private final DomainDAO domainDAO;
 
+    private final RoleDAO roleDAO;
+
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO) {
+                                DomainDAO domainDAO, RoleDAO roleDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
         this.passwordDAO = passwordDAO;
         this.domainDAO = domainDAO;
+        this.roleDAO = roleDAO;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Tenant.Users users(Tenant tenant) {
-        return new TenantUsers(tenant, userDAO, passwordDAO, this);
+        return new TenantUsers(tenant, userDAO, this);
     }
 
     @Override
@@ -93,6 +95,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setUsers(this.users(tenant));
         tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
+        tenant.setRoles(new TenantRoles(roleDAO, tenant));
         return tenant;
     }
 

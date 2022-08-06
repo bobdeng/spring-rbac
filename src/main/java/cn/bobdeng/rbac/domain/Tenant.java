@@ -16,6 +16,7 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private TenantDescription description;
     private Users users;
     private LoginNames loginNames;
+    private Roles roles;
     private HasMany<Integer, Domain> domains;
 
     public Tenant(TenantDescription tenantDescription) {
@@ -65,6 +66,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     public interface LoginNames extends EntityList<Integer, LoginName> {
 
         Optional<LoginName> findByLoginName(String name);
+    }
+
+    public interface Roles extends EntityList<Integer, Role> {
+
     }
 
 

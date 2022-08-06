@@ -14,13 +14,11 @@ import java.util.stream.Stream;
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
     private UserDAO userDAO;
-    private PasswordDAO passwordDAO;
     private TenantRepository tenantRepository;
 
-    public TenantUsers(Tenant tenant, UserDAO userDAO, PasswordDAO passwordDAO, TenantRepositoryImpl tenantRepository) {
+    public TenantUsers(Tenant tenant, UserDAO userDAO, TenantRepositoryImpl tenantRepository) {
         this.tenant = tenant;
         this.userDAO = userDAO;
-        this.passwordDAO = passwordDAO;
         this.tenantRepository = tenantRepository;
     }
 
