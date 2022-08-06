@@ -1,6 +1,7 @@
 <template>
   <div>
     <Spin :spinning="loading">
+      <AddTenantRole @success="onLoad" :tenant="tenant"/>
       <Table :dataSource="roles" :columns="columns" :pagination="false" id="tableDomains">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
@@ -18,6 +19,7 @@ import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
 import {useRoute} from "vue-router";
+import AddTenantRole from "./AddTenantRole.vue";
 
 const columns = ref([
   {

@@ -14,8 +14,9 @@
         </FormItem>
         <FormItem label="功能">
           <Tree
-              :fieldNames="{title:'name'}"
+              :fieldNames="{title:'name',}"
               checkable
+              :selectable="false"
               autoExpandParent
               :expandedKeys="expandedKeys"
               v-model:checkedKeys="form.allows"

@@ -68,6 +68,6 @@ export const server = {
         return await ajax(() => axios.get("/functions", config)) as Function[];
     },
     async newTenantRole(param: { allows: string[]; name: string; tenant: any }) {
-        return await ajax(() => axios.post(`/tenant/${param.tenant}/roles`, param, config))
+        return await ajax(() => axios.post(`/tenants/${param.tenant}/roles`, param, config))
     }
 }

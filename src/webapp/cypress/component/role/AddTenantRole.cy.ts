@@ -7,8 +7,8 @@ describe('AddTenantRole.cy.ts', () => {
             statusCode: 200,
             body: JSON.stringify([
                 {
-                    name: "模块1",
                     key: "m1",
+                    name: "模块1",
                     children: [
                         {name: "模块1.功能1", key: "m1.fun1"}
                     ]
@@ -31,7 +31,7 @@ describe('AddTenantRole.cy.ts', () => {
     });
     it('should save role', function () {
         let onSuccessSpy = cy.spy().as('onSuccessSpy')
-        cy.intercept("POST", `/tenant/${tenant}/roles`, {statusCode: 200}).as("saveRole")
+        cy.intercept("POST", `/tenants/${tenant}/roles`, {statusCode: 200}).as("saveRole")
         cy.mount(AddTenantRole, {props: {tenant: tenant,onSuccess:onSuccessSpy}})
         cy.wait("@functions")
         cy.contains("新 增").click().then(() => {
