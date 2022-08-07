@@ -34,7 +34,7 @@ public class UserTest extends E2ETest {
         newUserPage.inputById("lisi", "inputLoginName");
         newUserPage.inputById("1344444", "inputPassword");
         newUserPage.clickContent("角色1");
-        
+
         newUserPage.clickButton("保 存");
         newUserPage.waitUntilNoButtonSpin();
 
@@ -45,5 +45,13 @@ public class UserTest extends E2ETest {
         assertEquals(1, roles.size());
         LoginName loginNameOfLisi = userWithTenantFixture.getTenant().loginNames().findByLoginName("lisi").get();
         assertEquals("lisi", loginNameOfLisi.description().getName());
+    }
+
+    @Test
+    public void should_list_user() {
+        ListUserPage listUserPage = new ListUserPage(webDriverHandler);
+        listUserPage.open();
+        listUserPage.waitUntilNoSpin();
+        assertTrue(listUserPage.hasText("张三"));//in fixture
     }
 }

@@ -17,7 +17,6 @@ public class User implements Entity<Integer, UserDescription> {
     @Setter
     private UserDescription description;
     @Setter
-    @Getter
     private UserPassword userPassword;
     @Setter
     private HasOne<Tenant> tenant;
