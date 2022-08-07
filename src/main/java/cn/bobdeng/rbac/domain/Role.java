@@ -25,4 +25,8 @@ public class Role implements Entity<Integer, RoleDescription> {
     public RoleDescription description() {
         return description;
     }
+
+    public boolean hasSomePermission(String[] allows) {
+        return description.hasSomePermission(allows);
+    }
 }

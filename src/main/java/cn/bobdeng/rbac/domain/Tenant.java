@@ -58,9 +58,9 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return roles.list().collect(Collectors.toList());
     }
 
-    public void newRole(RoleDescription description) {
+    public Role newRole(RoleDescription description) {
         description.validate();
-        roles.save(new Role(description));
+        return roles.save(new Role(description));
     }
 
     public void saveRole(Role role) {

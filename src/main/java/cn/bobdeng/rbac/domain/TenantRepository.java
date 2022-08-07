@@ -16,4 +16,6 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
     Tenant.LoginNames loginNames(Tenant tenant);
 
     User.UserPassword userPassword(User user);
+
+    User.UserRoles userRoles(User user);
 }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @EqualsAndHashCode
 @NoArgsConstructor
 public class User implements Entity<Integer, UserDescription> {
@@ -19,6 +21,9 @@ public class User implements Entity<Integer, UserDescription> {
     private UserPassword userPassword;
     @Setter
     private HasOne<Tenant> tenant;
+    @Setter
+    private UserRoles userRoles;
+
 
     public User(Integer id, UserDescription description) {
         this.id = id;
@@ -54,9 +59,21 @@ public class User implements Entity<Integer, UserDescription> {
                 .orElse(false);
     }
 
+    public boolean hasSomePermission(String[] allows) {
+        return userRoles.list().anyMatch(role -> role.hasSomePermission(allows));
+    }
+
+    public void setRoles(List<Role> roles) {
+        roles.forEach(userRoles::save);
+    }
+
     public interface UserPassword extends EntityList<Integer, Password> {
         String encodePassword(String rawPassword);
 
         boolean match(String rawPassword, String password);
+    }
+
+    public interface UserRoles extends EntityList<Integer, Role> {
+
     }
 }

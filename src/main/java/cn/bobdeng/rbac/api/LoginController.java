@@ -61,7 +61,7 @@ public class LoginController {
     }
 
     private void setLoginResponse(HttpServletResponse response, User user) {
-        String token = new LoginToken(user).toString();
+        String token = new UserToken(user).toString();
         Cookie authorization = new Cookie(Cookies.AUTHORIZATION, token);
         response.addCookie(authorization);
     }

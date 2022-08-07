@@ -40,4 +40,8 @@ public class RoleDescription {
                 .lengthLessThan(20, "角色名不能大于20位")
                 .getErrors();
     }
+
+    public boolean hasSomePermission(String[] allows) {
+        return Stream.of(allows).anyMatch(this.allows::contains);
+    }
 }

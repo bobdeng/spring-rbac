@@ -2,6 +2,7 @@ package cn.bobdeng.rbac;
 
 import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.JwtToken;
+import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.DomainRepository;
 import cn.bobdeng.rbac.security.Session;
@@ -25,6 +26,7 @@ public class SessionCheckFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         checkAdminSession(httpRequest);
+        checkUserSession(httpRequest);
         readTenant(request, httpRequest);
         try {
             sessionStore.get().ifPresent(session -> httpRequest.setAttribute("session", session));
@@ -32,6 +34,10 @@ public class SessionCheckFilter implements Filter {
         } finally {
             sessionStore.clear();
         }
+    }
+
+    private void checkUserSession(HttpServletRequest httpRequest) {
+        sessionStore.set(new Session(new UserToken(1, 1)));
     }
 
     private void readTenant(ServletRequest request, HttpServletRequest httpRequest) {

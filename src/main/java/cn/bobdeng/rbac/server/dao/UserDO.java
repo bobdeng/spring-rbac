@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.server.dao;
 
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.server.impl.UserRolesImpl;
 import lombok.*;
 
 import java.util.Objects;
@@ -26,6 +27,7 @@ public final class UserDO {
         User user = new User(id, new UserDescription(name));
         user.setUserPassword(tenantRepository.userPassword(user));
         user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
+        user.setUserRoles(tenantRepository.userRoles(user));
         return user;
     }
 

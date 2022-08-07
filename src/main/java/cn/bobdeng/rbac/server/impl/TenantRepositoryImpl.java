@@ -18,19 +18,20 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final LoginNameDAO loginNameDAO;
     private final PasswordDAO passwordDAO;
     private final DomainDAO domainDAO;
-
+    private final UserRoleDAO userRoleDAO;
     private final RoleDAO roleDAO;
 
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, RoleDAO roleDAO) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
         this.passwordDAO = passwordDAO;
         this.domainDAO = domainDAO;
+        this.userRoleDAO = userRoleDAO;
         this.roleDAO = roleDAO;
     }
 
@@ -73,6 +74,11 @@ public class TenantRepositoryImpl implements TenantRepository {
     @Override
     public User.UserPassword userPassword(User user) {
         return new UserPasswordImpl(user, this, passwordDAO);
+    }
+
+    @Override
+    public User.UserRoles userRoles(User user) {
+        return new UserRolesImpl(user,userRoleDAO,roleDAO);
     }
 
     @Override
