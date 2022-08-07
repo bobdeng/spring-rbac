@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Login @login="onLogin"/>
+    <Login @adminLogin="onAdminLogin" @userLogin="onUserLogin"/>
   </div>
 </template>
 
@@ -9,9 +9,14 @@ import {useRouter} from "vue-router";
 import Login from "./Login.vue";
 
 const router = useRouter();
-const onLogin = () => {
-  router.push({
+const onAdminLogin = () => {
+  router.replace({
     name: "console",
+  });
+};
+const onUserLogin = () => {
+  router.replace({
+    name: "userConsole",
   });
 };
 </script>

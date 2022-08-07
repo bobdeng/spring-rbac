@@ -25,7 +25,7 @@ import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {LoginForm, server} from "../model/HttpServer";
 
-const emit = defineEmits(['login'])
+const emit = defineEmits(['adminLogin', 'userLogin'])
 const password = ref("")
 const loginName = ref("")
 const error = ref("")
@@ -36,10 +36,11 @@ async function login() {
   try {
     if (loginName.value === "sysadmin") {
       await server.login(new LoginForm(password.value))
-    } else {
-      await server.userLogin({loginName: loginName.value, password: password.value});
+      emit("adminLogin")
+      return;
     }
-    emit("login")
+    await server.userLogin({loginName: loginName.value, password: password.value});
+    emit("userLogin")
   } catch (e) {
     error.value = e + "";
   } finally {
