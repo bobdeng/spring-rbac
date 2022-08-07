@@ -87,5 +87,8 @@ export const server = {
     },
     async userLogin(param: { password: string; loginName: string }) {
         return await ajax(() => axios.post("/user_sessions", param, config))
+    },
+    async listUsers() {
+        return await ajax(() => axios.get("/users", config));
     }
 }

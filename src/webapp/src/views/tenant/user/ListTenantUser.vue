@@ -1,0 +1,73 @@
+<template>
+  <div>
+    <Spin :spinning="loading">
+      <div style="display: flex">
+        <Space>
+        </Space>
+      </div>
+      <Table :dataSource="users" :columns="columns" :pagination="false" id="tableUsers">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key==='action'">
+            <Button type="link" @click="()=>confirmDeleteRole(record)">删除</Button>
+          </template>
+        </template>
+      </Table>
+    </Spin>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {Table, InputSearch, Button, Spin, Modal, Space} from "ant-design-vue";
+import 'ant-design-vue/dist/antd.css';
+import {ref} from "vue";
+import {server} from "../../../model/HttpServer";
+import {useRoute, useRouter} from "vue-router";
+
+const columns = ref([
+  {
+    title: "姓名",
+    dataIndex: ['description', 'name'],
+    key: "description.name"
+  },
+  {
+    title: '操作',
+    key: 'action',
+    width: "200px"
+  }
+])
+const users = ref([])
+const loading = ref(false)
+const router = useRouter()
+
+async function onLoad() {
+  loading.value = true
+  try {
+    users.value = await server.listUsers();
+  } finally {
+    loading.value = false
+  }
+}
+
+
+const confirmDeleteRole = (role: any) => {
+  Modal.confirm({
+    title: "确认",
+    content: "你确定要删除吗？",
+    onOk: async () => {
+      loading.value = true;
+      try {
+        await onLoad();
+      } catch (e) {
+
+      } finally {
+        loading.value = false;
+      }
+    }
+  })
+}
+
+
+onLoad();
+</script>
+
+<style scoped></style>
