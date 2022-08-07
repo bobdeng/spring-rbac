@@ -1,6 +1,7 @@
 <template>
   <div>
     <Card title="登录" style="width: 480px;">
+      <div>{{ tenant.description.name }}</div>
       <Form :label-col="{style:{width:'150px'}}" :wrapper-col="{span:16}">
         <FormItem>
           <Alert v-if="error" id="error" :message="error" type="error"/>
@@ -30,6 +31,7 @@ const password = ref("")
 const loginName = ref("")
 const error = ref("")
 const loading = ref(false)
+const tenant = ref({id: 0, description: {name: ""}})
 
 async function login() {
   loading.value = true;
@@ -47,6 +49,12 @@ async function login() {
     loading.value = false;
   }
 }
+
+const onLoad = () => {
+  server.getTenant().then(resp => tenant.value = resp);
+}
+
+onLoad();
 </script>
 
 <style scoped>
