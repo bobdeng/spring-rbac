@@ -1,8 +1,10 @@
 <template>
   <div>
+    <AddUser ref="newUserModal"/>
     <Spin :spinning="loading">
       <div style="display: flex">
         <Space>
+          <Button type="primary" @click="newUser">新增</Button>
         </Space>
       </div>
       <Table :dataSource="users" :columns="columns" :pagination="false" id="tableUsers">
@@ -22,6 +24,7 @@ import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
 import {useRoute, useRouter} from "vue-router";
+import AddUser from "./AddUser.vue";
 
 const columns = ref([
   {
@@ -38,6 +41,7 @@ const columns = ref([
 const users = ref([])
 const loading = ref(false)
 const router = useRouter()
+const newUserModal = ref()
 
 async function onLoad() {
   loading.value = true
@@ -48,6 +52,9 @@ async function onLoad() {
   }
 }
 
+const newUser = () => {
+  newUserModal.value.show();
+}
 
 const confirmDeleteRole = (role: any) => {
   Modal.confirm({

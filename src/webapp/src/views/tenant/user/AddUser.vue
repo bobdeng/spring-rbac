@@ -1,13 +1,8 @@
 <template>
   <div>
-    <Button type="primary" @click="show" id="buttonShow">新增</Button>
     <Modal v-if="visible" id="dialog" v-model:visible="visible"
-           cancelText="取消"
-           okText="确定"
-           title="新增角色"
-           :ok-button-props="{ loading:loading}"
+           title="新增用户"
            :maskClosable="false"
-           @ok="save"
     >
       <Form v-model:value="form">
         <FormItem label="姓名">
