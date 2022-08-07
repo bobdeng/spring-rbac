@@ -84,5 +84,8 @@ export const server = {
     },
     async deleteRole(param: { role: any; tenant: any }) {
         return await ajax(() => axios.delete(`/tenants/${param.tenant}/roles/${param.role}`, config))
+    },
+    async userLogin(param: { password: string; loginName: string }) {
+        return await ajax(() => axios.post("/user_sessions", param, config))
     }
 }
