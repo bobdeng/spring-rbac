@@ -40,7 +40,7 @@ import {server} from "../../../model/HttpServer";
 
 const visible = ref(false)
 const loading = ref(false)
-const roles = ref([])
+const roles = ref([] as {id:number,description:{name:string}}[])
 const form = ref({
   name: "",
   password: "",

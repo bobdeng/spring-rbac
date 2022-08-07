@@ -2,8 +2,8 @@
   <div>
     <div>
       <Menu mode="horizontal" theme="dark" @select="onMenuSelect">
-        <MenuItem key="tenants">
-          租户管理
+        <MenuItem key="userConsole">
+          用户管理
         </MenuItem>
       </Menu>
     </div>
