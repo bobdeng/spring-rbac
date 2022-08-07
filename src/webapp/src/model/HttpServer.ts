@@ -96,5 +96,8 @@ export const server = {
     },
     async newUser(form: { password: string; loginName: string; roles: any[]; name: string }) {
         return await ajax(() => axios.post("/users", form, config))
+    },
+    async getTenant() {
+        return await ajax(() => axios.get("/tenant", config))
     }
 }

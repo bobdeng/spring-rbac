@@ -2,7 +2,10 @@
   <div>
     <div>
       <Menu mode="horizontal" theme="dark" @select="onMenuSelect">
-        <MenuItem key="userConsole">
+        <MenuItem disabled>
+          {{ tenant.description.name }}
+        </MenuItem>
+        <MenuItem key="user">
           用户管理
         </MenuItem>
       </Menu>
@@ -14,14 +17,21 @@
 </template>
 
 <script setup lang="ts">
-import {Menu, MenuItem} from "ant-design-vue";
+import {Menu, MenuItem, PageHeader} from "ant-design-vue";
 import {SelectInfo} from "ant-design-vue/es/menu/src/interface";
 import {useRouter} from "vue-router";
+import {server} from "../model/HttpServer";
+import {ref} from "vue";
 
 const router = useRouter()
+const tenant = ref({id: 0, description: {name: ""}})
 const onMenuSelect = (info: SelectInfo) => {
   router.push({name: info.key.toString()})
 }
+const onLoad = () => {
+  server.getTenant().then(resp => tenant.value = resp)
+}
+onLoad();
 </script>
 
 <style scoped></style>

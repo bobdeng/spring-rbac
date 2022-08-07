@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card title="管理员登录" style="width: 480px;">
+    <Card title="登录" style="width: 480px;">
       <Form :label-col="{style:{width:'150px'}}" :wrapper-col="{span:16}">
         <FormItem>
           <Alert v-if="error" id="error" :message="error" type="error"/>
