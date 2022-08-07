@@ -4,6 +4,9 @@
     <Spin :spinning="loading">
       <div style="display: flex">
         <Space>
+          <InputSearch placeholder="输入名称查询" style="width:200px;" id="search"
+                       @search="onLoad"
+                       v-model:value="keyword"/>
           <Button type="primary" @click="newUser">新增</Button>
         </Space>
       </div>
@@ -42,11 +45,12 @@ const users = ref([])
 const loading = ref(false)
 const router = useRouter()
 const newUserModal = ref()
+const keyword = ref("")
 
 async function onLoad() {
   loading.value = true
   try {
-    users.value = await server.listUsers();
+    users.value = await server.listUsers(keyword.value);
   } finally {
     loading.value = false
   }

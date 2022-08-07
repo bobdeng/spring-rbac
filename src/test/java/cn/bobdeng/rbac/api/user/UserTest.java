@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest extends E2ETest {
     @Autowired
@@ -53,5 +52,18 @@ public class UserTest extends E2ETest {
         listUserPage.open();
         listUserPage.waitUntilNoSpin();
         assertTrue(listUserPage.hasText("张三"));//in fixture
+    }
+
+    @Test
+    public void should_list_user_by_name() {
+        ListUserPage listUserPage = new ListUserPage(webDriverHandler);
+        listUserPage.open();
+        listUserPage.waitUntilNoSpin();
+        listUserPage.inputById("张\n", "search");
+        listUserPage.waitUntilNoSpin();
+        assertTrue(listUserPage.hasText("张三"));//in fixture
+        listUserPage.inputById("李\n", "search");
+        listUserPage.waitUntilNoSpin();
+        assertFalse(listUserPage.hasText("张三"));//in fixture
     }
 }

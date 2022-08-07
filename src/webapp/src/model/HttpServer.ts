@@ -1,4 +1,5 @@
 import axios, {AxiosRequestConfig} from "axios";
+import {Ref, UnwrapRef} from "vue";
 
 export class LoginForm {
     password: string;
@@ -91,8 +92,8 @@ export const server = {
     async userLogin(param: { password: string; loginName: string }) {
         return await ajax(() => axios.post("/user_sessions", param, config))
     },
-    async listUsers() {
-        return await ajax(() => axios.get("/users", config));
+    async listUsers(keyword: string) {
+        return await ajax(() => axios.get(`/users?name=${keyword}`, config));
     },
     async newUser(form: { password: string; loginName: string; roles: any[]; name: string }) {
         return await ajax(() => axios.post("/users", form, config))
