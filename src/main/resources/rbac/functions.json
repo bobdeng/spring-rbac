@@ -24,5 +24,37 @@
         }
       ]
     }
+  },
+  {
+    "key": "user",
+    "description": {
+      "name": "用户管理",
+      "children": [
+        {
+          "key": "user.create",
+          "description": {
+            "name": "新增用户"
+          }
+        },
+        {
+          "key": "user.del",
+          "description": {
+            "name": "删除用户"
+          }
+        },
+        {
+          "key": "user.reset_pass",
+          "description": {
+            "name": "重置密码"
+          }
+        },
+        {
+          "key": "user.lock",
+          "description": {
+            "name": "锁定/解锁用户"
+          }
+        }
+      ]
+    }
   }
 ]

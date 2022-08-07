@@ -16,9 +16,9 @@ public class AdminLoginPage extends BasePage {
         this.webDriverHandler.open("/admin/");
     }
 
-    public void loginWith(String password) {
-        String id = "inputPassword";
-        inputById(password, id);
+    public void loginWith(String loginName, String password) {
+        inputById(password, "inputPassword");
+        inputById(loginName, "inputLoginName");
         clickById("buttonLogin");
         waitUntilNoButtonSpin();
     }

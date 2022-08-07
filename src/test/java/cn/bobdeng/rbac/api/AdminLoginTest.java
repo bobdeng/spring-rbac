@@ -2,14 +2,11 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.api.pages.TestNeedAdminPage;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
-import cn.bobdeng.rbac.security.Admin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +26,7 @@ public class AdminLoginTest extends E2ETest {
     public void should_send_admin_password_when_fail() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
-        adminLoginPage.loginWith("123");
+        adminLoginPage.loginWith("sysadmin", "123");
         assertEquals("密码已经发出", adminLoginPage.error());
         assertNotNull(adminPasswordNotifier.getPassword());
         assertTrue(new BCryptPasswordEncoder().matches(adminPasswordNotifier.getPassword(), adminPasswordNotifier.getEncodedPassword()));
@@ -40,7 +37,7 @@ public class AdminLoginTest extends E2ETest {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         adminPasswordNotifier.setEncodedPassword(new BCryptPasswordEncoder().encode("123456"));
-        adminLoginPage.loginWith("123456");
+        adminLoginPage.loginWith("sysadmin", "123456");
         Cookie authorization = webDriverHandler.getCookie("AdminAuthorization");
         assertNotNull(authorization);
     }

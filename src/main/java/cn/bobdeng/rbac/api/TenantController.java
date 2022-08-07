@@ -28,4 +28,9 @@ public class TenantController {
         final Page<Tenant> tenants = tenantRepository.findByName(name, 0, 100);
         return tenants.getElements();
     }
+
+    @GetMapping("/tenant")
+    public Tenant getTenant(@RequestAttribute("tenant") Tenant tenant) {
+        return tenant;
+    }
 }
