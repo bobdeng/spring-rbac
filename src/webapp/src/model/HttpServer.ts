@@ -67,8 +67,11 @@ export const server = {
     async deleteDomain(tenantId: any) {
         return await ajax(() => axios.delete(`/domains/${tenantId}`, config))
     },
-    async listRoles(tenantId: any) {
+    async listRolesOfTenant(tenantId: any) {
         return await ajax(() => axios.get(`/tenants/${tenantId}/roles`, config));
+    },
+    async listRoles() {
+        return await ajax(() => axios.get(`/roles`, config));
     },
     async listFunctions(): Promise<Function[]> {
         return await ajax(() => axios.get("/functions", config)) as Function[];
@@ -90,5 +93,8 @@ export const server = {
     },
     async listUsers() {
         return await ajax(() => axios.get("/users", config));
+    },
+    async newUser(form: { password: string; loginName: string; roles: any[]; name: string }) {
+        return await ajax(() => axios.post("/users", form, config))
     }
 }

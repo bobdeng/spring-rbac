@@ -51,7 +51,7 @@ const router = useRouter()
 async function onLoad() {
   loading.value = true
   try {
-    roles.value = await server.listRoles(tenant.value);
+    roles.value = await server.listRolesOfTenant(tenant.value);
   } finally {
     loading.value = false
   }

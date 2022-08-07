@@ -6,10 +6,10 @@
           <Alert v-if="error" id="error" :message="error" type="error"/>
         </FormItem>
         <FormItem label="登录名">
-          <Input v-model:value="loginName" id="inputLoginName" maxlength="20"/>
+          <Input v-model:value="loginName" id="inputLoginName" :maxlength="20"/>
         </FormItem>
         <FormItem label="密码">
-          <InputPassword v-model:value="password" id="inputPassword" maxlength="20"/>
+          <InputPassword v-model:value="password" id="inputPassword"/>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="login" id="buttonLogin" :loading="loading">登录</Button>
