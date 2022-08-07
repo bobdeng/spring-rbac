@@ -1,8 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +8,20 @@ import java.util.stream.Collectors;
 
 @EqualsAndHashCode
 @NoArgsConstructor
-@Data
 public class Tenant implements Entity<Integer, TenantDescription> {
+    @Getter
+    @Setter
     private Integer id;
+    @Getter
+    @Setter
     private TenantDescription description;
+    @Setter
     private Users users;
+    @Setter
     private LoginNames loginNames;
+    @Setter
     private Roles roles;
+    @Setter
     private HasMany<Integer, Domain> domains;
 
     public Tenant(TenantDescription tenantDescription) {
@@ -74,6 +79,14 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
     public Optional<Role> getRole(Integer roleId) {
         return roles.findByIdentity(roleId);
+    }
+
+    public Users users() {
+        return users;
+    }
+
+    public LoginNames loginNames() {
+        return loginNames;
     }
 
 

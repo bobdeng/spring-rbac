@@ -9,6 +9,7 @@ import cn.bobdeng.rbac.server.dao.UserDO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TenantUsers implements Tenant.Users {
@@ -29,7 +30,10 @@ public class TenantUsers implements Tenant.Users {
 
     @Override
     public List<User> findByName(String name) {
-        return null;
+        return userDAO.findAllByTenantIdAndNameLike(tenant.identity(), name)
+                .stream()
+                .map(userDO -> userDO.toUser(tenantRepository))
+                .collect(Collectors.toList());
     }
 
     @Override

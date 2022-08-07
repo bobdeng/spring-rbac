@@ -30,6 +30,7 @@ public class UserRolesImpl implements User.UserRoles {
     @Override
     public Stream<Role> list() {
         return userRoleDAO.findAllByUserId(user.getId())
+                .stream()
                 .flatMap(userRoleDO -> roleDAO.findById(userRoleDO.getRoleId()).map(Stream::of).orElse(Stream.empty()))
                 .map(RoleDO::toEntity);
     }

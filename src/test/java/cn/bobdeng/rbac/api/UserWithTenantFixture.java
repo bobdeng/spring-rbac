@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.function.Function;
 import cn.bobdeng.rbac.domain.function.FunctionRepository;
 import cn.bobdeng.rbac.domain.function.Functions;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,6 +34,7 @@ public class UserWithTenantFixture {
         clearTable("t_rbac_password");
         clearTable("t_rbac_login_name");
         clearTable("t_rbac_role");
+        clearTable("t_rbac_user_role");
         tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
         domainRepository.save(new Domain(new DomainDescription("localhost", tenant.identity())));
         user = tenant.addUser(new UserDescription("张三"));
@@ -65,5 +67,9 @@ public class UserWithTenantFixture {
 
     public User user() {
         return user;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
     }
 }

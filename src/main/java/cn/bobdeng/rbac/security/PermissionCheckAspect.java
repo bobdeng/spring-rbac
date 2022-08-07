@@ -27,7 +27,7 @@ public class PermissionCheckAspect {
         }
         UserToken userToken = session.userToken();
         tenantRepository.findByIdentity(userToken.getTenant())
-                .flatMap(tenant -> tenant.getUsers().findByIdentity(userToken.getId()))
+                .flatMap(tenant -> tenant.users().findByIdentity(userToken.getId()))
                 .filter(user -> user.hasSomePermission(permission.allows()))
                 .orElseThrow(PermissionDeniedException::new);
     }

@@ -45,7 +45,7 @@ public class TenantLoginNameTest extends BaseTest{
         User bob = tenant.addUser(new UserDescription("bob"));
         tenant.addLoginName(new LoginNameDescription("bob", bob));
 
-        LoginName loginName = tenant.getLoginNames().findByLoginName("bob").orElseThrow(RuntimeException::new);
+        LoginName loginName = tenant.loginNames().findByLoginName("bob").orElseThrow(RuntimeException::new);
         assertEquals("bob", loginName.description().getName());
     }
 }

@@ -5,7 +5,7 @@
         <MenuItem disabled>
           {{ tenant.description.name }}
         </MenuItem>
-        <MenuItem key="user">
+        <MenuItem key="users">
           用户管理
         </MenuItem>
       </Menu>

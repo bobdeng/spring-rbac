@@ -42,6 +42,6 @@ public class BaseController {
     public void onUnexpectException(RuntimeException e, HttpServletResponse response) throws IOException {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        e.printStackTrace(response.getWriter());
+        log.warn("error", e);
     }
 }

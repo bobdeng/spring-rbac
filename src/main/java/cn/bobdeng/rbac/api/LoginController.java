@@ -55,7 +55,7 @@ public class LoginController {
     @NotNull
     private Optional<User> checkUserLogin(LoginForm form) {
         return tenantRepository.findByName(form.getTenant())
-                .flatMap(tenant -> tenant.getLoginNames().findByLoginName(form.getLoginName()))
+                .flatMap(tenant -> tenant.loginNames().findByLoginName(form.getLoginName()))
                 .map(LoginName::user)
                 .filter(user -> user.verifyPassword(form.getPassword()));
     }

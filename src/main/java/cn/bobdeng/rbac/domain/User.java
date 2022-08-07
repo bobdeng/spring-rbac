@@ -29,7 +29,9 @@ public class User implements Entity<Integer, UserDescription> {
         this.id = id;
         this.description = description;
     }
-
+    public UserRoles userRoles(){
+        return userRoles;
+    }
     public Tenant tenant() {
         return tenant.get();
     }

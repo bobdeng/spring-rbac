@@ -21,7 +21,15 @@ public class RoleController {
 
     @GetMapping("/tenants/{id}/roles")
     @Admin
-    public List<Role> listRoles(@PathVariable int id) {
+    public List<Role> listRolesOfTenant(@PathVariable int id) {
+        return tenantRepository.findByIdentity(id)
+                .map(Tenant::roles)
+                .orElse(Collections.emptyList());
+    }
+
+    @GetMapping("/roles")
+    public List<Role> listRoles(@RequestAttribute("tenant") Tenant tenant) {
+        Integer id = tenant.getId();
         return tenantRepository.findByIdentity(id)
                 .map(Tenant::roles)
                 .orElse(Collections.emptyList());

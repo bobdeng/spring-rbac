@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.DomainRepository;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.server.dao.DomainDAO;
 import cn.bobdeng.rbac.server.dao.TenantDAO;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,11 @@ import java.util.stream.Stream;
 @Service
 public class DomainRepositoryImpl implements DomainRepository {
     private final DomainDAO domainDAO;
-    private TenantDAO tenantDAO;
+    private TenantRepository tenantRepository;
 
-    public DomainRepositoryImpl(DomainDAO domainDAO, TenantDAO tenantDAO) {
+    public DomainRepositoryImpl(DomainDAO domainDAO, TenantRepository tenantRepository) {
         this.domainDAO = domainDAO;
-        this.tenantDAO = tenantDAO;
+        this.tenantRepository = tenantRepository;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class DomainRepositoryImpl implements DomainRepository {
     }
 
     private Domain inject(Domain domain) {
-        domain.setTenant(() -> tenantDAO.findById(domain.getDescription().getTenantId()).orElse(null));
+        domain.setTenant(() -> tenantRepository.findByIdentity(domain.identity()).orElse(null));
         return domain;
     }
 

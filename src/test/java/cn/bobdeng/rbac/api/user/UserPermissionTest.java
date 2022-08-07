@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
+import cn.bobdeng.rbac.api.WebDriverHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,16 @@ public class UserPermissionTest extends E2ETest {
     }
 
     @Test
-    public void should_can_visit_function_permission_granted() throws Exception {
+    public void should_can_visit_function_permission_granted() {
         TestPermissionGrantedPage page = new TestPermissionGrantedPage(webDriverHandler);
         page.open();
         assertTrue(page.hasText("permission_granted"));
+    }
+
+    @Test
+    public void should_not_can_visit_function_permission_denied() {
+        TestPermissionDeniedPage page = new TestPermissionDeniedPage(webDriverHandler);
+        page.open();
+        assertTrue(page.hasText("无权限"));
     }
 }
