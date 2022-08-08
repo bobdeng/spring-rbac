@@ -13,7 +13,7 @@
       <Table :dataSource="users" :columns="columns" :pagination="false" id="tableUsers">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key==='action'">
-            <Button type="link" @click="()=>confirmDeleteRole(record)">删除</Button>
+            <Button type="link" @click="()=>configResetPassword(record)">重置密码</Button>
           </template>
         </template>
       </Table>
@@ -59,14 +59,16 @@ async function onLoad() {
 const newUser = () => {
   newUserModal.value.show();
 }
-
-const confirmDeleteRole = (role: any) => {
+const configResetPassword = (user: any) => {
   Modal.confirm({
     title: "确认",
-    content: "你确定要删除吗？",
+    content: "你确定要重置密码吗？",
+    okText: "确定",
+    cancelText: "取消",
     onOk: async () => {
       loading.value = true;
       try {
+        await server.resetPassword({userId: user.id});
         await onLoad();
       } catch (e) {
 

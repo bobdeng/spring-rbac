@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 public class UserController {
     @PostMapping("/users")
     @Transactional
+    @Permission(allows = {"user.create"})
     public void newUser(@RequestBody NewUserForm form, @RequestAttribute("tenant") Tenant tenant) {
         User user = tenant.addUser(new UserDescription(form.getName()));
         user.setRoles(tenant.roles().stream().filter(role -> form.getRoles().contains(role.identity())).collect(Collectors.toList()));

@@ -24,4 +24,14 @@ describe('ListTenantUser.cy.ts', () => {
             cy.contains("新增用户").should("exist")
         })
     });
+    it('should reset user password', function () {
+        cy.intercept("PATCH", "/users/2/password", {statusCode: 200, body: {password: "13456"}}).as("reset")
+        cy.intercept("GET", "/users?name=", [{id: 2, description: {name: "张三"}}]).as("listUser")
+        cy.mount(ListTenantUser)
+        cy.contains("重置密码").click().then(() => {
+            cy.contains("确 定").click().then(() => {
+                cy.wait("@reset")
+            })
+        })
+    });
 })

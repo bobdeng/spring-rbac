@@ -100,5 +100,8 @@ export const server = {
     },
     async getTenant() {
         return await ajax(() => axios.get("/tenant", config))
+    },
+    async resetPassword(param: { userId: any }) {
+        return await ajax(() => axios.patch(`/users/${param.userId}/password`, {}, config))
     }
 }
