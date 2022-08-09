@@ -22,7 +22,7 @@ const expandedKeys = ref<number[]>([])
 const loading = ref(false)
 const emit = defineEmits(['select'])
 let organizationsData: OrganizationsData;
-const onLoad = () => {
+const reload = () => {
   server.getOrganizations().then(resp => {
     organizationsData = new OrganizationsData(resp);
     organizations.value = organizationsData.tree
@@ -32,7 +32,10 @@ const onLoad = () => {
 const onSelect = (selectedKeys: any) => {
   emit("select", organizationsData.findById(selectedKeys[0]))
 }
-onLoad();
+reload();
+defineExpose({
+  reload
+})
 </script>
 <script lang="ts">
 import {Organization} from "../../../model/HttpServer";

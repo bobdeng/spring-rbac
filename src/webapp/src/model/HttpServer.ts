@@ -125,5 +125,8 @@ export const server = {
     },
     async getOrganizations(): Promise<Organization[]> {
         return await ajax(() => axios.get("/organizations", config)) as Organization[]
+    },
+    async newOrganization(param: { name: string, parent: number }) {
+        return await ajax(() => axios.post("/organizations", param, config))
     }
 }
