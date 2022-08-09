@@ -21,6 +21,16 @@ export class Function {
     }
 }
 
+export class Organization {
+    id: number
+    description: { name: string, parent: number }
+
+    constructor(id: number, description: { name: string; parent: number }) {
+        this.id = id;
+        this.description = description;
+    }
+}
+
 const config: AxiosRequestConfig = {
     validateStatus: () => true
 }
@@ -112,5 +122,8 @@ export const server = {
     },
     async unlockUser(userId: any) {
         return await ajax(() => axios.delete(`/users/${userId}/lock`, config))
+    },
+    async getOrganizations(): Promise<Organization[]> {
+        return await ajax(() => axios.get("/organizations", config)) as Organization[]
     }
 }
