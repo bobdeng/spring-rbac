@@ -17,6 +17,7 @@
             <generator class="native"></generator>
         </id>
         <property name="name" column="name"/>
+        <property name="status" column="status"/>
         <property name="tenantId" column="tenant_id"/>
 
     </class>

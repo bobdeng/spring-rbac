@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
+import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.server.dao.PasswordDAO;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ public class UserTest extends E2ETest {
     public void setup() {
         userWithTenantFixture.init();
         userLogin(userWithTenantFixture.user());
+        new AdminLoginPage(webDriverHandler).open();
     }
 
     @Test
@@ -43,6 +45,7 @@ public class UserTest extends E2ETest {
         assertTrue(newUserPage.hasText("新增成功"));
         User lisi = userWithTenantFixture.getTenant().users().findByName("李四").get(0);
         assertTrue(lisi.verifyPassword("1344444"));
+        assertEquals(User.UserStatus.Normal, lisi.description().getStatus());
         List<Role> roles = lisi.userRoles().list().collect(Collectors.toList());
         assertEquals(1, roles.size());
         LoginName loginNameOfLisi = userWithTenantFixture.getTenant().loginNames().findByLoginName("lisi").get();
@@ -78,6 +81,7 @@ public class UserTest extends E2ETest {
         listUserPage.open();
         listUserPage.waitUntilNoSpin();
         listUserPage.clickButton("重置密码");
+        listUserPage.waitUntilNoButtonSpin();
         listUserPage.clickButton("确 定");
         listUserPage.waitUntilNoSpin();
         listUserPage.waitUntilNoButtonSpin();
@@ -100,5 +104,30 @@ public class UserTest extends E2ETest {
         assertTrue(setPasswordPage.hasText("修改成功"));
         assertNotEquals(passwordDAO.findAll().iterator().next().description().getPassword(),
                 currentPassword.description().getPassword());
+    }
+
+    @Test
+    public void should_lock_user() {
+        ListUserPage listUserPage = new ListUserPage(webDriverHandler);
+        listUserPage.open();
+        listUserPage.waitUntilNoSpin();
+        listUserPage.clickButton("锁定");
+        listUserPage.waitUntilNoSpin();
+        assertTrue(listUserPage.hasText("用户已锁定"));
+        User user = userWithTenantFixture.getTenant().users().findByIdentity(userWithTenantFixture.user().identity()).get();
+        assertEquals(User.UserStatus.Locked, user.description().getStatus());
+    }
+
+    @Test
+    public void should_unlock_user() {
+        userWithTenantFixture.user().lock();
+        ListUserPage listUserPage = new ListUserPage(webDriverHandler);
+        listUserPage.open();
+        listUserPage.waitUntilNoSpin();
+        listUserPage.clickButton("解锁");
+        listUserPage.waitUntilNoSpin();
+        assertTrue(listUserPage.hasText("用户已解锁"));
+        User user = userWithTenantFixture.getTenant().users().findByIdentity(userWithTenantFixture.user().identity()).get();
+        assertEquals(User.UserStatus.Normal, user.description().getStatus());
     }
 }

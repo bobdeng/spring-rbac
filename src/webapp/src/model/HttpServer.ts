@@ -106,5 +106,11 @@ export const server = {
     },
     async setPassword(param: { password: string; newPassword: string }) {
         return await ajax(() => axios.put("/password", param, config))
+    },
+    async lockUser(userId: any) {
+        return await ajax(() => axios.post(`/users/${userId}/lock`, {}, config))
+    },
+    async unlockUser(userId: any) {
+        return await ajax(() => axios.delete(`/users/${userId}/lock`, config))
     }
 }

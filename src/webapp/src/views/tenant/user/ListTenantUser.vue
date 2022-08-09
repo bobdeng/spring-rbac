@@ -12,8 +12,14 @@
       </div>
       <Table :dataSource="users" :columns="columns" :pagination="false" id="tableUsers">
         <template #bodyCell="{ column, record }">
+          <template v-if="column.key==='status'">
+            <SmileOutlined v-if="record.description.status==='Normal'"/>
+            <LockOutlined v-else/>
+          </template>
           <template v-if="column.key==='action'">
             <Button type="link" @click="()=>configResetPassword(record)">重置密码</Button>
+            <Button type="link" @click="()=>lockUser(record)" v-if="record.description.status==='Normal'">锁定</Button>
+            <Button type="link" @click="()=>unlockUser(record)" v-else>解锁</Button>
           </template>
         </template>
       </Table>
@@ -23,13 +29,19 @@
 
 <script setup lang="ts">
 import {Table, InputSearch, Button, Spin, Modal, Space, notification} from "ant-design-vue";
+import {SmileOutlined, LockOutlined} from "@ant-design/icons-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 import AddUser from "./AddUser.vue";
 
 const columns = ref([
+  {
+    title: '',
+    key: 'status',
+    width: "40px"
+  },
   {
     title: "姓名",
     dataIndex: ['description', 'name'],
@@ -80,6 +92,30 @@ const configResetPassword = (user: any) => {
       }
     }
   })
+}
+const lockUser = async (user: any) => {
+  loading.value = true;
+  try {
+    await server.lockUser(user.id);
+    notification.success({message: "用户已锁定"})
+    await onLoad();
+  } catch (e) {
+    notification.error({message: "错误", description: e as string})
+  } finally {
+    loading.value = false;
+  }
+}
+const unlockUser = async (user: any) => {
+  loading.value = true;
+  try {
+    await server.unlockUser(user.id);
+    notification.success({message: "用户已解锁"})
+    await onLoad();
+  } catch (e) {
+    notification.error({message: "错误", description: e as string})
+  } finally {
+    loading.value = false;
+  }
 }
 
 

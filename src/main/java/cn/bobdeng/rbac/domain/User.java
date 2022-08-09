@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -70,6 +71,16 @@ public class User implements Entity<Integer, UserDescription> {
         roles.forEach(userRoles::save);
     }
 
+    public void lock() {
+        this.description = new UserDescription(description.getName(), UserStatus.Locked);
+        tenant().users().save(this);
+    }
+
+    public void unlock() {
+        this.description = new UserDescription(description.getName(), UserStatus.Normal);
+        tenant().users().save(this);
+    }
+
     public interface UserPassword extends EntityList<Integer, Password> {
         String encodePassword(String rawPassword);
 
@@ -78,5 +89,22 @@ public class User implements Entity<Integer, UserDescription> {
 
     public interface UserRoles extends EntityList<Integer, Role> {
 
+    }
+
+    public enum UserStatus {
+        Normal("normal"), Locked("locked");
+        @Getter
+        private String status;
+
+        UserStatus(String status) {
+
+            this.status = status;
+        }
+
+        public static UserStatus of(String value) {
+            return Stream.of(UserStatus.values())
+                    .filter(status -> status.status.equals(value))
+                    .findFirst().orElse(Normal);
+        }
     }
 }
