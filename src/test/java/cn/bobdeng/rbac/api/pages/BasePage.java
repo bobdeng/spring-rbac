@@ -3,7 +3,11 @@ package cn.bobdeng.rbac.api.pages;
 import cn.bobdeng.rbac.api.WebDriverHandler;
 import org.openqa.selenium.By;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class BasePage {
     protected WebDriverHandler webDriverHandler;
@@ -59,5 +63,19 @@ public class BasePage {
 
     protected String getInputValueById(String id) {
         return WEBDRIVER.findElement(By.id(id)).getAttribute("value");
+    }
+
+    public void waitUntil(Supplier<Boolean> check, int time) {
+        long begin = System.currentTimeMillis();
+        while (System.currentTimeMillis() - begin < time) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (check.get())
+                return;
+        }
+        fail();
     }
 }

@@ -56,5 +56,25 @@
         }
       ]
     }
+  },
+  {
+    "key": "organizations",
+    "description": {
+      "name": "组织管理",
+      "children": [
+        {
+          "key": "organization.create",
+          "description": {
+            "name": "新建组织"
+          }
+        },
+        {
+          "key": "organization.del",
+          "description": {
+            "name": "删除组织"
+          }
+        }
+      ]
+    }
   }
 ]

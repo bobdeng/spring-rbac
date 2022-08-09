@@ -13,20 +13,22 @@
 </template>
 
 <script setup lang="ts">
-import {Tree} from "ant-design-vue";
+import {Tree,Spin} from "ant-design-vue";
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
 
 const organizations = ref([] as OrganizationTreeItem[])
 const expandedKeys = ref<number[]>([])
-const loading = ref(false)
+const loading = ref(true)
 const emit = defineEmits(['select'])
 let organizationsData: OrganizationsData;
 const reload = () => {
+  loading.value = true
   server.getOrganizations().then(resp => {
     organizationsData = new OrganizationsData(resp);
     organizations.value = organizationsData.tree
     expandedKeys.value = organizationsData.all
+    loading.value = false
   })
 }
 const onSelect = (selectedKeys: any) => {

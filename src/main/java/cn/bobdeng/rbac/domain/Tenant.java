@@ -1,5 +1,7 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.tenant.organization.Organization;
+import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import lombok.*;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private Roles roles;
     @Setter
     private HasMany<Integer, Domain> domains;
+    @Setter
+    private Organizations organizations;
 
     public Tenant(TenantDescription tenantDescription) {
 
@@ -89,6 +93,14 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return loginNames;
     }
 
+    public Organizations organizations() {
+        return organizations;
+    }
+
+    public void newOrganization(OrganizationDescription description) {
+        organizations.save(new Organization(description));
+    }
+
 
     public interface Users extends EntityList<Integer, User> {
         User save(User user);
@@ -106,6 +118,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     public interface Roles extends EntityList<Integer, Role> {
 
         void delete(Role role);
+    }
+
+    public interface Organizations extends EntityList<Integer, Organization> {
+
     }
 
 

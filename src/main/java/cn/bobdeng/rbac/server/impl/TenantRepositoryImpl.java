@@ -20,12 +20,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final DomainDAO domainDAO;
     private final UserRoleDAO userRoleDAO;
     private final RoleDAO roleDAO;
+    private final OrganizationDAO organizationDAO;
 
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
@@ -33,6 +34,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         this.domainDAO = domainDAO;
         this.userRoleDAO = userRoleDAO;
         this.roleDAO = roleDAO;
+        this.organizationDAO = organizationDAO;
     }
 
     @Override
@@ -78,7 +80,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public User.UserRoles userRoles(User user) {
-        return new UserRolesImpl(user,userRoleDAO,roleDAO);
+        return new UserRolesImpl(user, userRoleDAO, roleDAO);
     }
 
     @Override
@@ -102,6 +104,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
         tenant.setRoles(new TenantRoles(roleDAO, tenant));
+        tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO));
         return tenant;
     }
 

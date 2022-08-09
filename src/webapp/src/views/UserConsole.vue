@@ -8,6 +8,9 @@
         <MenuItem key="users">
           用户管理
         </MenuItem>
+        <MenuItem key="organizations">
+          组织管理
+        </MenuItem>
         <MenuItem key="set_password">
           修改密码
         </MenuItem>

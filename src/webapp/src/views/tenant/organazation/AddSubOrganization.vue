@@ -41,12 +41,15 @@ const parentId = (): number => {
 }
 const save = async () => {
   try {
+    loading.value = true
     await server.newOrganization({name: form.value.name, parent: parentId()})
     notification.success({message: '新增成功'})
     emit('success')
     visible.value = false;
   } catch (e) {
     notification.error({message: "错误", description: e as string})
+  } finally {
+    loading.value = false
   }
 }
 
