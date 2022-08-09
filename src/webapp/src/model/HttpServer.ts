@@ -103,5 +103,8 @@ export const server = {
     },
     async resetPassword(param: { userId: any }) {
         return await ajax(() => axios.patch(`/users/${param.userId}/password`, {}, config))
+    },
+    async setPassword(param: { password: string; newPassword: string }) {
+        return await ajax(() => axios.put("/password", param, config))
     }
 }
