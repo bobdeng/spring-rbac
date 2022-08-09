@@ -1,14 +1,13 @@
 package cn.bobdeng.rbac.api.user;
 
+import cn.bobdeng.rbac.domain.RawPassword;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.security.Permission;
 import cn.bobdeng.rbac.security.PermissionDeniedException;
+import cn.bobdeng.rbac.security.Session;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
@@ -21,7 +20,18 @@ public class UserPasswordController {
                                              @RequestAttribute("tenant") Tenant tenant) {
         User user = tenant.users().findByIdentity(id).orElseThrow(PermissionDeniedException::new);
         String newPassword = RandomStringUtils.randomAlphanumeric(10);
-        user.resetPassword(newPassword);
+        user.savePassword(new RawPassword(newPassword));
         return new ResetPasswordResult(newPassword);
+    }
+
+    @PutMapping("/password")
+    @Transactional
+    public void setPassword(@RequestAttribute("session") Session session,
+                            @RequestBody SetPasswordForm form,
+                            @RequestAttribute("tenant") Tenant tenant) {
+        User user = tenant.users().findByIdentity(session.userId())
+                .filter(it -> it.verifyPassword(form.getPassword()))
+                .orElseThrow(() -> new RuntimeException("原密码错误"));
+        user.savePassword(new RawPassword(form.getNewPassword()));
     }
 }

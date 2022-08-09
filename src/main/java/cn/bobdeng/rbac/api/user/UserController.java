@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,7 +23,8 @@ public class UserController {
 
     @GetMapping("/users")
     @Transactional
-    public List<User> listUser(@RequestAttribute("tenant") Tenant tenant) {
-        return tenant.users().findByName("%");
+    public List<User> listUser(@RequestAttribute("tenant") Tenant tenant,
+                               @RequestParam(value = "name", required = false) String name) {
+        return tenant.users().findByName(Optional.ofNullable(name).orElse("") + "%");
     }
 }

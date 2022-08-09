@@ -65,14 +65,15 @@ public class UserTest extends E2ETest {
         listUserPage.inputById("张\n", "search");
         listUserPage.waitUntilNoSpin();
         assertTrue(listUserPage.hasText("张三"));//in fixture
-        listUserPage.inputById("李\n", "search");
+        listUserPage.inputById("\b李\n", "search");
         listUserPage.waitUntilNoSpin();
+        listUserPage.waitUntilNoButtonSpin();
         assertFalse(listUserPage.hasText("张三"));//in fixture
     }
 
     @Test
     public void should_reset_user_password() {
-        Password firstPassword = passwordDAO.findAll().iterator().next();
+        Password currentPassword = passwordDAO.findAll().iterator().next();
         ListUserPage listUserPage = new ListUserPage(webDriverHandler);
         listUserPage.open();
         listUserPage.waitUntilNoSpin();
@@ -82,6 +83,22 @@ public class UserTest extends E2ETest {
         listUserPage.waitUntilNoButtonSpin();
         assertTrue(listUserPage.hasText("新密码为"));
         assertNotEquals(passwordDAO.findAll().iterator().next().description().getPassword(),
-                firstPassword.description().getPassword());
+                currentPassword.description().getPassword());
+    }
+
+    @Test
+    public void should_change_password() {
+        Password currentPassword = passwordDAO.findAll().iterator().next();
+
+        SetPasswordPage setPasswordPage = new SetPasswordPage(webDriverHandler);
+        setPasswordPage.open();
+        setPasswordPage.inputCurrentPassword("123456");
+        setPasswordPage.inputNewPassword("cwkidSd2");
+        setPasswordPage.inputConfirmation("cwkidSd2");
+        setPasswordPage.save();
+        setPasswordPage.waitUntilNoButtonSpin();
+        assertTrue(setPasswordPage.hasText("修改成功"));
+        assertNotEquals(passwordDAO.findAll().iterator().next().description().getPassword(),
+                currentPassword.description().getPassword());
     }
 }

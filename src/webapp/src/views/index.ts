@@ -6,6 +6,7 @@ import TenantsView from "./tenant/Tenants.vue"
 import TenantDomainView from './tenant/domain/ListTenantDomain.vue'
 import TenantRoleView from './tenant/role/ListTenantRole.vue'
 import UsersView from './tenant/user/ListTenantUser.vue'
+import SetPasswordView from './tenant/user/UserPassword.vue'
 
 export const Home = HomeView;
 export const Console = ConsoleView
@@ -15,6 +16,7 @@ export const Role = TenantRoleView
 
 export const UserConsole = UserConsoleView
 export const Users = UsersView
+export const SetPassword = SetPasswordView
 
 
 

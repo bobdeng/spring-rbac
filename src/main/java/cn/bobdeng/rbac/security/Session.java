@@ -24,4 +24,8 @@ public class Session {
     public UserToken userToken() {
         return this.userToken;
     }
+
+    public Integer userId() {
+        return userToken.getId();
+    }
 }
