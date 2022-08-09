@@ -31,6 +31,7 @@ describe('ListTenantUser.cy.ts', () => {
         cy.contains("重置密码").click().then(() => {
             cy.contains("确 定").click().then(() => {
                 cy.wait("@reset")
+                cy.contains("新密码为：13456")
             })
         })
     });

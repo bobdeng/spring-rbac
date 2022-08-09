@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import {Table, InputSearch, Button, Spin, Modal, Space} from "ant-design-vue";
+import {Table, InputSearch, Button, Spin, Modal, Space, notification} from "ant-design-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
@@ -68,10 +68,13 @@ const configResetPassword = (user: any) => {
     onOk: async () => {
       loading.value = true;
       try {
-        await server.resetPassword({userId: user.id});
+        let resp = await server.resetPassword({userId: user.id});
+        notification.success({
+          message: "重置成功，新密码为：" + resp.password
+        })
         await onLoad();
       } catch (e) {
-
+        notification.error({message: "错误", description: e as string})
       } finally {
         loading.value = false;
       }

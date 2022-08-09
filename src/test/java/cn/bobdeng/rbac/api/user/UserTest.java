@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.api.user;
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.server.dao.PasswordDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserTest extends E2ETest {
     @Autowired
     UserWithTenantFixture userWithTenantFixture;
+    @Autowired
+    PasswordDAO passwordDAO;
 
     @BeforeEach
     public void setup() {
@@ -65,5 +68,20 @@ public class UserTest extends E2ETest {
         listUserPage.inputById("李\n", "search");
         listUserPage.waitUntilNoSpin();
         assertFalse(listUserPage.hasText("张三"));//in fixture
+    }
+
+    @Test
+    public void should_reset_user_password() {
+        Password firstPassword = passwordDAO.findAll().iterator().next();
+        ListUserPage listUserPage = new ListUserPage(webDriverHandler);
+        listUserPage.open();
+        listUserPage.waitUntilNoSpin();
+        listUserPage.clickButton("重置密码");
+        listUserPage.clickButton("确 定");
+        listUserPage.waitUntilNoSpin();
+
+        assertTrue(listUserPage.hasText("新密码为"));
+        assertNotEquals(passwordDAO.findAll().iterator().next().description().getPassword(),
+                firstPassword.description().getPassword());
     }
 }

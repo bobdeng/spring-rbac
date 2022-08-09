@@ -28,9 +28,11 @@ public class User implements Entity<Integer, UserDescription> {
         this.id = id;
         this.description = description;
     }
-    public UserRoles userRoles(){
+
+    public UserRoles userRoles() {
         return userRoles;
     }
+
     public Tenant tenant() {
         return tenant.get();
     }
@@ -66,6 +68,14 @@ public class User implements Entity<Integer, UserDescription> {
 
     public void setRoles(List<Role> roles) {
         roles.forEach(userRoles::save);
+    }
+
+    public void resetPassword(String newPassword) {
+        this.userPassword.findByIdentity(identity())
+                .ifPresent(password -> {
+                    password.setDescription(new PasswordDescription(new RawPassword(newPassword), userPassword));
+                    userPassword.save(password);
+                });
     }
 
     public interface UserPassword extends EntityList<Integer, Password> {

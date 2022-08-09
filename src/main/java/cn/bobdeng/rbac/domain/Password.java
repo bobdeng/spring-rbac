@@ -20,4 +20,6 @@ public class Password implements Entity<Integer, PasswordDescription> {
     public PasswordDescription description() {
         return description;
     }
+
+
 }
