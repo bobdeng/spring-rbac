@@ -2,7 +2,7 @@
   <div>
     <Spin :spinning="loading">
       <Tree
-          :fieldNames="{title:'name',key:'id'}"
+          :fieldNames="{title:'name'}"
           :treeData="organizations"
           v-model:expandedKeys="expandedKeys"
           @select="onSelect"
@@ -41,12 +41,13 @@ defineExpose({
 import {Organization} from "../../../model/HttpServer";
 
 class OrganizationTreeItem {
-  id: number
+  key: number
   name: string
   children: OrganizationTreeItem[]
 
-  constructor(id: number, name: string, children: OrganizationTreeItem[]) {
-    this.id = id;
+
+  constructor(key: number, name: string, children: OrganizationTreeItem[]) {
+    this.key = key;
     this.name = name;
     this.children = children;
   }
@@ -76,7 +77,7 @@ class OrganizationsData {
 
   private readSubOrganizations(organizations: OrganizationTreeItem[]) {
     organizations.forEach(organization => {
-      organization.children = this._organizations.filter(it => it.description.parent === organization.id)
+      organization.children = this._organizations.filter(it => it.description.parent === organization.key)
           .map(it => new OrganizationTreeItem(it.id, it.description.name, []))
       this.readSubOrganizations(organization.children)
     })

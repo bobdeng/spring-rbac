@@ -6,7 +6,7 @@ describe('AddOrganization.cy.ts', () => {
         let onSuccessSpy = cy.spy().as("onSuccessSpy")
         cy.intercept("POST", "/organizations", {statusCode: 200}).as("newOrganization")
         cy.mount(AddSubOrganization, {props: {onSuccess: onSuccessSpy}}).then(() => {
-            Cypress.vue.$.exposeProxy.show()
+            (Cypress.vue.$.exposeProxy as any).show()
             cy.get("#inputName").type("子公司名称")
             cy.contains("确 定").click().then(() => {
                 cy.contains("新增成功")
@@ -22,7 +22,7 @@ describe('AddOrganization.cy.ts', () => {
         let onSuccessSpy = cy.spy().as("onSuccessSpy")
         cy.intercept("POST", "/organizations", {statusCode: 400, body: "名字重复"}).as("newOrganization")
         cy.mount(AddSubOrganization, {props: {onSuccess: onSuccessSpy}}).then(() => {
-            Cypress.vue.$.exposeProxy.show()
+            (Cypress.vue.$.exposeProxy as any).show()
             cy.get("#inputName").type("子公司名称")
             cy.contains("确 定").click().then(() => {
                 cy.contains("名字重复")

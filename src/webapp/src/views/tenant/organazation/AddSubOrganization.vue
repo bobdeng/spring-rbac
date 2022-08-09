@@ -10,7 +10,7 @@
     >
       <Form v-model:value="form">
         <FormItem label="名称">
-          <Input maxlength="20" v-model:value="form.name" id="inputName"/>
+          <Input :maxlength="20" v-model:value="form.name" id="inputName"/>
         </FormItem>
       </Form>
     </Modal>
