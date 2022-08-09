@@ -79,7 +79,7 @@ public class UserTest extends E2ETest {
         listUserPage.clickButton("重置密码");
         listUserPage.clickButton("确 定");
         listUserPage.waitUntilNoSpin();
-
+        listUserPage.waitUntilNoButtonSpin();
         assertTrue(listUserPage.hasText("新密码为"));
         assertNotEquals(passwordDAO.findAll().iterator().next().description().getPassword(),
                 firstPassword.description().getPassword());
