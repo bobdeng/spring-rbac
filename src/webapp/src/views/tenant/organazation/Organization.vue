@@ -8,7 +8,7 @@
       </PageHeader>
       <Divider/>
     </Spin>
-    <AddSubOrganization :parent="organization" ref="newOrganizationModal"/>
+    <AddSubOrganization :parent="organization" ref="newOrganizationModal" @success="onSuccess"/>
   </div>
 </template>
 
@@ -26,8 +26,12 @@ const name = computed(() => {
 const props = defineProps(['organization'])
 const loading = ref(false)
 const newOrganizationModal = ref()
+const emit = defineEmits(['add'])
 const addOrganization = () => {
   newOrganizationModal.value.show()
+}
+const onSuccess = () => {
+  emit('add')
 }
 </script>
 

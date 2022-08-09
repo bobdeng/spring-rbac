@@ -2,10 +2,10 @@
   <div>
     <Layout style="min-height: 400px;">
       <LayoutSider>
-        <OrganizationTree @select="onOrganizationSelect"/>
+        <OrganizationTree @select="onOrganizationSelect" ref="tree"/>
       </LayoutSider>
       <LayoutContent>
-        <OrganizationView :organization="organization"/>
+        <OrganizationView :organization="organization" @add="onAdd"/>
       </LayoutContent>
     </Layout>
   </div>
@@ -19,8 +19,12 @@ import {Organization} from "../../../model/HttpServer";
 import {ref} from "vue";
 
 const organization = ref<Organization>()
+const tree = ref()
 const onOrganizationSelect = (selected: any) => {
   organization.value = selected;
+}
+const onAdd = () => {
+  tree.value.reload()
 }
 </script>
 

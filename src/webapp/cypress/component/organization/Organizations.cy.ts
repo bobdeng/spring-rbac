@@ -20,4 +20,18 @@ describe('Organizations.cy.ts', () => {
             cy.contains("新增组织").should('exist')
         })
     });
+
+    it('should 刷新树，当添加成功', function () {
+        cy.fixture("organization/organizations", 'utf8').then((json) => {
+            cy.intercept("GET", "/organizations", json).as("list")
+        })
+        cy.intercept("POST", "/organizations", {statusCode: 200}).as("newOrganization")
+        cy.mount(Organizations)
+        cy.wait("@list")
+        cy.contains("添加下级单位").click().then(() => {
+            cy.contains("确 定").click().then(()=>{
+                cy.wait("@list")
+            })
+        })
+    });
 })
