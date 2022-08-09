@@ -70,14 +70,6 @@ public class User implements Entity<Integer, UserDescription> {
         roles.forEach(userRoles::save);
     }
 
-    public void resetPassword(String newPassword) {
-        this.userPassword.findByIdentity(identity())
-                .ifPresent(password -> {
-                    password.setDescription(new PasswordDescription(new RawPassword(newPassword), userPassword));
-                    userPassword.save(password);
-                });
-    }
-
     public interface UserPassword extends EntityList<Integer, Password> {
         String encodePassword(String rawPassword);
 

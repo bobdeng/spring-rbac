@@ -35,6 +35,9 @@ const tenant = ref({id: 0, description: {name: ""}})
 async function save() {
   loading.value = true;
   try {
+    if (newPassword.value !== confirmation.value) {
+      throw "两次密码输入不一致";
+    }
     await server.setPassword({password: password.value, newPassword: newPassword.value})
     notification.success({message: "修改成功"})
     reset();
