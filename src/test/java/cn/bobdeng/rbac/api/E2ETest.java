@@ -12,6 +12,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.function.Supplier;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -39,10 +43,24 @@ public abstract class E2ETest {
         adminLoginPage.setCookie(Cookies.AUTHORIZATION, new UserToken(user).toString());
     }
 
-    protected void clearLogin(){
+    protected void clearLogin() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         webDriverHandler.removeAllCookies();
+    }
+
+    public void waitUntil(Supplier<Boolean> check, int time) {
+        long begin = System.currentTimeMillis();
+        while (System.currentTimeMillis() - begin < time) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (check.get())
+                return;
+        }
+        fail();
     }
 
 }

@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import {Table, InputSearch, Button, Spin, Modal, Space} from "ant-design-vue";
+import {Table, InputSearch, Button, Spin, Modal, Space, notification} from "ant-design-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
@@ -69,9 +69,10 @@ const confirmDeleteRole = (role: any) => {
       loading.value = true;
       try {
         await server.deleteRole({tenant: tenant.value, role: role.id});
+        notification.success({message: "删除成功"})
         await onLoad();
       } catch (e) {
-
+        notification.error({message: "错误", description: e as string})
       } finally {
         loading.value = false;
       }

@@ -51,6 +51,6 @@ public class EmployeeTest extends E2ETest {
         organizationsPage.waitUntilNoSpin();
         organizationsPage.waitUntil(() -> organizationsPage.hasText("删除成功"), 1000);
         organizationsPage.waitUntilNoSpin();
-        assertFalse(organizationsPage.hasText("张三"));
+        waitUntil(() -> !organizationsPage.hasText("张三"), 1000);
     }
 }

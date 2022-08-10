@@ -20,7 +20,7 @@ public class UserLoginTest extends E2ETest {
     public void show_tenant_name() {
         AdminLoginPage loginPage = new AdminLoginPage(webDriverHandler);
         loginPage.open();
-        assertTrue(loginPage.hasText("租户1"));
+        waitUntil(() -> loginPage.hasText("租户1"), 1000);
     }
 
     @Test

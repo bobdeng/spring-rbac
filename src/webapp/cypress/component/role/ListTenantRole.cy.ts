@@ -35,6 +35,7 @@ describe('ListTenantRole.cy.ts', () => {
         cy.intercept("DELETE", "/tenants/101/roles/102", {statusCode: 200}).as("delete")
         cy.contains("删除").trigger("click").then(() => {
             cy.contains("OK").click().then(() => {
+                cy.contains("删除成功")
                 cy.wait("@delete")
                 cy.wait("@listRoles")
             })

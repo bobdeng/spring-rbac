@@ -90,6 +90,7 @@ public class RoleTest extends E2ETest {
         listTenantRolePage.waitUntil(() -> listTenantRolePage.hasText("OK"), 1000);
         listTenantRolePage.clickContent("OK");
         listTenantRolePage.waitUntilNoSpin();
+        waitUntil(() -> listTenantRolePage.hasText("删除成功"), 1000);
         List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
         assertEquals(0, roles.size());
     }

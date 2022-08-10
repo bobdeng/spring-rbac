@@ -85,7 +85,7 @@ public class UserTest extends E2ETest {
         listUserPage.clickButton("确 定");
         listUserPage.waitUntilNoSpin();
         listUserPage.waitUntilNoButtonSpin();
-        assertTrue(listUserPage.hasText("新密码为"));
+        waitUntil(() -> listUserPage.hasText("新密码为"), 1000);
         assertNotEquals(passwordDAO.findAll().iterator().next().description().getPassword(),
                 currentPassword.description().getPassword());
     }

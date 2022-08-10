@@ -15,9 +15,6 @@ configurations {
         extendsFrom annotationProcessor
     }
     providedRuntime
-    cucumberRuntime {
-        extendsFrom testImplementation
-    }
 }
 repositories {
     mavenCentral()
@@ -50,20 +47,13 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-task cucumber(type: JavaExec) {
-    dependsOn assemble, testClasses
-    main = "io.cucumber.core.cli.Main"
-    classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-    environment "SPRING_PROFILES_ACTIVE", "test"
-    args = ['--plugin', 'pretty', '--glue', 'com.odde', 'src/test/resources']
-}
+
 webdriverBinaries {
     chromedriver {
         version = '103.0.5060.134'
         fallbackTo32Bit = true
     }
     driverUrlsConfiguration = resources.text.fromFile('src/test/resources/webdriver_download_config.json')
-    configureTask(cucumber)
 }
 publishing {
     publications {
