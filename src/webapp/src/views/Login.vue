@@ -1,18 +1,15 @@
 <template>
-  <div>
-    <Card title="登录" style="width: 480px;">
-      <div>{{ tenant.description.name }}</div>
-      <Form :label-col="{style:{width:'150px'}}" :wrapper-col="{span:16}">
-        <FormItem>
-          <Alert v-if="error" id="error" :message="error" type="error"/>
-        </FormItem>
+  <div style="display: flex;justify-content: center;">
+    <Card :title="tenant.description.name+'  登录'" style="width: 480px;margin-top: 100px;">
+      <Alert v-if="error" id="error" :message="error" type="error" style="margin-bottom: 10px;"/>
+      <Form :label-col="{span:8}" :wrapper-col="{span:16}">
         <FormItem label="登录名">
           <Input v-model:value="loginName" id="inputLoginName" :maxlength="20"/>
         </FormItem>
         <FormItem label="密码">
           <InputPassword v-model:value="password" id="inputPassword"/>
         </FormItem>
-        <FormItem>
+        <FormItem :wrapper-col="{ offset: 8, span: 16 }">
           <Button type="primary" @click="login" id="buttonLogin" :loading="loading">登录</Button>
         </FormItem>
       </Form>

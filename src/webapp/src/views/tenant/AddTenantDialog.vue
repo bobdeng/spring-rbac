@@ -3,6 +3,7 @@
     <Button type="primary" @click="show" id="buttonShow">新增</Button>
     <Modal v-if="visible" id="dialog" v-model:visible="visible"
            cancelText="取消"
+           title="新增租户"
            okText="确定"
            :ok-button-props="{ loading:loading}"
            :maskClosable="false"
