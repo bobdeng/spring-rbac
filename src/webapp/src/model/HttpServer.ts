@@ -1,5 +1,4 @@
 import axios, {AxiosRequestConfig} from "axios";
-import {Ref, UnwrapRef} from "vue";
 
 export class LoginForm {
     password: string;
@@ -50,7 +49,7 @@ export async function ajax(fun: any) {
         return Promise.reject(response.status)
     }
     if (Array.isArray(response.data)) {
-        return Promise.reject(response.data.map((error: any) => error.error).join("\n"))
+        return Promise.reject(response.data.map((error: any) => error.error).join("；"))
     }
     return Promise.reject(response.data)
 }

@@ -35,7 +35,7 @@ public class UserPermissionTest extends E2ETest {
     }
 
     @Test
-    public void should_get_all_permissions() {
+    public void should_get_all_permissions_json() {
         UserPermissionsPage page = new UserPermissionsPage(webDriverHandler);
         page.open();
         assertTrue(page.hasText("user.create"));

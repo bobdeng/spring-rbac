@@ -14,9 +14,13 @@ public class FieldChecker {
     private final List<FieldError> errors;
 
     public FieldChecker(String fieldName, Object value) {
+        this(fieldName, value, new ArrayList<>());
+    }
+
+    public FieldChecker(String name, Object value, List<FieldError> errors) {
         this.value = value;
-        this.fieldName = fieldName;
-        this.errors = new ArrayList<>();
+        this.fieldName = name;
+        this.errors = errors;
     }
 
     public static FieldChecker of(String fieldName, Object value) {
@@ -50,6 +54,16 @@ public class FieldChecker {
             errors.add(new FieldError(fieldName, message));
         }
         return this;
+    }
+
+    public void throwIfHasErrors() {
+        if (this.errors.size() > 0) {
+            throw new FieldIllegalException(this.errors);
+        }
+    }
+
+    public FieldChecker concat(String name, String value) {
+        return new FieldChecker(name, value, getErrors());
     }
 
     @Data

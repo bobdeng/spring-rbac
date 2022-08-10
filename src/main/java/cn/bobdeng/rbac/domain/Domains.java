@@ -9,6 +9,7 @@ public class Domains {
     }
 
     public Domain newDomain(DomainDescription description) {
+        description.validate();
         if (this.domainRepository.findByDomain(description.getDomain()).isPresent()) {
             throw new DuplicateDomainException();
         }

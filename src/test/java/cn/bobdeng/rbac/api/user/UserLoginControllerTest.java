@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static cn.bobdeng.rbac.api.user.PermissionTest.assertPermissionAnnotation;
+
 class UserLoginControllerTest extends E2ETest {
     @Autowired
     UserWithTenantFixture userWithTenantFixture;
@@ -48,5 +50,10 @@ class UserLoginControllerTest extends E2ETest {
         adminLoginPage.loginWith("bobdeng", "123456");
         adminLoginPage.waitUntilNoButtonSpin();
         adminLoginPage.userLocked();
+    }
+
+    @Test
+    public void should_has_permission_annotation() {
+        assertPermissionAnnotation(UserController.class, "newUser", new String[]{"user.create"});
     }
 }

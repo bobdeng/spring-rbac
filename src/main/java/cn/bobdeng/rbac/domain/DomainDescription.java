@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -14,5 +16,12 @@ public class DomainDescription {
     public DomainDescription(String domain, Integer tenantId) {
         this.domain = domain;
         this.tenantId = tenantId;
+    }
+
+    public void validate() {
+        FieldChecker.of("domain", this.domain)
+                .lengthLessThan(50, "域名最长50个字符")
+                .notEmpty("域名不能为空")
+                .throwIfHasErrors();
     }
 }

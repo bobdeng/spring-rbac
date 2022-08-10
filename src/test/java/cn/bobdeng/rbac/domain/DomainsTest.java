@@ -25,4 +25,17 @@ class DomainsTest {
         Domains domains = new Domains(domainRepository);
         assertThrows(DuplicateDomainException.class, () -> domains.newDomain(localhost));
     }
+
+    @Test
+    public void throw_when_domain_length_more_than_50() {
+        assertThrows(FieldIllegalException.class, () ->
+                new Domains(null)
+                        .newDomain(new DomainDescription("www.a123456789a123456789a123456789a123456789a123456", 1)));
+    }
+    @Test
+    public void throw_when_domain_length_is_empty() {
+        assertThrows(FieldIllegalException.class, () ->
+                new Domains(null)
+                        .newDomain(new DomainDescription("", 1)));
+    }
 }

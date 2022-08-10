@@ -5,6 +5,7 @@ describe('AddTenantDialog.cy.ts', () => {
         cy.mount(AddTenantDialog)
         cy.get(".ant-modal").should("not.exist")
     })
+
     it('show when call show', () => {
         cy.mount(AddTenantDialog)
         cy.get("#buttonShow").click().then(() => {
@@ -47,6 +48,19 @@ describe('AddTenantDialog.cy.ts', () => {
             cy.contains('确 定').click()
             cy.get(".ant-modal").should("exist")
             cy.contains("租户名重复").should("exist")
+        })
+    });
+
+    it('should error when save fail with fields error', function () {
+        cy.intercept('POST', "/tenants", {
+            statusCode: 400, body: [{"field": "name", "error": "名字不能为空"},{"field": "name", "error": "第二个错误"}]
+        }).as("newTenant")
+        cy.mount(AddTenantDialog)
+        cy.get("#buttonShow").click().then(() => {
+            cy.get("#inputName").type("租户1")
+            cy.contains('确 定').click()
+            cy.get(".ant-modal").should("exist")
+            cy.contains("名字不能为空").should("exist")
         })
     });
 })

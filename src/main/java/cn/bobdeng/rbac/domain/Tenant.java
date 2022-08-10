@@ -101,6 +101,7 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     }
 
     public void newOrganization(OrganizationDescription description) {
+        description.validate();
         organizations.save(new Organization(description));
     }
 

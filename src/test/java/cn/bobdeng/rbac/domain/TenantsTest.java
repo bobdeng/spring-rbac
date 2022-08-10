@@ -4,9 +4,11 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantDescription;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.Tenants;
+import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -26,5 +28,6 @@ public class TenantsTest {
         tenants.add(tenantDescription);
         verify(tenantRepository).save(new Tenant(tenantDescription));
     }
+
 
 }
