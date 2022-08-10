@@ -30,7 +30,7 @@ public class User implements Entity<Integer, UserDescription> {
         this.description = description;
     }
 
-    public UserRoles userRoles() {
+    public UserRoles roles() {
         return userRoles;
     }
 

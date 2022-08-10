@@ -27,14 +27,22 @@ public class AdminLoginController {
                            HttpServletResponse response) throws IOException {
         AdminPassword adminPassword = new AdminPassword(adminPasswordNotifier, store);
         if (!adminPassword.verify(adminLoginForm.getPassword())) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().println("密码已经发出");
+            responseError(response);
             return;
         }
+        setLoginCookie(response);
+    }
+
+    private void setLoginCookie(HttpServletResponse response) {
         String value = new AdminToken().toString();
         Cookie cookie = new Cookie(Cookies.ADMIN_AUTHORIZATION, value);
         cookie.setPath("/");
         response.addCookie(cookie);
+    }
+
+    private void responseError(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.setContentType("application/json;charset=utf-8");
+        response.getWriter().println("密码已经发出");
     }
 }
