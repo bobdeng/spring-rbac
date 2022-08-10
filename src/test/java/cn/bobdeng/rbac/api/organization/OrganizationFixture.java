@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api.organization;
 
+import cn.bobdeng.rbac.ClearTable;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.server.dao.OrganizationDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDO;
@@ -12,12 +13,12 @@ import java.util.List;
 @Service
 public class OrganizationFixture {
     @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
     OrganizationDAO organizationDAO;
+    @Autowired
+    ClearTable clearTable;
 
     public void clear() {
-        jdbcTemplate.execute("truncate table t_rbac_organization");
+        clearTable.clearTable("t_rbac_organization");
     }
 
     public OrganizationDO newOne(Tenant tenant) {

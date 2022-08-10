@@ -20,11 +20,11 @@ public class EmployeeTest extends E2ETest {
     @BeforeEach
     public void setup() {
         userWithTenantFixture.init();
-        userLogin(userWithTenantFixture.user());
         organizationFixture.clear();
         employeeFixture.clear();
         OrganizationDO organizationDO = organizationFixture.newOne(userWithTenantFixture.getTenant());
         employeeFixture.set(organizationDO.getId(), userWithTenantFixture.user());
+        userLogin(userWithTenantFixture.user());
     }
 
     @Test
@@ -50,6 +50,7 @@ public class EmployeeTest extends E2ETest {
         organizationsPage.clickContent("删除");
         organizationsPage.waitUntilNoSpin();
         organizationsPage.waitUntil(() -> organizationsPage.hasText("删除成功"), 1000);
+        organizationsPage.waitUntilNoSpin();
         assertFalse(organizationsPage.hasText("张三"));
     }
 }

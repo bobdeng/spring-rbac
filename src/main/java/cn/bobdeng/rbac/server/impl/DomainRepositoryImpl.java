@@ -53,7 +53,7 @@ public class DomainRepositoryImpl implements DomainRepository {
     }
 
     private Domain inject(Domain domain) {
-        domain.setTenant(() -> tenantRepository.findByIdentity(domain.identity()).orElse(null));
+        domain.setTenant(() -> tenantRepository.findByIdentity(domain.description().getTenantId()).orElse(null));
         return domain;
     }
 

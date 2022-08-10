@@ -5,6 +5,7 @@ import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
+import cn.bobdeng.rbac.server.dao.UserDO;
 
 import java.util.List;
 import java.util.Optional;

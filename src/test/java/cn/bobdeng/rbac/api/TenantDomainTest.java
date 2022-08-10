@@ -22,8 +22,8 @@ public class TenantDomainTest extends E2ETest {
     @BeforeEach
     public void setup() {
         adminLogin();
-        clearTable("t_rbac_tenant");
-        clearTable("t_rbac_domain");
+        clearTable.clearTable("t_rbac_tenant");
+        clearTable.clearTable("t_rbac_domain");
         tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
     }
 

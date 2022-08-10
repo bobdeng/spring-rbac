@@ -20,7 +20,7 @@ public class ListTenantTest extends E2ETest {
 
     @BeforeEach
     public void setup() {
-        clearTable("t_rbac_tenant");
+        clearTable.clearTable("t_rbac_tenant");
         adminLogin();
     }
 

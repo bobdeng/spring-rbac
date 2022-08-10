@@ -26,8 +26,8 @@ repositories {
 
 dependencies {
     api("org.springframework.boot:spring-boot-starter")
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-jersey'
+    api 'org.springframework.boot:spring-boot-starter-hateoas'
+    api 'org.springframework.boot:spring-boot-starter-jersey'
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
     api("org.springframework.security:spring-security-core:5.3.2.RELEASE")
     api 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.2'
@@ -70,7 +70,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'cn.bobdeng.rbac'
             artifactId = 'rbac-server'
-            version = '0.1'
+            version = '0.3'
             from components.java
         }
     }

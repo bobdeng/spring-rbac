@@ -26,8 +26,8 @@ public class RoleTest extends E2ETest {
     @BeforeEach
     public void setup() {
         adminLogin();
-        clearTable("t_rbac_tenant");
-        clearTable("t_rbac_role");
+        clearTable.clearTable("t_rbac_tenant");
+        clearTable.clearTable("t_rbac_role");
         tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
     }
 
@@ -88,7 +88,7 @@ public class RoleTest extends E2ETest {
         listTenantRolePage.waitUntilNoSpin();
         listTenantRolePage.clickButton("删除");
         listTenantRolePage.waitUntil(() -> listTenantRolePage.hasText("OK"), 1000);
-        listTenantRolePage.clickButton("OK");
+        listTenantRolePage.clickContent("OK");
         listTenantRolePage.waitUntilNoSpin();
         List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
         assertEquals(0, roles.size());

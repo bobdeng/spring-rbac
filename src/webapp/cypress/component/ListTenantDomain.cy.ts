@@ -34,6 +34,7 @@ describe('ListTenantDomain.cy.ts', () => {
             cy.contains("你确定要删除吗？").should("exist")
             cy.contains("OK").click().then(() => {
                 cy.wait("@deleteDomain")
+                cy.contains("删除成功")
                 cy.wait("@listDomain")
             })
         })

@@ -2,9 +2,10 @@ package cn.bobdeng.rbac.security;
 
 import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.UserToken;
+import lombok.ToString;
 
 import java.util.Optional;
-
+@ToString
 public class Session {
 
     private UserToken userToken;

@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.ClearTable;
 import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.domain.User;
@@ -11,8 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.transaction.Transactional;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -23,10 +22,8 @@ public abstract class E2ETest {
     protected JdbcTemplate jdbcTemplate;
     @Autowired
     protected MockMvc mockMvc;
-
-    protected void clearTable(String tableName) {
-        jdbcTemplate.execute("truncate table " + tableName);
-    }
+    @Autowired
+    protected ClearTable clearTable;
 
     protected void adminLogin() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);

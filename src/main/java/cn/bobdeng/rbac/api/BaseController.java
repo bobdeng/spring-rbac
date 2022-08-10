@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.List;
 @Slf4j
 public class BaseController {
     @ExceptionHandler(PermissionDeniedException.class)
-    public void onPermissionDenied(HttpServletResponse response) throws IOException {
+    public void onPermissionDenied(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        log.warn("无权限：" + request.getAttribute("session"));
         sendResponseError(response, HttpServletResponse.SC_FORBIDDEN, "无权限");
     }
 

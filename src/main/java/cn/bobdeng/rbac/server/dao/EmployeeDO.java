@@ -16,7 +16,6 @@ import java.util.Objects;
 @Table(name = "t_rbac_employee")
 public class EmployeeDO {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer organizationId;
 

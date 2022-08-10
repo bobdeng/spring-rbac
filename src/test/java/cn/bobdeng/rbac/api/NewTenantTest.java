@@ -26,7 +26,7 @@ public class NewTenantTest extends E2ETest {
 
     @BeforeEach
     public void setup() {
-        jdbcTemplate.execute("truncate table t_rbac_tenant");
+        clearTable.clearTable("t_rbac_tenant");
     }
 
     @Test

@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import {Table, Space, Button, Spin, Modal} from "ant-design-vue";
+import {Table, Space, Button, Spin, Modal, notification} from "ant-design-vue";
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
@@ -61,8 +61,9 @@ const confirmDeleteDomain = (domain: any) => {
       try {
         await server.deleteDomain(domain.id);
         await onLoad();
+        notification.success({message: "删除成功"})
       } catch (e) {
-
+        notification.error({message: "删除失败", description: e as string})
       } finally {
         loading.value = false;
       }

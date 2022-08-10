@@ -15,13 +15,21 @@ public class AdminLoginTest extends E2ETest {
     AdminPasswordNotifierImpl adminPasswordNotifier;
     @Autowired
     TestController testController;
+    @Autowired
+    UserWithTenantFixture userWithTenantFixture;
 
     @BeforeEach
     public void setup() {
+        userWithTenantFixture.init();
         webDriverHandler.removeAllCookies();
         adminPasswordNotifier.clear();
     }
-
+    @Test
+    public void should_show_tenant_name(){
+        AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
+        adminLoginPage.open();
+        adminLoginPage.waitUntil(()->adminLoginPage.hasText("租户1"),1000);
+    }
     @Test
     public void should_send_admin_password_when_fail() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);

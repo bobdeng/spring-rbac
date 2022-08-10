@@ -6,9 +6,7 @@ import cn.bobdeng.rbac.server.dao.LoginNameDO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -24,8 +22,8 @@ public class TenantLoginNameTest extends BaseTest{
 
     @BeforeEach
     public void setup() {
-        clearTable("t_rbac_tenant");
-        clearTable("t_rbac_login_name");
+        clearTable.clearTable("t_rbac_tenant");
+        clearTable.clearTable("t_rbac_login_name");
     }
 
     @Test
