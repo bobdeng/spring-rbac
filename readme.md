@@ -10,13 +10,37 @@
 ## 导入库
 - Maven
 ```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 <dependency>
-            <groupId>cn.bobdeng.rbac</groupId>
-            <artifactId>rbac-server</artifactId>
-            <version>版本</version>
- </dependency>
+    <groupId>com.github.bobdeng</groupId>
+    <artifactId>spring-rbac</artifactId>
+    <version>Tag</version>
+</dependency>
+```
+- gradle
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencies {
+	        implementation 'com.github.bobdeng:spring-rbac:Tag'
+	}
 ```
 ## 配置应用
+- application.properties
+```properties
+spring.jpa.mapping-resources=/rbac/orm.xml
+jwt.token=123456
+jwt.expire=8640000000
+jwt.prefix=Token:
+```
 - Application配置
 ```java
   @ComponentScan({"应用包", "cn.bobdeng"})
