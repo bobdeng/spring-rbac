@@ -128,5 +128,15 @@ export const server = {
     },
     async newOrganization(param: { name: string, parent: number }) {
         return await ajax(() => axios.post("/organizations", param, config))
+    },
+    async listEmployees(organization: any) {
+        return await ajax(() => axios.get(`/organizations/${organization.id}/employees`, config))
+    },
+    async putUserToOrganization(param: { organizationId: any; userId: any }) {
+        return await ajax(() => axios.put(`/organizations/${param.organizationId}/employees`, param, config))
+    },
+    async deleteEmployee(param: { organizationId: any; userId: any }) {
+        return await ajax(() => axios.delete(`/organizations/${param.organizationId}/employees/${param.userId}`, config))
+
     }
 }
