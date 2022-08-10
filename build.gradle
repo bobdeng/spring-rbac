@@ -75,10 +75,5 @@ publishing {
         }
     }
 }
-jar {
-    enabled = true
-    archiveClassifier = '' //use empty string
-}
-bootJar{
-    enabled = false
-}
+tasks.bootJar {enabled = false}
+tasks.jar {enabled = true}
