@@ -1,5 +1,7 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.tenant.organization.Organization;
+
 import java.util.Optional;
 
 public interface TenantRepository extends EntityList<Integer, Tenant> {
@@ -18,4 +20,6 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
     User.UserPassword userPassword(User user);
 
     User.UserRoles userRoles(User user);
+
+    Organization.Employees employees(Organization organization);
 }

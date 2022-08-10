@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -41,7 +42,7 @@ public class UserWithTenantFixture {
         user.savePassword(new RawPassword("123456"));
         tenant.addLoginName(new LoginNameDescription("bobdeng", user));
         Role role = tenant.newRole(new RoleDescription("角色1", getAllFunctions()));
-        user.setRoles(Arrays.asList(role));
+        user.setRoles(Collections.singletonList(role));
     }
 
     @NotNull

@@ -20,8 +20,8 @@ public class OrganizationFixture {
         jdbcTemplate.execute("truncate table t_rbac_organization");
     }
 
-    public void newOne(Tenant tenant) {
-        organizationDAO.save(OrganizationDO.builder()
+    public OrganizationDO newOne(Tenant tenant) {
+        return organizationDAO.save(OrganizationDO.builder()
                 .name("总公司")
                 .parentId(null)
                 .tenantId(tenant.identity())

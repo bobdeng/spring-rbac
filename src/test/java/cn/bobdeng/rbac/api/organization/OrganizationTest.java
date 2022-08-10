@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api.organization;
 
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
+import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.server.dao.OrganizationDO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ public class OrganizationTest extends E2ETest {
     public void setup() {
         userWithTenantFixture.init();
         organizationFixture.clear();
+        userLogin(userWithTenantFixture.user());
     }
 
     @Test

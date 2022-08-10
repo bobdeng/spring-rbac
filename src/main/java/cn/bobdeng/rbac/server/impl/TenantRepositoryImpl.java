@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
@@ -21,12 +22,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final UserRoleDAO userRoleDAO;
     private final RoleDAO roleDAO;
     private final OrganizationDAO organizationDAO;
+    private final EmployeeDAO employeeDAO;
 
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
@@ -35,6 +37,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         this.userRoleDAO = userRoleDAO;
         this.roleDAO = roleDAO;
         this.organizationDAO = organizationDAO;
+        this.employeeDAO = employeeDAO;
     }
 
     @Override
@@ -84,6 +87,11 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
+    public Organization.Employees employees(Organization organization) {
+        return new OrganizationEmployee(organization,employeeDAO,this, userDAO);
+    }
+
+    @Override
     public List<Tenant> subList(int from, int to) {
         return null;
     }
@@ -104,7 +112,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
         tenant.setRoles(new TenantRoles(roleDAO, tenant));
-        tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO));
+        tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO, this));
         return tenant;
     }
 
