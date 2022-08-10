@@ -79,3 +79,6 @@ jar {
     enabled = true
     archiveClassifier = '' //use empty string
 }
+bootJar{
+    enabled = false
+}
