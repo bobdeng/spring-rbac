@@ -29,7 +29,7 @@ const columns = ref([
   {
     title: '操作',
     key: 'action',
-    width: "200px"
+    width: "100px"
   }
 ])
 const employees = ref([])

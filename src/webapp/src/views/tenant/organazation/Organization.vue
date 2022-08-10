@@ -8,6 +8,7 @@
       </PageHeader>
       <Divider/>
     </Spin>
+    <Employees :organization="organization" v-if="organization"/>
     <AddSubOrganization :parent="organization" ref="newOrganizationModal" @success="onSuccess"/>
   </div>
 </template>
@@ -16,6 +17,7 @@
 import {computed, ref} from "vue";
 import {Button, PageHeader, Divider} from "ant-design-vue";
 import AddSubOrganization from "./AddSubOrganization.vue";
+import Employees from "./Employees.vue";
 
 const name = computed(() => {
   if (!props.organization) {

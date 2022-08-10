@@ -5,6 +5,9 @@ describe('Organizations.cy.ts', () => {
         cy.fixture("organization/organizations", 'utf8').then((json) => {
             cy.intercept("GET", "/organizations", json)
         })
+        cy.fixture("organization/employees.json").then(json => {
+            cy.intercept("GET", "/organizations/2/employees", json).as("employees")
+        })
         cy.mount(Organizations)
         cy.contains("分公司").click().then(() => {
             cy.get("[title='分公司']").should('exist')
