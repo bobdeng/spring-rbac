@@ -1,8 +1,9 @@
-import {Home, Tenants, Console, Domain, Role, UserConsole, Users, SetPassword, Organizations} from "./views";
+import {Home, Tenants, Console, Domain, Role, UserConsole, Users, SetPassword, Organizations, UserLogin} from "./views";
 import {createRouter, createWebHashHistory} from "vue-router";
 
 export const routes = [
     {path: "/", component: Home, name: "home"},
+    {path: "/login", component: UserLogin, name: "userLogin"},
     {
         path: "/console", component: Console, name: "console",
         children: [
