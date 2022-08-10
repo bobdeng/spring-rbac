@@ -5,7 +5,7 @@ export const routes = [
     {path: "/", component: Home, name: "home"},
     {path: "/login", component: UserLogin, name: "userLogin"},
     {
-        path: "/console", component: Console, name: "console",
+        path: "/admin/console", component: Console, name: "console",
         children: [
             {path: "/tenants", component: Tenants, name: "tenants"},
             {path: "/tenants/:id/domains", component: Domain, name: "tenantDomains"},

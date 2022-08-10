@@ -40,6 +40,7 @@ public class AdminLoginTest extends E2ETest {
         adminLoginPage.loginWith("sysadmin", "123456");
         Cookie authorization = webDriverHandler.getCookie("AdminAuthorization");
         assertNotNull(authorization);
+        adminLoginPage.waitUntil(() -> adminLoginPage.hasText("租户管理"), 1000);
     }
 
     @Test

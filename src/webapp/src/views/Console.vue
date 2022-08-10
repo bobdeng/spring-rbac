@@ -2,7 +2,9 @@
   <div>
     <div>
       <Menu mode="horizontal" theme="dark" @select="onMenuSelect">
-
+        <MenuItem key="tenants">
+          租户管理
+        </MenuItem>
       </Menu>
     </div>
     <div style="padding: 5px;">
