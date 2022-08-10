@@ -87,7 +87,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization,employeeDAO,this, userDAO);
+        return new OrganizationEmployee(organization, employeeDAO, this, userDAO);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setUsers(this.users(tenant));
         tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
-        tenant.setRoles(new TenantRoles(roleDAO, tenant));
+        tenant.setRoles(new TenantRoles(roleDAO, tenant, userRoleDAO));
         tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO, this));
         return tenant;
     }

@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.Role;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.server.dao.RoleDAO;
 import cn.bobdeng.rbac.server.dao.RoleDO;
+import cn.bobdeng.rbac.server.dao.UserRoleDAO;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,10 +13,12 @@ import java.util.stream.Stream;
 public class TenantRoles implements Tenant.Roles {
     private final RoleDAO roleDAO;
     private final Tenant tenant;
+    private final UserRoleDAO userRoleDAO;
 
-    public TenantRoles(RoleDAO roleDAO, Tenant tenant) {
+    public TenantRoles(RoleDAO roleDAO, Tenant tenant, UserRoleDAO userRoleDAO) {
         this.roleDAO = roleDAO;
         this.tenant = tenant;
+        this.userRoleDAO = userRoleDAO;
     }
 
     @Override
@@ -47,5 +50,6 @@ public class TenantRoles implements Tenant.Roles {
     @Override
     public void delete(Role role) {
         roleDAO.deleteById(role.getId());
+        userRoleDAO.deleteAllByRoleId(role.identity());
     }
 }

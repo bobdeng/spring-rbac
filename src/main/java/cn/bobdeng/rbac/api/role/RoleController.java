@@ -7,6 +7,7 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.security.Admin;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class RoleController {
 
     @DeleteMapping("/tenants/{tenantId}/roles/{roleId}")
     @Admin
+    @Transactional
     public void delete(@PathVariable Integer tenantId, @PathVariable Integer roleId) {
         tenantRepository.findByIdentity(tenantId)
                 .ifPresent(tenant -> tenant.deleteRole(roleId));

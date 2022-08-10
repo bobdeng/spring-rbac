@@ -6,6 +6,7 @@ import cn.bobdeng.rbac.api.pages.NewTenantRolePage;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.server.dao.RoleDAO;
 import cn.bobdeng.rbac.server.dao.RoleDO;
+import cn.bobdeng.rbac.server.dao.UserRoleDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RoleTest extends E2ETest {
     @Autowired
     RoleDAO roleDAO;
+    @Autowired
+    UserRoleDAO userRoleDAO;
     @Autowired
     TenantRepository tenantRepository;
     private Tenant tenant;
@@ -82,7 +85,11 @@ public class RoleTest extends E2ETest {
 
     @Test
     public void should_delete_role() {
-        roleDAO.save(new RoleDO(new Role(null, new RoleDescription("角色1", Arrays.asList("role.create"))), tenant));
+        Role role1 = roleDAO.save(new RoleDO(new Role(null, new RoleDescription("角色1", Arrays.asList("role.create"))), tenant))
+                .toEntity();
+        User bob = tenant.addUser(new UserDescription("bob"));
+        bob.setRoles(Arrays.asList(role1));
+
         ListTenantRolePage listTenantRolePage = new ListTenantRolePage(webDriverHandler);
         listTenantRolePage.open(tenant);
         listTenantRolePage.waitUntilNoSpin();
@@ -93,5 +100,6 @@ public class RoleTest extends E2ETest {
         waitUntil(() -> listTenantRolePage.hasText("删除成功"), 1000);
         List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
         assertEquals(0, roles.size());
+        assertEquals(0, userRoleDAO.findAllByUserId(bob.getId()).size());
     }
 }
