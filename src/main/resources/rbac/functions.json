@@ -73,6 +73,12 @@
           "description": {
             "name": "删除组织"
           }
+        },
+        {
+          "key": "organization.employee",
+          "description": {
+            "name": "组织员工"
+          }
         }
       ]
     }

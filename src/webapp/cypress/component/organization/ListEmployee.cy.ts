@@ -40,6 +40,7 @@ describe('ListEmployee.cy.ts', () => {
         cy.mount(Employee, {props: {organization: {id: 10}}})
         cy.wait("@employees")
         cy.contains("删除").click().then(()=>{
+            cy.contains("删除成功")
             cy.wait("@deleteUser")
             cy.wait("@employees")
         })

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 public class EmployeeTest extends E2ETest {
     @Autowired
     OrganizationFixture organizationFixture;
@@ -34,5 +36,20 @@ public class EmployeeTest extends E2ETest {
         organizationsPage.clickContent("总公司");
         organizationsPage.waitUntilNoSpin();
         organizationsPage.waitUntil(() -> organizationsPage.hasText("张三"), 1000);
+    }
+
+    @Test
+    public void should_remove_employee_from_organization() {
+        OrganizationsPage organizationsPage = new OrganizationsPage(webDriverHandler);
+        organizationsPage.open();
+        organizationsPage.waitUntilNoSpin();
+        organizationsPage.waitUntil(() -> organizationsPage.hasText("总公司"), 1000);
+        organizationsPage.clickContent("总公司");
+        organizationsPage.waitUntilNoSpin();
+        organizationsPage.waitUntil(() -> organizationsPage.hasText("张三"), 1000);
+        organizationsPage.clickContent("删除");
+        organizationsPage.waitUntilNoSpin();
+        organizationsPage.waitUntil(() -> organizationsPage.hasText("删除成功"), 1000);
+        assertFalse(organizationsPage.hasText("张三"));
     }
 }

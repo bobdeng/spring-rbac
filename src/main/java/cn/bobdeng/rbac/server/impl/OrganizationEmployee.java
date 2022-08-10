@@ -38,7 +38,9 @@ public class OrganizationEmployee implements Organization.Employees {
 
     @Override
     public Optional<User> findByIdentity(Integer integer) {
-        return Optional.empty();
+        return employeeDAO.findById(integer)
+                .flatMap(employeeDO -> userDAO.findById(integer))
+                .map(userDO -> userDO.toUser(tenantRepository));
     }
 
     @Override
@@ -49,5 +51,10 @@ public class OrganizationEmployee implements Organization.Employees {
     @Override
     public int size() {
         return 0;
+    }
+
+    @Override
+    public void delete(User user) {
+        employeeDAO.deleteById(user.identity());
     }
 }

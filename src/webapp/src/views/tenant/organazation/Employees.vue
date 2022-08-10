@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import {Table, Button, notification} from "ant-design-vue";
+import {Table, Button, notification, Spin} from "ant-design-vue";
 import {server} from "../../../model/HttpServer";
 import SelectUser from "../user/SelectUser.vue";
 
@@ -62,7 +62,10 @@ function onUserSelect(user: any) {
 function remove(user: any) {
   loading.value = true;
   server.deleteEmployee({userId: user.id, organizationId: props.organization.id})
-      .then(reload)
+      .then(() => {
+        notification.success({message: "删除成功"})
+        reload()
+      })
       .finally(() => loading.value = false)
 }
 
