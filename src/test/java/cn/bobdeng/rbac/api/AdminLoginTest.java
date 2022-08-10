@@ -28,7 +28,7 @@ public class AdminLoginTest extends E2ETest {
     public void should_show_tenant_name(){
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
-        adminLoginPage.waitUntil(()->adminLoginPage.hasText("租户1"),1000);
+        waitUntil(()->adminLoginPage.hasText("租户1"),1000);
     }
     @Test
     public void should_send_admin_password_when_fail() {

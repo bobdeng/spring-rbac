@@ -7,7 +7,6 @@ import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.DomainRepository;
 import cn.bobdeng.rbac.security.Session;
 import cn.bobdeng.rbac.security.SessionStore;
-import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -51,7 +50,6 @@ public class SessionCheckFilter implements Filter {
                 .ifPresent(userToken -> sessionStore.set(new Session(userToken)));
     }
 
-    @NotNull
     private Optional<Cookie> getCookie(HttpServletRequest request, String name) {
         return Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals(name))

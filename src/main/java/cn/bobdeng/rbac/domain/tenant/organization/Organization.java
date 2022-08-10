@@ -1,6 +1,5 @@
 package cn.bobdeng.rbac.domain.tenant.organization;
 
-import cn.bobdeng.rbac.api.organization.OrganizationController;
 import cn.bobdeng.rbac.domain.Entity;
 import cn.bobdeng.rbac.domain.EntityList;
 import cn.bobdeng.rbac.domain.User;

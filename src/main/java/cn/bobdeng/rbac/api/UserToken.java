@@ -3,7 +3,6 @@ package cn.bobdeng.rbac.api;
 import cn.bobdeng.rbac.domain.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
 @EqualsAndHashCode

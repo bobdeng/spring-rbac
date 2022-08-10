@@ -3,7 +3,6 @@ package cn.bobdeng.rbac.server.impl;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -116,7 +115,6 @@ public class TenantRepositoryImpl implements TenantRepository {
         return tenant;
     }
 
-    @NotNull
     private HasMany<Integer, Domain> getDomains(Tenant tenant) {
         return new HasMany<Integer, Domain>() {
             @Override
@@ -131,7 +129,6 @@ public class TenantRepositoryImpl implements TenantRepository {
         };
     }
 
-    @NotNull
     private Many<Domain> getManyDomains(Tenant tenant) {
         List<Domain> domains = domainDAO.findAllByDescriptionTenantId(tenant.identity());
         return new Many<Domain>() {
@@ -145,7 +142,6 @@ public class TenantRepositoryImpl implements TenantRepository {
                 return null;
             }
 
-            @NotNull
             @Override
             public Iterator<Domain> iterator() {
                 return domains.iterator();

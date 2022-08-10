@@ -1,6 +1,8 @@
 package cn.bobdeng.rbac.api.domain;
 
-import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.DomainDescription;
+import cn.bobdeng.rbac.domain.DomainRepository;
+import cn.bobdeng.rbac.domain.Domains;
 import cn.bobdeng.rbac.security.Admin;
 import org.springframework.web.bind.annotation.*;
 

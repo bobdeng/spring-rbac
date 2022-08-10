@@ -1,7 +1,6 @@
 package cn.bobdeng.rbac.server;
 
 import cn.bobdeng.rbac.domain.AdminPassword;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 

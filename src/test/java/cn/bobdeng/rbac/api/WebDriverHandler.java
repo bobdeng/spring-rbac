@@ -1,12 +1,16 @@
 package cn.bobdeng.rbac.api;
 
 import org.jetbrains.annotations.NotNull;
+import org.junit.Rule;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.stereotype.Service;
+import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.containers.Network;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -23,11 +27,16 @@ public class WebDriverHandler {
     private int port = 8080;
     @Autowired(required = false)
     private ServletWebServerApplicationContext webServerAppCtxt;
+    @Rule
+    public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
+            .withCapabilities(new ChromeOptions())
+            .withNetwork(Network.SHARED);
 
     @PostConstruct
     private void init() {
+        chrome.start();
         if (webServerAppCtxt != null) {
-            WEBDRIVER = createWebDriver();
+            WEBDRIVER = chrome.getWebDriver();
             this.port = webServerAppCtxt.getWebServer().getPort();
         }
     }
@@ -68,7 +77,7 @@ public class WebDriverHandler {
 
     @NotNull
     private String getDomain() {
-        return "localhost:" + port;
+        return "host.docker.internal:" + port;
     }
 
     public void removeAllCookies() {

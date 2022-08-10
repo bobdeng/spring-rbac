@@ -5,7 +5,6 @@ import cn.bobdeng.rbac.domain.Role;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.security.Admin;
-import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;

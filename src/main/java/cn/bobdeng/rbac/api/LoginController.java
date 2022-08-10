@@ -2,10 +2,11 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.domain.*;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +53,6 @@ public class LoginController {
         return "login";
     }
 
-    @NotNull
     private Optional<User> checkUserLogin(LoginForm form) {
         return tenantRepository.findByName(form.getTenant())
                 .flatMap(tenant -> tenant.loginNames().findByLoginName(form.getLoginName()))

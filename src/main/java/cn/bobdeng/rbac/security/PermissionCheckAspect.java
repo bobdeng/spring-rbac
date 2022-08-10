@@ -2,7 +2,6 @@ package cn.bobdeng.rbac.security;
 
 import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.Tenants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

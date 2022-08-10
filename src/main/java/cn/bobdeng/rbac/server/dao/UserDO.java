@@ -1,7 +1,9 @@
 package cn.bobdeng.rbac.server.dao;
 
-import cn.bobdeng.rbac.domain.*;
-import cn.bobdeng.rbac.server.impl.UserRolesImpl;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.UserDescription;
 import lombok.*;
 
 import java.util.Objects;

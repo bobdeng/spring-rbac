@@ -30,7 +30,6 @@ dependencies {
     api 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.2'
     testImplementation 'org.junit.platform:junit-platform-launcher:1.9.0'
     api('org.flywaydb:flyway-mysql:8.5.12')
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     api 'org.apache.commons:commons-lang3:3.12.0'
     api("com.google.guava:guava:31.1-jre")
     api('io.jsonwebtoken:jjwt:0.9.1')
@@ -41,20 +40,21 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.seleniumhq.selenium:selenium-java:2.45.0'
-    implementation 'org.testcontainers:mysql:1.17.3'
-    implementation 'org.testcontainers:testcontainers:1.17.3'
+    testImplementation 'org.testcontainers:mysql:1.17.3'
+    testImplementation 'org.testcontainers:testcontainers:1.17.3'
+    testImplementation "org.testcontainers:selenium:1.17.3"
 }
 tasks.named('test') {
     useJUnitPlatform()
 }
-
+/*
 webdriverBinaries {
     chromedriver {
         version = '103.0.5060.134'
         fallbackTo32Bit = true
     }
     driverUrlsConfiguration = resources.text.fromFile('src/test/resources/webdriver_download_config.json')
-}
+}*/
 publishing {
     publications {
         mavenJava(MavenPublication) {

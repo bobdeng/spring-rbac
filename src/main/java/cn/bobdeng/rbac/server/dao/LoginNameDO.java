@@ -1,11 +1,13 @@
 package cn.bobdeng.rbac.server.dao;
 
-import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.LoginName;
+import cn.bobdeng.rbac.domain.LoginNameDescription;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.User;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.Objects;
 
 @Getter

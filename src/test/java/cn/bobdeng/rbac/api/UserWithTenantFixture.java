@@ -37,6 +37,7 @@ public class UserWithTenantFixture {
         clearTable.clearTable("t_rbac_user_role");
         tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
         domainRepository.save(new Domain(new DomainDescription("localhost", tenant.identity())));
+        domainRepository.save(new Domain(new DomainDescription("host.docker.internal", tenant.identity())));
         user = tenant.addUser(new UserDescription("张三"));
         user.savePassword(new RawPassword("123456"));
         tenant.addLoginName(new LoginNameDescription("bobdeng", user));

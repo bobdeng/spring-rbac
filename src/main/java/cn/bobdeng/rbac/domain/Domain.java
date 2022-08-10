@@ -1,6 +1,9 @@
 package cn.bobdeng.rbac.domain;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @EqualsAndHashCode
 @NoArgsConstructor

@@ -2,7 +2,10 @@ package cn.bobdeng.rbac.domain;
 
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Optional;

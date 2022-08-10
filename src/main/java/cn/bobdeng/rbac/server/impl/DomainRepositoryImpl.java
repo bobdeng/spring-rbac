@@ -4,7 +4,6 @@ import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.DomainRepository;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.server.dao.DomainDAO;
-import cn.bobdeng.rbac.server.dao.TenantDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
