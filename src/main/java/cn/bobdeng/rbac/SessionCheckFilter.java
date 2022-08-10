@@ -26,7 +26,7 @@ public class SessionCheckFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         checkAdminSession(httpRequest);
-        checkUserSession(httpRequest);
+        checkUserSession();
         readTenant(request, httpRequest);
         try {
             sessionStore.get().ifPresent(session -> httpRequest.setAttribute("session", session));
@@ -36,7 +36,7 @@ public class SessionCheckFilter implements Filter {
         }
     }
 
-    private void checkUserSession(HttpServletRequest httpRequest) {
+    private void checkUserSession() {
         sessionStore.set(new Session(new UserToken(1, 1)));
     }
 

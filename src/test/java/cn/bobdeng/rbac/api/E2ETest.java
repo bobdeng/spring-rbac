@@ -31,12 +31,14 @@ public abstract class E2ETest {
     protected void adminLogin() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
+        webDriverHandler.removeAllCookies();
         adminLoginPage.setCookie(Cookies.ADMIN_AUTHORIZATION, new AdminToken().toString());
     }
 
     protected void userLogin(User user) {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
+        webDriverHandler.removeAllCookies();
         adminLoginPage.setCookie(Cookies.AUTHORIZATION, new UserToken(user).toString());
     }
 

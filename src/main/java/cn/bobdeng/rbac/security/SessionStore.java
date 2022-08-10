@@ -10,7 +10,7 @@ public class SessionStore {
     private ThreadLocal<Session> sessionThreadLocal;
 
     @PostConstruct
-    private void init() {
+    public void init() {
         sessionThreadLocal = new ThreadLocal<>();
     }
 
@@ -19,6 +19,9 @@ public class SessionStore {
     }
 
     public void set(Session session) {
+        if(sessionThreadLocal.get()!=null){
+            session = session.merge(sessionThreadLocal.get());
+        }
         sessionThreadLocal.set(session);
     }
 

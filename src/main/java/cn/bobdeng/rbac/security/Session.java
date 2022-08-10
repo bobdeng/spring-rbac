@@ -3,6 +3,8 @@ package cn.bobdeng.rbac.security;
 import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.UserToken;
 
+import java.util.Optional;
+
 public class Session {
 
     private UserToken userToken;
@@ -27,5 +29,11 @@ public class Session {
 
     public Integer userId() {
         return userToken.getId();
+    }
+
+    public Session merge(Session session) {
+        this.adminToken = Optional.ofNullable(session.adminToken).orElse(adminToken);
+        this.userToken = Optional.ofNullable(session.userToken).orElse(userToken);
+        return this;
     }
 }

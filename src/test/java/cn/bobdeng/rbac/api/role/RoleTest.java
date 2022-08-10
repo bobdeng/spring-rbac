@@ -37,7 +37,6 @@ public class RoleTest extends E2ETest {
         ListTenantRolePage listTenantRolePage = new ListTenantRolePage(webDriverHandler);
         listTenantRolePage.open(tenant);
         listTenantRolePage.waitUntilNoSpin();
-        assertFalse(listTenantRolePage.hasNoData());
         assertTrue(listTenantRolePage.hasText("角色1"));
     }
 
@@ -67,6 +66,7 @@ public class RoleTest extends E2ETest {
         listTenantRolePage.waitUntilNoSpin();
         listTenantRolePage.clickButton("修改");
         EditRolePage editRolePage = new EditRolePage(webDriverHandler);
+        editRolePage.waitUntil(() -> editRolePage.name().equals("角色1"), 1000);
         assertEquals("角色1", editRolePage.name());
         editRolePage.inputById("角色2", "inputName");
         editRolePage.clickContent("角色管理");
@@ -87,6 +87,7 @@ public class RoleTest extends E2ETest {
         listTenantRolePage.open(tenant);
         listTenantRolePage.waitUntilNoSpin();
         listTenantRolePage.clickButton("删除");
+        listTenantRolePage.waitUntil(() -> listTenantRolePage.hasText("OK"), 1000);
         listTenantRolePage.clickButton("OK");
         listTenantRolePage.waitUntilNoSpin();
         List<RoleDO> roles = roleDAO.findAllByTenantId(tenant.identity());
