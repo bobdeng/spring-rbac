@@ -35,7 +35,6 @@ public class AdminLoginController {
         String value = new AdminToken().toString();
         Cookie cookie = new Cookie(Cookies.ADMIN_AUTHORIZATION, value);
         cookie.setPath("/");
-        cookie.setMaxAge(86400 * 1000);
         response.addCookie(cookie);
     }
 }

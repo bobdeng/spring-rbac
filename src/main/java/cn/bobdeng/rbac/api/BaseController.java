@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RestControllerAdvice
@@ -44,6 +45,7 @@ public class BaseController {
     public void onUnexpectException(RuntimeException e, HttpServletResponse response) throws IOException {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        response.getWriter().println(Optional.ofNullable(e.getMessage()).orElse("未知错误"));
         log.warn("error", e);
     }
 }

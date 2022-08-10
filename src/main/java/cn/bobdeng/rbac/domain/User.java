@@ -81,6 +81,10 @@ public class User implements Entity<Integer, UserDescription> {
         tenant().users().save(this);
     }
 
+    public boolean isNormal() {
+        return description.getStatus()==UserStatus.Normal;
+    }
+
     public interface UserPassword extends EntityList<Integer, Password> {
         String encodePassword(String rawPassword);
 
