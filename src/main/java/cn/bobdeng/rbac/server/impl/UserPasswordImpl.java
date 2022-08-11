@@ -10,11 +10,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class UserPasswordImpl implements User.UserPassword {
-    private User user;
     private PasswordDAO passwordDAO;
 
-    public UserPasswordImpl(User user, TenantRepositoryImpl tenantRepository, PasswordDAO passwordDAO) {
-        this.user = user;
+    public UserPasswordImpl(PasswordDAO passwordDAO) {
         this.passwordDAO = passwordDAO;
     }
 

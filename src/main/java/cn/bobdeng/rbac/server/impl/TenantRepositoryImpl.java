@@ -71,7 +71,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public User.UserPassword userPassword(User user) {
-        return new UserPasswordImpl(user, this, passwordDAO);
+        return new UserPasswordImpl(passwordDAO);
     }
 
     @Override
