@@ -4,7 +4,6 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
-import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
 
 import java.util.List;
@@ -16,13 +15,12 @@ public class OrganizationEmployee implements Organization.Employees {
     private final EmployeeDAO employeeDAO;
     private final TenantRepository tenantRepository;
     private final UserDAO userDAO;
-    private final LoginNameDAO loginNameDAO;
-    public OrganizationEmployee(Organization organization, EmployeeDAO employeeDAO, TenantRepository tenantRepository, UserDAO userDAO, LoginNameDAO loginNameDAO) {
+
+    public OrganizationEmployee(Organization organization, EmployeeDAO employeeDAO, TenantRepository tenantRepository, UserDAO userDAO) {
         this.organization = organization;
         this.employeeDAO = employeeDAO;
         this.tenantRepository = tenantRepository;
         this.userDAO = userDAO;
-        this.loginNameDAO = loginNameDAO;
     }
 
     @Override

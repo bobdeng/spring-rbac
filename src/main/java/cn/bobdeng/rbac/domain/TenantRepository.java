@@ -9,8 +9,6 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
 
     Page<Tenant> findByName(String name, int page, int size);
 
-    Optional<Tenant> findById(Integer id);
-
     Optional<Tenant> findByName(String tenantName);
 
     Tenant.Users users(Tenant tenant);

@@ -53,12 +53,6 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public Optional<Tenant> findById(Integer id) {
-        return tenantDAO.findById(id)
-                .map(this::injectDependencies);
-    }
-
-    @Override
     public Optional<Tenant> findByName(String tenantName) {
         return tenantDAO.findByDescriptionName(tenantName)
                 .map(this::injectDependencies)
@@ -87,7 +81,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, this, userDAO, loginNameDAO);
+        return new OrganizationEmployee(organization, employeeDAO, this, userDAO);
     }
 
     @Override

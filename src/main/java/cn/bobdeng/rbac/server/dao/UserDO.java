@@ -30,8 +30,8 @@ public final class UserDO {
     public User toUser(TenantRepository tenantRepository) {
         User user = new User(id, new UserDescription(name, User.UserStatus.of(status)));
         user.setUserPassword(tenantRepository.userPassword(user));
-        user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
         user.setUserRoles(tenantRepository.userRoles(user));
+        user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
         return user;
     }
 
