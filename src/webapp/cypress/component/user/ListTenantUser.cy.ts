@@ -48,6 +48,19 @@ describe('ListTenantUser.cy.ts', () => {
         })
     });
 
+    it('should show login name ', function () {
+        cy.intercept("PATCH", "/users/2/password", {statusCode: 200, body: {password: "13456"}}).as("reset")
+        cy.intercept("GET", "/users?name=", [{id: 2, description: {name: "张三"}}]).as("listUser")
+        cy.intercept("GET", `/users/2/login_name`, {
+            id: 1,
+            description: {name: "bobdeng"}
+        }).as("getLoginName")
+        cy.mount(ListTenantUser)
+        cy.contains("登录名").click().then(() => {
+            cy.contains("bobdeng")
+        })
+    });
+
     it('should reset user password', function () {
         cy.intercept("PATCH", "/users/2/password", {statusCode: 200, body: {password: "13456"}}).as("reset")
         cy.intercept("GET", "/users?name=", [{id: 2, description: {name: "张三"}}]).as("listUser")
@@ -60,5 +73,6 @@ describe('ListTenantUser.cy.ts', () => {
             })
         })
     });
+
 
 })

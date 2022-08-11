@@ -1,6 +1,7 @@
 <template>
   <div>
     <AddUser ref="newUserModal"/>
+    <UserLoginName ref="loginName"/>
     <Spin :spinning="loading">
       <div style="display: flex">
         <Space>
@@ -20,6 +21,7 @@
             <Button type="link" @click="()=>configResetPassword(record)">重置密码</Button>
             <Button type="link" @click="()=>lockUser(record)" v-if="record.description.status==='Normal'">锁定</Button>
             <Button type="link" @click="()=>unlockUser(record)" v-else>解锁</Button>
+            <Button type="link" @click="()=>showLoginName(record)">登录名</Button>
           </template>
         </template>
       </Table>
@@ -35,6 +37,7 @@ import {ref} from "vue";
 import {server} from "../../../model/HttpServer";
 import {useRouter} from "vue-router";
 import AddUser from "./AddUser.vue";
+import UserLoginName from "./UserLoginName.vue";
 
 const columns = ref([
   {
@@ -50,7 +53,7 @@ const columns = ref([
   {
     title: '操作',
     key: 'action',
-    width: "200px"
+    width: "300px"
   }
 ])
 const users = ref([])
@@ -58,6 +61,7 @@ const loading = ref(false)
 const router = useRouter()
 const newUserModal = ref()
 const keyword = ref("")
+const loginName = ref()
 
 async function onLoad() {
   loading.value = true
@@ -118,6 +122,9 @@ const unlockUser = async (user: any) => {
   }
 }
 
+function showLoginName(user: any) {
+  loginName.value.show(user.id)
+}
 
 onLoad();
 </script>
