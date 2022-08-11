@@ -44,10 +44,10 @@ public class DomainsTest {
     @Test
     public void search_domain_by_host() {
         Tenant tenant = tenantRepository.save(new Tenant(new TenantDescription("Tenant1")));
-        domainRepository.save(new Domain(new DomainDescription("localhost", tenant.getId())));
+        domainRepository.save(new Domain(new DomainDescription("localhost.local", tenant.getId())));
 
-        Domain domain = domainRepository.findByDomain("localhost").orElseThrow(RuntimeException::new);
+        Domain domain = domainRepository.findByDomain("localhost.local").orElseThrow(RuntimeException::new);
         assertEquals(domain.tenant(), tenant);
-        assertEquals(domain.getDescription(), new DomainDescription("localhost", tenant.getId()));
+        assertEquals(domain.getDescription(), new DomainDescription("localhost.local", tenant.getId()));
     }
 }

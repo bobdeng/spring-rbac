@@ -24,7 +24,6 @@ public class TenantLoginNamesTest {
         LoginName result = tenant.addLoginName(description);
 
         verify(loginNames).save(new LoginName(description));
-        assertEquals(result, new LoginName(1, new LoginNameDescription("bob", user)));
     }
 
     @Test
