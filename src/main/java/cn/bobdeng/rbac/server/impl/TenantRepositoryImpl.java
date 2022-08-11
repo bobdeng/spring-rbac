@@ -67,7 +67,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Tenant.Users users(Tenant tenant) {
-        return new TenantUsers(tenant, userDAO, this);
+        return new TenantUsers(tenant, userDAO, loginNameDAO, this);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, this, userDAO);
+        return new OrganizationEmployee(organization, employeeDAO, this, userDAO, loginNameDAO);
     }
 
     @Override

@@ -27,11 +27,12 @@ public final class UserDO {
         this.status = user.description().getStatus().getStatus();
     }
 
-    public User toUser(TenantRepository tenantRepository) {
+    public User toUser(TenantRepository tenantRepository, LoginNameDAO loginNameDAO) {
         User user = new User(id, new UserDescription(name, User.UserStatus.of(status)));
         user.setUserPassword(tenantRepository.userPassword(user));
         user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
         user.setUserRoles(tenantRepository.userRoles(user));
+        user.setLoginName(() -> loginNameDAO.findByUserId(user.getId()).map(loginNameDO -> loginNameDO.toEntity(user)));
         return user;
     }
 

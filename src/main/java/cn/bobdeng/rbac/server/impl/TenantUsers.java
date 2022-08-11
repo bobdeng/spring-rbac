@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.server.impl;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
 import cn.bobdeng.rbac.server.dao.UserDO;
 
@@ -14,24 +15,26 @@ import java.util.stream.Stream;
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
     private UserDAO userDAO;
+    private LoginNameDAO loginNameDAO;
     private TenantRepository tenantRepository;
 
-    public TenantUsers(Tenant tenant, UserDAO userDAO, TenantRepositoryImpl tenantRepository) {
+    public TenantUsers(Tenant tenant, UserDAO userDAO, LoginNameDAO loginNameDAO, TenantRepositoryImpl tenantRepository) {
         this.tenant = tenant;
         this.userDAO = userDAO;
+        this.loginNameDAO = loginNameDAO;
         this.tenantRepository = tenantRepository;
     }
 
     @Override
     public User save(User user) {
-        return userDAO.save(new UserDO(user, tenant)).toUser(tenantRepository);
+        return userDAO.save(new UserDO(user, tenant)).toUser(tenantRepository, loginNameDAO);
     }
 
     @Override
     public List<User> findByName(String name) {
         return userDAO.findAllByTenantIdAndNameLike(tenant.identity(), name)
                 .stream()
-                .map(userDO -> userDO.toUser(tenantRepository))
+                .map(userDO -> userDO.toUser(tenantRepository, loginNameDAO))
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +55,7 @@ public class TenantUsers implements Tenant.Users {
 
     @Override
     public Optional<User> findByIdentity(Integer integer) {
-        return userDAO.findById(integer).map(userDO -> userDO.toUser(tenantRepository));
+        return userDAO.findById(integer).map(userDO -> userDO.toUser(tenantRepository,loginNameDAO));
     }
 
     @Override

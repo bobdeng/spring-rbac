@@ -28,6 +28,12 @@ public class TenantLoginNames implements Tenant.LoginNames {
     }
 
     @Override
+    public void delete(Integer id) {
+        loginNameDAO.findByIdAndTenantId(id, tenant.identity())
+                .ifPresent(loginNameDAO::delete);
+    }
+
+    @Override
     public List<LoginName> subList(int from, int to) {
         return null;
     }

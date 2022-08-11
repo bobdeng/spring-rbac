@@ -22,6 +22,8 @@ public class User implements Entity<Integer, UserDescription> {
     @Setter
     private HasOne<Tenant> tenant;
     @Setter
+    private HasOptional<LoginName> loginName;
+    @Setter
     private UserRoles userRoles;
 
 
@@ -29,7 +31,9 @@ public class User implements Entity<Integer, UserDescription> {
         this.id = id;
         this.description = description;
     }
-
+    public HasOptional<LoginName> loginName(){
+        return loginName;
+    }
     public UserRoles roles() {
         return userRoles;
     }

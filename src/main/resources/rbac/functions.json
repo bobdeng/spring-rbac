@@ -53,6 +53,12 @@
           "description": {
             "name": "锁定/解锁用户"
           }
+        },
+        {
+          "key": "user.login_name",
+          "description": {
+            "name": "用户登录名"
+          }
         }
       ]
     }

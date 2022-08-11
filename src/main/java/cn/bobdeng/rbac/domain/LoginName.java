@@ -1,13 +1,16 @@
 package cn.bobdeng.rbac.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @EqualsAndHashCode
 public class LoginName implements Entity<Integer, LoginNameDescription> {
+    @Getter
     private Integer id;
+    @Getter
     private LoginNameDescription description;
     @Setter
     private HasOne<User> user;

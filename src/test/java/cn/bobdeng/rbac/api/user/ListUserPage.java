@@ -11,4 +11,16 @@ public class ListUserPage extends BasePage {
     public void open() {
         webDriverHandler.open("/admin/#/users");
     }
+
+    public void clickUnbind() {
+        clickById("buttonRemove");
+    }
+
+    public void inputLoginName(String bobdeng) {
+        inputById(bobdeng,"inputLoginName");
+    }
+
+    public void clickBind() {
+        clickById("buttonAdd");
+    }
 }

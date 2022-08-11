@@ -15,7 +15,7 @@
       </Form>
       <template #footer>
         <Button @click="close">取消</Button>
-        <Button @click="remove" type="danger" id="buttonRemove" v-if="form" :loading="loading">解绑</Button>
+        <Button @click="remove" danger id="buttonRemove" v-if="form" :loading="loading">解绑</Button>
         <Button @click="bind" type="primary" id="buttonAdd" v-else :loading="loading">绑定</Button>
       </template>
     </Modal>

@@ -35,9 +35,14 @@ public class LoginNameDO {
 
     public LoginName toEntity(Tenant.Users users) {
         User user = new User(userId, null);
+        LoginName loginName = getLoginName(user);
+        loginName.setUser(() -> users.findByIdentity(userId).orElse(null));
+        return loginName;
+    }
+
+    private LoginName getLoginName(User user) {
         LoginNameDescription description = new LoginNameDescription(loginName, user);
         LoginName loginName = new LoginName(id, description);
-        loginName.setUser(() -> users.findByIdentity(userId).orElse(null));
         return loginName;
     }
 
@@ -52,5 +57,11 @@ public class LoginNameDO {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public LoginName toEntity(User user) {
+        LoginName loginName = getLoginName(user);
+        loginName.setUser(() -> user);
+        return loginName;
     }
 }
