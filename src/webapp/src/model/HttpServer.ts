@@ -137,5 +137,14 @@ export const server = {
     async deleteEmployee(param: { organizationId: any; userId: any }) {
         return await ajax(() => axios.delete(`/organizations/${param.organizationId}/employees/${param.userId}`, config))
 
+    },
+    async getUserLoginName(userId: any) {
+        return await ajax(() => axios.get(`/users/${userId}/login_name`, config))
+    },
+    async deleteLoginName(id: any) {
+        return await ajax(() => axios.delete(`/login_names/${id}`, config))
+    },
+    async newLoginName(param: { loginName: string; userId: string }) {
+        return await ajax(() => axios.post("/login_names", param, config))
     }
 }
