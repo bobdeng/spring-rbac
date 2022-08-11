@@ -16,9 +16,7 @@ public class UserLoginNameController {
     @Transactional
     public LoginName getUserLoginName(@RequestAttribute("tenant") Tenant tenant,
                                       @PathVariable Integer id) {
-        return tenant.users().findByIdentity(id)
-                .flatMap(user -> user.loginName().get())
-                .orElse(null);
+        return tenant.loginNames().findByUser(id).orElse(null);
     }
 
     @DeleteMapping("/login_names/{id}")

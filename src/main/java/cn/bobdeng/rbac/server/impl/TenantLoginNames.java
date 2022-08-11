@@ -34,6 +34,11 @@ public class TenantLoginNames implements Tenant.LoginNames {
     }
 
     @Override
+    public Optional<LoginName> findByUser(Integer id) {
+        return loginNameDAO.findByUserId(id).map(loginNameDO -> loginNameDO.toEntity(tenantRepository.users(tenant)));
+    }
+
+    @Override
     public List<LoginName> subList(int from, int to) {
         return null;
     }

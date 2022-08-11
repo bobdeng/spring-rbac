@@ -119,6 +119,8 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         Optional<LoginName> findByLoginName(String name);
 
         void delete(Integer id);
+
+        Optional<LoginName> findByUser(Integer id);
     }
 
     public interface Roles extends EntityList<Integer, Role> {

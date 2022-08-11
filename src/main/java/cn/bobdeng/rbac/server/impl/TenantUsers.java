@@ -15,26 +15,24 @@ import java.util.stream.Stream;
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;
     private UserDAO userDAO;
-    private LoginNameDAO loginNameDAO;
     private TenantRepository tenantRepository;
 
-    public TenantUsers(Tenant tenant, UserDAO userDAO, LoginNameDAO loginNameDAO, TenantRepositoryImpl tenantRepository) {
+    public TenantUsers(Tenant tenant, UserDAO userDAO, TenantRepositoryImpl tenantRepository) {
         this.tenant = tenant;
         this.userDAO = userDAO;
-        this.loginNameDAO = loginNameDAO;
         this.tenantRepository = tenantRepository;
     }
 
     @Override
     public User save(User user) {
-        return userDAO.save(new UserDO(user, tenant)).toUser(tenantRepository, loginNameDAO);
+        return userDAO.save(new UserDO(user, tenant)).toUser(tenantRepository);
     }
 
     @Override
     public List<User> findByName(String name) {
         return userDAO.findAllByTenantIdAndNameLike(tenant.identity(), name)
                 .stream()
-                .map(userDO -> userDO.toUser(tenantRepository, loginNameDAO))
+                .map(userDO -> userDO.toUser(tenantRepository))
                 .collect(Collectors.toList());
     }
 
@@ -55,7 +53,7 @@ public class TenantUsers implements Tenant.Users {
 
     @Override
     public Optional<User> findByIdentity(Integer integer) {
-        return userDAO.findById(integer).map(userDO -> userDO.toUser(tenantRepository,loginNameDAO));
+        return userDAO.findById(integer).map(userDO -> userDO.toUser(tenantRepository));
     }
 
     @Override

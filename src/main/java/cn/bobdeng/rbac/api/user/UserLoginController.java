@@ -23,7 +23,7 @@ public class UserLoginController {
                 .map(LoginName::user)
                 .filter(it -> it.verifyPassword(loginForm.getPassword()))
                 .orElseThrow(() -> new RuntimeException("用户名或密码错误"));
-        if (!user.isNormal()) {
+        if (!user.normal()) {
             throw new RuntimeException("账号被锁定");
         }
         Cookie cookie = new Cookie(Cookies.AUTHORIZATION, new UserToken(user).toString());

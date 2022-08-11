@@ -22,17 +22,12 @@ public class User implements Entity<Integer, UserDescription> {
     @Setter
     private HasOne<Tenant> tenant;
     @Setter
-    private HasOptional<LoginName> loginName;
-    @Setter
     private UserRoles userRoles;
 
 
     public User(Integer id, UserDescription description) {
         this.id = id;
         this.description = description;
-    }
-    public HasOptional<LoginName> loginName(){
-        return loginName;
     }
     public UserRoles roles() {
         return userRoles;
@@ -85,7 +80,7 @@ public class User implements Entity<Integer, UserDescription> {
         tenant().users().save(this);
     }
 
-    public boolean isNormal() {
+    public boolean normal() {
         return description.getStatus()==UserStatus.Normal;
     }
 

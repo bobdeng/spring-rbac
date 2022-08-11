@@ -43,9 +43,9 @@ public class BaseController {
 
     @ExceptionHandler(RuntimeException.class)
     public void onUnexpectException(RuntimeException e, HttpServletResponse response) throws IOException {
+        log.warn("error", e);
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         response.getWriter().println(Optional.ofNullable(e.getMessage()).orElse("未知错误"));
-        log.warn("error", e);
     }
 }

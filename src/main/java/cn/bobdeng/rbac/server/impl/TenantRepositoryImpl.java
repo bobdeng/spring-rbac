@@ -67,7 +67,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Tenant.Users users(Tenant tenant) {
-        return new TenantUsers(tenant, userDAO, loginNameDAO, this);
+        return new TenantUsers(tenant, userDAO, this);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class UserLoginNameTest extends E2ETest {
         waitUntil(() -> listUserPage.hasText("解 绑"), 1000);
         listUserPage.clickUnbind();
         waitUntil(() -> listUserPage.hasText("解绑成功"), 1000);
-        assertFalse(userWithTenantFixture.user().loginName().get().isPresent());
+        assertFalse(userWithTenantFixture.getTenant().loginNames().findByUser(userWithTenantFixture.user().identity()).isPresent());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class UserLoginNameTest extends E2ETest {
         listUserPage.inputLoginName("bobdeng1");
         listUserPage.clickBind();
         waitUntil(() -> listUserPage.hasText("绑定成功"), 1000);
-        LoginName loginName = userWithTenantFixture.user().loginName().get().get();
+        LoginName loginName = userWithTenantFixture.getTenant().loginNames().findByUser(userWithTenantFixture.user().identity()).get();
         assertEquals("bobdeng1", loginName.description().getName());
     }
 

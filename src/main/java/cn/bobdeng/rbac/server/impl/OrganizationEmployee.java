@@ -35,14 +35,14 @@ public class OrganizationEmployee implements Organization.Employees {
         return employeeDAO.findAllByOrganizationId(organization.identity())
                 .stream()
                 .flatMap(employeeDO -> userDAO.findById(employeeDO.getId()).map(Stream::of).orElse(Stream.empty()))
-                .map(userDO -> userDO.toUser(tenantRepository, loginNameDAO));
+                .map(userDO -> userDO.toUser(tenantRepository));
     }
 
     @Override
     public Optional<User> findByIdentity(Integer integer) {
         return employeeDAO.findById(integer)
                 .flatMap(employeeDO -> userDAO.findById(integer))
-                .map(userDO -> userDO.toUser(tenantRepository, loginNameDAO));
+                .map(userDO -> userDO.toUser(tenantRepository));
     }
 
     @Override
