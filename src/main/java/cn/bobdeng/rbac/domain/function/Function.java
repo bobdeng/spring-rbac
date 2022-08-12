@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.domain.function;
 
-import cn.bobdeng.rbac.domain.Entity;
+import cn.bobdeng.rbac.archtype.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

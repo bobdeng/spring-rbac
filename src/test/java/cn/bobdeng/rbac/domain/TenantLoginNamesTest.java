@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.archtype.LoginNameDescription;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

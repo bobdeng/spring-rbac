@@ -6,7 +6,6 @@ import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 

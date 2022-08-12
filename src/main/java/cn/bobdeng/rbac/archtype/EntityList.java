@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.domain;
+package cn.bobdeng.rbac.archtype;
 
 import java.util.List;
 import java.util.Optional;

@@ -5,9 +5,7 @@ import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.server.dao.PasswordDAO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class UserPasswordImpl implements User.UserPassword {
     private PasswordDAO passwordDAO;

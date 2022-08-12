@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 
 import java.util.Optional;

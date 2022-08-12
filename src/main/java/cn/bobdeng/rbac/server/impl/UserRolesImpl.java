@@ -7,8 +7,6 @@ import cn.bobdeng.rbac.server.dao.RoleDO;
 import cn.bobdeng.rbac.server.dao.UserRoleDAO;
 import cn.bobdeng.rbac.server.dao.UserRoleDO;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class UserRolesImpl implements User.UserRoles {

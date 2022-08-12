@@ -3,14 +3,12 @@ package cn.bobdeng.rbac.server.impl;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
-import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
 import cn.bobdeng.rbac.server.dao.UserDO;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TenantUsers implements Tenant.Users {
     private Tenant tenant;

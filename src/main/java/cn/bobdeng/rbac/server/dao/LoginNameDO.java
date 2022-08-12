@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.server.dao;
 
+import cn.bobdeng.rbac.archtype.LoginNameDescription;
 import cn.bobdeng.rbac.domain.LoginName;
-import cn.bobdeng.rbac.domain.LoginNameDescription;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.User;
 import lombok.*;

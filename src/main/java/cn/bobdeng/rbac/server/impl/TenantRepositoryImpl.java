@@ -1,5 +1,7 @@
 package cn.bobdeng.rbac.server.impl;
 
+import cn.bobdeng.rbac.archtype.HasMany;
+import cn.bobdeng.rbac.archtype.Many;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class TenantRepositoryImpl implements TenantRepository {
@@ -120,11 +121,6 @@ public class TenantRepositoryImpl implements TenantRepository {
             @Override
             public int size() {
                 return domains.size();
-            }
-
-            @Override
-            public Many<Domain> subCollection(int from, int to) {
-                return null;
             }
 
             @Override

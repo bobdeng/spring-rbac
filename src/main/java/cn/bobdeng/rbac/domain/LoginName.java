@@ -1,5 +1,8 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.archtype.Entity;
+import cn.bobdeng.rbac.archtype.HasOne;
+import cn.bobdeng.rbac.archtype.LoginNameDescription;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

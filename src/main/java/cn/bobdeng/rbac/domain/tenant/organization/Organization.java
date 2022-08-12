@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.domain.tenant.organization;
 
-import cn.bobdeng.rbac.domain.Entity;
-import cn.bobdeng.rbac.domain.EntityList;
+import cn.bobdeng.rbac.archtype.Entity;
+import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.domain.User;
 import lombok.Getter;
 import lombok.Setter;

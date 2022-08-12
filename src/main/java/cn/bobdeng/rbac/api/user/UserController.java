@@ -1,6 +1,10 @@
 package cn.bobdeng.rbac.api.user;
 
-import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.archtype.LoginNameDescription;
+import cn.bobdeng.rbac.domain.RawPassword;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.UserDescription;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,9 +6,7 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.LoginNameDO;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class TenantLoginNames implements Tenant.LoginNames {
     private Tenant tenant;
