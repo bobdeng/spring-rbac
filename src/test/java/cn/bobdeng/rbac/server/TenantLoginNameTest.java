@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.server;
 
-import cn.bobdeng.rbac.archtype.LoginNameDescription;
+import cn.bobdeng.rbac.domain.LoginNameDescription;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.LoginNameDO;

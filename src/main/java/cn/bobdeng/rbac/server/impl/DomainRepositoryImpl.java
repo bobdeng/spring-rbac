@@ -31,11 +31,6 @@ public class DomainRepositoryImpl implements DomainRepository {
 
 
     @Override
-    public Optional<Domain> findByIdentity(Integer integer) {
-        return domainDAO.findById(integer).map(this::inject);
-    }
-
-    @Override
     public Domain save(Domain entity) {
         return inject(domainDAO.save(entity));
     }

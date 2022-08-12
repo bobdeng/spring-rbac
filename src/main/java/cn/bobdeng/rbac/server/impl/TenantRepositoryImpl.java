@@ -54,13 +54,6 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public Optional<Tenant> findByName(String tenantName) {
-        return tenantDAO.findByDescriptionName(tenantName)
-                .map(this::injectDependencies)
-                .findFirst();
-    }
-
-    @Override
     public Tenant.Users users(Tenant tenant) {
         return new TenantUsers(tenant, userDAO, this);
     }
@@ -102,32 +95,17 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     private HasMany<Integer, Domain> getDomains(Tenant tenant) {
-        return new HasMany<Integer, Domain>() {
+        return new HasMany<>() {
             @Override
             public Many<Domain> findAll() {
                 return getManyDomains(tenant);
-            }
-
-            @Override
-            public Optional<Domain> findByIdentity(Integer identifier) {
-                return Optional.empty();
             }
         };
     }
 
     private Many<Domain> getManyDomains(Tenant tenant) {
         List<Domain> domains = domainDAO.findAllByDescriptionTenantId(tenant.identity());
-        return new Many<Domain>() {
-            @Override
-            public int size() {
-                return domains.size();
-            }
-
-            @Override
-            public Iterator<Domain> iterator() {
-                return domains.iterator();
-            }
-        };
+        return domains::iterator;
     }
 
 }

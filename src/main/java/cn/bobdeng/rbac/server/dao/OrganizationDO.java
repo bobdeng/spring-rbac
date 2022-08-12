@@ -5,10 +5,8 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,19 +29,6 @@ public class OrganizationDO {
         this.tenantId = tenant.identity();
         this.name = entity.description().getName();
         this.parentId = entity.description().getParent();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        OrganizationDO that = (OrganizationDO) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 
     public Organization toEntity(TenantRepository tenantRepository) {

@@ -65,4 +65,16 @@ public class TenantDomainTest extends E2ETest {
         List<Map<String, String>> domains = listTenantDomainPage.domains();
         assertEquals(1, domains.size());
     }
+
+    @Test
+    public void new_tenant_domain_with_name_too_long() {
+        ListTenantDomainPage listTenantDomainPage = new ListTenantDomainPage(webDriverHandler);
+        listTenantDomainPage.open(tenant);
+        listTenantDomainPage.waitUntilNoSpin();
+        listTenantDomainPage.clickButton("新 增");
+        NewDomainPage newDomainPage = new NewDomainPage(webDriverHandler);
+        newDomainPage.inputDomain("www.testtesttesttesttesttesttesttesttesttesttesttesttest.com");
+        newDomainPage.clickButton("确 定");
+        waitUntil(()->newDomainPage.hasText("域名最长50个字符"),1000);
+    }
 }

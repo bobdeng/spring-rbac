@@ -3,7 +3,6 @@ package cn.bobdeng.rbac.domain;
 import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasMany;
-import cn.bobdeng.rbac.archtype.LoginNameDescription;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import lombok.EqualsAndHashCode;

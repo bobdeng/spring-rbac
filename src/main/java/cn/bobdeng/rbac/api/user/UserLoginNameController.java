@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.api.ObjectNotFoundException;
-import cn.bobdeng.rbac.archtype.LoginNameDescription;
+import cn.bobdeng.rbac.domain.LoginNameDescription;
 import cn.bobdeng.rbac.domain.LoginName;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.User;

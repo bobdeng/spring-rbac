@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.ClearTable;
-import cn.bobdeng.rbac.archtype.LoginNameDescription;
+import cn.bobdeng.rbac.domain.LoginNameDescription;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.function.Function;
 import cn.bobdeng.rbac.domain.function.FunctionRepository;

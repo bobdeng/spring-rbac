@@ -27,12 +27,12 @@ public class BaseController {
     private void sendResponseError(HttpServletResponse response, int status, String message) throws IOException {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(status);
-        response.getWriter().println(message);
+        response.getWriter().print(message);
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public void onObjectNotFound(HttpServletResponse response) throws IOException {
-        sendResponseError(response, HttpServletResponse.SC_NOT_FOUND, "找不到对象");
+        sendResponseError(response, HttpServletResponse.SC_NOT_FOUND, "没有发现记录");
     }
 
     @ExceptionHandler(FieldIllegalException.class)
@@ -44,8 +44,7 @@ public class BaseController {
     @ExceptionHandler(RuntimeException.class)
     public void onUnexpectException(RuntimeException e, HttpServletResponse response) throws IOException {
         log.warn("error", e);
-        response.setContentType("application/json;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        response.getWriter().println(Optional.ofNullable(e.getMessage()).orElse("未知错误"));
+        String message = Optional.ofNullable(e.getMessage()).orElse(e.getClass().getName());
+        sendResponseError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message);
     }
 }

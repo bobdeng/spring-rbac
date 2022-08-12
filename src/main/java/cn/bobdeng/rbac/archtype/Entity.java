@@ -1,7 +1,11 @@
 package cn.bobdeng.rbac.archtype;
 
 public interface Entity<T, Description> {
-    T identity();
+    default T identity() {
+        throw new RuntimeException("not implemented yet");
+    }
 
-    Description description();
+    default Description description() {
+        throw new RuntimeException("not implemented yet");
+    }
 }

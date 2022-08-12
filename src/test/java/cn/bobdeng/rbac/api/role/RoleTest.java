@@ -1,5 +1,7 @@
 package cn.bobdeng.rbac.api.role;
 
+import cn.bobdeng.rbac.Cookies;
+import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.pages.ListTenantRolePage;
 import cn.bobdeng.rbac.api.pages.NewTenantRolePage;
@@ -10,12 +12,17 @@ import cn.bobdeng.rbac.server.dao.UserRoleDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MvcResult;
 
+import javax.servlet.http.Cookie;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class RoleTest extends E2ETest {
     @Autowired
@@ -81,6 +88,17 @@ public class RoleTest extends E2ETest {
         assertThat(roles.get(0).toEntity().description().getAllows()).hasSameElementsAs(
                 Arrays.asList("role", "role.create", "role.del", "role.edit")
         );
+    }
+
+    @Test
+    public void should_show_error_when_role_not_found() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/tenants/" + (tenant.identity() - 100) + "/roles/12")
+                        .cookie(new Cookie(Cookies.ADMIN_AUTHORIZATION, new AdminToken().toString()))
+                )
+                .andExpect(status().isNotFound())
+                .andReturn();
+        String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertEquals("没有发现记录", content);
     }
 
     @Test
