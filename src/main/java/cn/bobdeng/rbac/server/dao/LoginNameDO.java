@@ -12,12 +12,9 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @Entity
 @Table(name = "t_rbac_login_name")
-@Builder
-@AllArgsConstructor
 public class LoginNameDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,25 +40,6 @@ public class LoginNameDO {
     private LoginName getLoginName(User user) {
         LoginNameDescription description = new LoginNameDescription(loginName, user.getId());
         LoginName loginName = new LoginName(id, description);
-        return loginName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        LoginNameDO that = (LoginNameDO) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    public LoginName toEntity(User user) {
-        LoginName loginName = getLoginName(user);
-        loginName.setUser(() -> user);
         return loginName;
     }
 }

@@ -33,19 +33,6 @@ public class RoleDO {
         allows = String.join(",", entity.description().getAllows());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        RoleDO roleDO = (RoleDO) o;
-        return id != null && Objects.equals(id, roleDO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
     public Role toEntity() {
         return new Role(id, new RoleDescription(name, Arrays.asList(this.allows.split(","))));
     }
