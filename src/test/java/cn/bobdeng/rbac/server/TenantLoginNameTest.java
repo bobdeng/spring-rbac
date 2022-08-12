@@ -31,7 +31,7 @@ public class TenantLoginNameTest extends BaseTest{
         Tenant tenant = new Tenant(new TenantDescription("租户1"));
         tenant = tenantRepository.save(tenant);
         User bob = tenant.addUser(new UserDescription("bob"));
-        tenant.addLoginName(new LoginNameDescription("bob", bob));
+        tenant.addLoginName(new LoginNameDescription("bob", bob.identity()));
         List<LoginNameDO> loginNames = StreamSupport.stream(loginNameDAO.findAll().spliterator(), false).collect(Collectors.toList());
         assertEquals(1, loginNames.size());
     }
@@ -41,7 +41,7 @@ public class TenantLoginNameTest extends BaseTest{
         Tenant tenant = new Tenant(new TenantDescription("租户1"));
         tenant = tenantRepository.save(tenant);
         User bob = tenant.addUser(new UserDescription("bob"));
-        tenant.addLoginName(new LoginNameDescription("bob", bob));
+        tenant.addLoginName(new LoginNameDescription("bob", bob.identity()));
 
         LoginName loginName = tenant.loginNames().findByLoginName("bob").orElseThrow(RuntimeException::new);
         assertEquals("bob", loginName.description().getName());

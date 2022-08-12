@@ -40,7 +40,7 @@ public class UserWithTenantFixture {
         domainRepository.save(new Domain(new DomainDescription("host.docker.internal", tenant.identity())));
         user = tenant.addUser(new UserDescription("张三"));
         user.savePassword(new RawPassword("123456"));
-        tenant.addLoginName(new LoginNameDescription("bobdeng", user));
+        tenant.addLoginName(new LoginNameDescription("bobdeng", user.identity()));
         Role role = tenant.newRole(new RoleDescription("角色1", getAllFunctions()));
         user.setRoles(Collections.singletonList(role));
     }

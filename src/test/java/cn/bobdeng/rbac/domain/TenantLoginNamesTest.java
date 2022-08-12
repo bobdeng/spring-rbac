@@ -1,6 +1,5 @@
 package cn.bobdeng.rbac.domain;
 
-import cn.bobdeng.rbac.domain.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -16,10 +15,10 @@ public class TenantLoginNamesTest {
         User user = new User(101, null);
         Tenant.LoginNames loginNames = mock(Tenant.LoginNames.class);
         when(loginNames.save(any(LoginName.class))).thenReturn(
-                new LoginName(1, new LoginNameDescription("bob", user))
+                new LoginName(1, new LoginNameDescription("bob", user.identity()))
         );
         tenant.setLoginNames(loginNames);
-        LoginNameDescription description = new LoginNameDescription("bob", user);
+        LoginNameDescription description = new LoginNameDescription("bob", user.identity());
 
         LoginName result = tenant.addLoginName(description);
 
@@ -33,7 +32,7 @@ public class TenantLoginNamesTest {
         Tenant.LoginNames loginNames = mock(Tenant.LoginNames.class);
         when(loginNames.findByLoginName("bob")).thenReturn(Optional.of(new LoginName()));
         tenant.setLoginNames(loginNames);
-        LoginNameDescription description = new LoginNameDescription("bob", user);
+        LoginNameDescription description = new LoginNameDescription("bob", user.identity());
 
         assertThrows(DuplicateLoginNameException.class, () -> tenant.addLoginName(description));
 

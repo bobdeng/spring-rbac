@@ -31,6 +31,6 @@ public class UserLoginNameController {
     @Permission(allows = {"user.login_name"})
     public void newLoginName(@RequestBody NewLoginNameForm form, @RequestAttribute("tenant") Tenant tenant) {
         User user = tenant.users().findByIdentity(form.getUserId()).orElseThrow(ObjectNotFoundException::new);
-        tenant.addLoginName(new LoginNameDescription(form.getLoginName(), user));
+        tenant.addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
     }
 }

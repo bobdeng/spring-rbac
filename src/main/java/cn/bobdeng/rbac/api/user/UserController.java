@@ -18,7 +18,7 @@ public class UserController {
         User user = tenant.addUser(new UserDescription(form.getName()));
         user.setRoles(tenant.roles().stream().filter(role -> form.getRoles().contains(role.identity())).collect(Collectors.toList()));
         user.savePassword(new RawPassword(form.getPassword()));
-        tenant.addLoginName(new LoginNameDescription(form.getLoginName(), user));
+        tenant.addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
     }
 
     @GetMapping("/users")

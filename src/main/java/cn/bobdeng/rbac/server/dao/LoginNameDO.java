@@ -29,7 +29,7 @@ public class LoginNameDO {
     public LoginNameDO(LoginName entity, Tenant tenant) {
         this.id = entity.identity();
         this.tenantId = tenant.identity();
-        this.userId = entity.description().getUser().identity();
+        this.userId = entity.description().getUserId();
         this.loginName = entity.description().getName();
     }
 
@@ -41,7 +41,7 @@ public class LoginNameDO {
     }
 
     private LoginName getLoginName(User user) {
-        LoginNameDescription description = new LoginNameDescription(loginName, user);
+        LoginNameDescription description = new LoginNameDescription(loginName, user.getId());
         LoginName loginName = new LoginName(id, description);
         return loginName;
     }
