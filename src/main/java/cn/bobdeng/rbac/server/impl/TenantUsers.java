@@ -37,27 +37,7 @@ public class TenantUsers implements Tenant.Users {
     }
 
     @Override
-    public Optional<User> findByAccount(String account) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<User> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
-    public Stream<User> list() {
-        return null;
-    }
-
-    @Override
     public Optional<User> findByIdentity(Integer integer) {
         return userDAO.findById(integer).map(userDO -> userDO.toUser(tenantRepository));
-    }
-
-    @Override
-    public int size() {
-        return 0;
     }
 }

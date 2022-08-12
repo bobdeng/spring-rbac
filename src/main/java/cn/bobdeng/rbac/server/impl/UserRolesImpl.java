@@ -23,21 +23,11 @@ public class UserRolesImpl implements User.UserRoles {
     }
 
     @Override
-    public List<Role> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
     public Stream<Role> list() {
         return userRoleDAO.findAllByUserId(user.getId())
                 .stream()
                 .flatMap(userRoleDO -> roleDAO.findById(userRoleDO.getRoleId()).map(Stream::of).orElse(Stream.empty()))
                 .map(RoleDO::toEntity);
-    }
-
-    @Override
-    public Optional<Role> findByIdentity(Integer integer) {
-        return Optional.empty();
     }
 
     @Override
@@ -47,10 +37,5 @@ public class UserRolesImpl implements User.UserRoles {
                 .roleId(entity.getId())
                 .build());
         return entity;
-    }
-
-    @Override
-    public int size() {
-        return 0;
     }
 }

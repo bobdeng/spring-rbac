@@ -110,8 +110,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         User save(User user);
 
         List<User> findByName(String name);
-
-        Optional<User> findByAccount(String account);
     }
 
     public interface LoginNames extends EntityList<Integer, LoginName> {

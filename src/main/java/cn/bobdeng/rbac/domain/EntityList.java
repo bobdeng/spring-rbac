@@ -5,13 +5,23 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface EntityList<ID, E extends Entity<ID, ?>> {
-    List<E> subList(int from, int to);
+    default List<E> subList(int from, int to) {
+        throw new RuntimeException("not implemented yet");
+    }
 
-    Stream<E> list();
+    default Stream<E> list() {
+        throw new RuntimeException("not implemented yet");
+    }
 
-    Optional<E> findByIdentity(ID id);
+    default Optional<E> findByIdentity(ID id) {
+        throw new RuntimeException("not implemented yet");
+    }
 
-    E save(E entity);
+    default E save(E entity) {
+        throw new RuntimeException("not implemented yet");
+    }
 
-    int size();
+    default int size() {
+        throw new RuntimeException("not implemented yet");
+    }
 }

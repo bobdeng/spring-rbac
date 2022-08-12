@@ -22,11 +22,6 @@ public class TenantRoles implements Tenant.Roles {
     }
 
     @Override
-    public List<Role> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
     public Stream<Role> list() {
         return roleDAO.findAllByTenantId(tenant.identity())
                 .stream().map(RoleDO::toEntity);
@@ -40,11 +35,6 @@ public class TenantRoles implements Tenant.Roles {
     @Override
     public Role save(Role entity) {
         return roleDAO.save(new RoleDO(entity, tenant)).toEntity();
-    }
-
-    @Override
-    public int size() {
-        return 0;
     }
 
     @Override

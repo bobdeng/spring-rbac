@@ -84,15 +84,6 @@ public class TenantRepositoryImpl implements TenantRepository {
         return new OrganizationEmployee(organization, employeeDAO, this, userDAO);
     }
 
-    @Override
-    public List<Tenant> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
-    public Stream<Tenant> list() {
-        return null;
-    }
 
     @Override
     public Optional<Tenant> findByIdentity(Integer integer) {
@@ -143,8 +134,4 @@ public class TenantRepositoryImpl implements TenantRepository {
         };
     }
 
-    @Override
-    public int size() {
-        return 0;
-    }
 }

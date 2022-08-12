@@ -31,15 +31,6 @@ public class DomainRepositoryImpl implements DomainRepository {
         domainDAO.deleteById(id);
     }
 
-    @Override
-    public List<Domain> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
-    public Stream<Domain> list() {
-        return null;
-    }
 
     @Override
     public Optional<Domain> findByIdentity(Integer integer) {
@@ -56,8 +47,4 @@ public class DomainRepositoryImpl implements DomainRepository {
         return domain;
     }
 
-    @Override
-    public int size() {
-        return 0;
-    }
 }

@@ -24,11 +24,6 @@ public class OrganizationEmployee implements Organization.Employees {
     }
 
     @Override
-    public List<User> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
     public Stream<User> list() {
         return employeeDAO.findAllByOrganizationId(organization.identity())
                 .stream()
@@ -43,15 +38,6 @@ public class OrganizationEmployee implements Organization.Employees {
                 .map(userDO -> userDO.toUser(tenantRepository));
     }
 
-    @Override
-    public User save(User entity) {
-        return null;
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
 
     @Override
     public void delete(User user) {

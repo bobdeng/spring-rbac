@@ -22,11 +22,6 @@ public class TenantOrganizationsImpl implements Tenant.Organizations {
     }
 
     @Override
-    public List<Organization> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
     public Stream<Organization> list() {
         return organizationDAO.findAllByTenantId(tenant.identity()).stream()
                 .map(organizationDO -> organizationDO.toEntity(tenantRepository));
@@ -40,10 +35,5 @@ public class TenantOrganizationsImpl implements Tenant.Organizations {
     @Override
     public Organization save(Organization entity) {
         return organizationDAO.save(new OrganizationDO(entity, tenant)).toEntity(tenantRepository);
-    }
-
-    @Override
-    public int size() {
-        return 0;
     }
 }

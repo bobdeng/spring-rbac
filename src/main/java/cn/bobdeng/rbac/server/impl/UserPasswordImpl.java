@@ -17,16 +17,6 @@ public class UserPasswordImpl implements User.UserPassword {
     }
 
     @Override
-    public List<Password> subList(int from, int to) {
-        return null;
-    }
-
-    @Override
-    public Stream<Password> list() {
-        return null;
-    }
-
-    @Override
     public Optional<Password> findByIdentity(Integer integer) {
         return passwordDAO.findById(integer);
     }
@@ -34,11 +24,6 @@ public class UserPasswordImpl implements User.UserPassword {
     @Override
     public Password save(Password entity) {
         return passwordDAO.save(entity);
-    }
-
-    @Override
-    public int size() {
-        return 0;
     }
 
     @Override
