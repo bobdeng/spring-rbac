@@ -5,6 +5,8 @@ import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasMany;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
+import cn.bobdeng.rbac.domain.third.ThirdDescription;
+import cn.bobdeng.rbac.domain.third.ThirdIdentity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,8 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private HasMany<Integer, Domain> domains;
     @Setter
     private Organizations organizations;
+    @Setter
+    private ThirdIdentities thirdIdentities;
 
     public Tenant(TenantDescription tenantDescription) {
 
@@ -42,6 +46,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     public Tenant(Integer id, TenantDescription tenantDescription) {
         this.id = id;
         this.description = tenantDescription;
+    }
+
+    public ThirdIdentities thirdIdentities() {
+        return thirdIdentities;
     }
 
     @Override
@@ -108,6 +116,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         organizations.save(new Organization(description));
     }
 
+    public void newThirdIdentity(ThirdDescription thirdDescription) {
+        thirdIdentities.save(new ThirdIdentity(thirdDescription));
+    }
+
 
     public interface Users extends EntityList<Integer, User> {
         User save(User user);
@@ -131,6 +143,11 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
     public interface Organizations extends EntityList<Integer, Organization> {
 
+    }
+
+    public interface ThirdIdentities extends EntityList<Integer, ThirdIdentity> {
+
+        Optional<ThirdIdentity> findByNameAndIdentity(String thirdName, String identity);
     }
 
 

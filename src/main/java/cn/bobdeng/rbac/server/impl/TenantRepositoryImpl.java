@@ -8,7 +8,6 @@ import cn.bobdeng.rbac.server.dao.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +22,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final RoleDAO roleDAO;
     private final OrganizationDAO organizationDAO;
     private final EmployeeDAO employeeDAO;
+    private final ThirdIdentityDAO thirdIdentityDAO;
 
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
@@ -38,6 +38,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         this.roleDAO = roleDAO;
         this.organizationDAO = organizationDAO;
         this.employeeDAO = employeeDAO;
+        this.thirdIdentityDAO = thirdIdentityDAO;
     }
 
     @Override
@@ -90,6 +91,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
         tenant.setRoles(new TenantRoles(roleDAO, tenant, userRoleDAO));
+        tenant.setThirdIdentities(new TenantThirdIdentities(tenant,thirdIdentityDAO));
         tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO, this));
         return tenant;
     }
