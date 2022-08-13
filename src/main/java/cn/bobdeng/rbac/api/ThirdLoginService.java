@@ -25,13 +25,18 @@ public class ThirdLoginService {
     private UserToken getUserToken(Tenant tenant, ThirdLoginForm thirdLoginForm) {
         Optional<ThirdIdentity> thirdIdentity = tenant.thirdIdentities().findByNameAndIdentity(thirdLoginForm.getThirdName(), thirdLoginForm.getIdentity());
         if (thirdIdentity.isEmpty()) {
-            User user = tenant.addUser(new UserDescription(thirdLoginForm.getUserName()));
-            ThirdDescription thirdDescription = new ThirdDescription(thirdLoginForm.getIdentity(), thirdLoginForm.getThirdName(), user.identity());
-            tenant.newThirdIdentity(thirdDescription);
+            User user = newUser(tenant, thirdLoginForm);
             return new UserToken(user, tenant);
         }
         Integer userId = thirdIdentity.get().description().getUserId();
         User user = tenant.users().findByIdentity(userId).orElseThrow(ObjectNotFoundException::new);
         return new UserToken(user, tenant);
+    }
+
+    private User newUser(Tenant tenant, ThirdLoginForm thirdLoginForm) {
+        User user = tenant.addUser(new UserDescription(thirdLoginForm.getUserName()));
+        ThirdDescription thirdDescription = new ThirdDescription(thirdLoginForm.getIdentity(), thirdLoginForm.getThirdName(), user.identity());
+        tenant.newThirdIdentity(thirdDescription);
+        return user;
     }
 }
