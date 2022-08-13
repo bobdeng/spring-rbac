@@ -59,4 +59,6 @@ cn.bobdeng.rbac.domain.AdminPassword.Store
 进入 /admin/
 ## 用户登录跳转
 从用户页面，跳转到 /admin/user/login
+## 第三方用户登录
+- 调用ThirdLoginService，得到UserToken，然后保存Token到Cookie
 

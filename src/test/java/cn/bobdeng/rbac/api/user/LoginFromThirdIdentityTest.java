@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api.user;
 
+import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.api.ThirdLoginForm;
 import cn.bobdeng.rbac.api.ThirdLoginService;
 import cn.bobdeng.rbac.api.UserToken;
@@ -10,14 +11,19 @@ import cn.bobdeng.rbac.server.dao.ThirdIdentityDAO;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @Transactional
@@ -29,11 +35,15 @@ public class LoginFromThirdIdentityTest {
     @Autowired
     ThirdIdentityDAO thirdIdentityDAO;
     private Tenant tenant;
+    private HttpServletResponse response;
+    private ArgumentCaptor<Cookie> argumentCaptor;
 
     @BeforeEach
     public void setup() {
         userWithTenantFixture.init();
         tenant = userWithTenantFixture.getTenant();
+        response = mock(HttpServletResponse.class);
+        argumentCaptor = ArgumentCaptor.forClass(Cookie.class);
     }
 
     @Test
@@ -43,14 +53,17 @@ public class LoginFromThirdIdentityTest {
         thirdLoginForm.setUserName("李四");
         thirdLoginForm.setThirdName("微信");
 
-        UserToken token = thirdLoginService.login(tenant, thirdLoginForm);
+        UserToken token = thirdLoginService.login(tenant, thirdLoginForm, response);
 
         List<User> users = tenant.users().findByName("李四");
         assertEquals(1, users.size());
         List<ThirdIdentityDO> thirdIdentities = thirdIdentityDAO.findAllByTenantId(tenant.identity());
         assertEquals(1, thirdIdentities.size());
         assertNotNull(token);
-        assertEquals(users.get(0).identity(),token.getId());
+        assertEquals(users.get(0).identity(), token.getId());
+        verify(response).addCookie(argumentCaptor.capture());
+        Cookie value = argumentCaptor.getValue();
+        assertEquals(value.getName(), Cookies.AUTHORIZATION);
     }
 
     @Test
@@ -65,13 +78,13 @@ public class LoginFromThirdIdentityTest {
                 .tenantId(tenant.identity())
                 .identity(thirdLoginForm.getIdentity())
                 .build());
-        UserToken token = thirdLoginService.login(tenant, thirdLoginForm);
+        UserToken token = thirdLoginService.login(tenant, thirdLoginForm, response);
 
         List<User> users = tenant.users().findByName("李四");
         assertEquals(0, users.size());
         List<ThirdIdentityDO> thirdIdentities = thirdIdentityDAO.findAllByTenantId(tenant.identity());
         assertEquals(1, thirdIdentities.size());
         assertNotNull(token);
-        assertEquals(userWithTenantFixture.user().identity(),token.getId());
+        assertEquals(userWithTenantFixture.user().identity(), token.getId());
     }
 }
