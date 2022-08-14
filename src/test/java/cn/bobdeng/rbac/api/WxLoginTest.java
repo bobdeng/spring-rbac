@@ -4,6 +4,8 @@ import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @TestPropertySource(locations = "/wxconfig.properties")
 public class WxLoginTest extends E2ETest {
     @Test
@@ -12,5 +14,8 @@ public class WxLoginTest extends E2ETest {
         adminLoginPage.open();
         adminLoginPage.waitUntilNoButtonSpin();
         adminLoginPage.waitUntil(() -> adminLoginPage.hasText("微信登录"), 1000);
+        adminLoginPage.loginByWeixin();
+        String currentUrl = WebDriverHandler.WEBDRIVER.getCurrentUrl();
+        assertEquals("https://open.weixin.qq.com/connect/qrconnect?appid=123456&redirect_uri=https%3A%2F%2Ftest.com%2Fwx_callback&response_type=code&scope=snsapi_login&state=123456#wechat_redirect", currentUrl);
     }
 }

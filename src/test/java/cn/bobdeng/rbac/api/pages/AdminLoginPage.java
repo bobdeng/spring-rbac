@@ -44,4 +44,8 @@ public class AdminLoginPage extends BasePage {
     public void userLocked() {
         waitUntil(() -> hasText("账号被锁定"), 1000);
     }
+
+    public void loginByWeixin() {
+        clickContent("微信登录");
+    }
 }
