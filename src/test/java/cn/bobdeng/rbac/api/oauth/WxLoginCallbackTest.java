@@ -112,6 +112,14 @@ public class WxLoginCallbackTest extends E2ETest {
         waitUntil(() -> wxCallbackPage.hasText("登录失败"), 100);
     }
 
+    @Test
+    public void should_fail_when_state_fail() {
+        userLogin(userWithTenantFixture.user());
+        WxCallbackPage wxCallbackPage = new WxCallbackPage(webDriverHandler);
+        wxCallbackPage.open(code, "123456");
+        waitUntil(() -> wxCallbackPage.hasText("登录失败"), 100);
+    }
+
     private HttpResponse failedAccessTokenResponse() {
         return new HttpResponse(200, "{\"errcode\":40029,\"errmsg\":\"invalid code\"}");
     }

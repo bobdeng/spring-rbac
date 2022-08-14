@@ -19,17 +19,19 @@ import java.util.Optional;
 
 @Controller
 public record WxLoginCallbackController(HttpClient httpClient,
-                                        WxConfig wxConfig) {
+                                        WxConfig wxConfig,
+                                        WxLoginStateGenerator wxLoginStateGenerator) {
 
     @GetMapping("/wx_callback")
     public String wxCallback(Model model,
                              HttpServletResponse response,
                              @RequestParam("code") String code,
+                             @RequestParam("state") String state,
                              @RequestAttribute("tenant") Tenant tenant,
                              @RequestAttribute(value = "session", required = false) Session session) {
         WxLoginResult wxLoginResult = new WxLoginResult(httpClient, code, wxConfig);
         wxLoginResult.read();
-        if (!wxLoginResult.isSuccess()) {
+        if (!wxLoginResult.isSuccess() || !wxLoginStateGenerator.verify(state)) {
             return "oauth_fail";
         }
         User user = tenant.thirdIdentities().findByNameAndIdentity(OAuthNames.WX, wxLoginResult.openId())

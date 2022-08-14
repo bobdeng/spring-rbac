@@ -8,4 +8,9 @@ public class WxLoginStateGeneratorImpl implements WxLoginStateGenerator {
     public String generate() {
         return null;
     }
+
+    @Override
+    public boolean verify(String code) {
+        return false;
+    }
 }

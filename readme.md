@@ -64,3 +64,12 @@ cn.bobdeng.rbac.domain.AdminPassword.Store
 ## 读取当前用户所有可用权限
 - GET /permissions 返回 ["user.create"]，权限列表
 
+## 微信登录
+配置
+```properties
+wx.appId=123456
+wx.appSecret=333444
+wx.enabled=true
+wx.callback=https://test.com
+```
+
