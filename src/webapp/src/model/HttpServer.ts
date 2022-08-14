@@ -29,6 +29,11 @@ export class Organization {
         this.description = description;
     }
 }
+export class WxConfig{
+    appId:string
+    callback:string
+    code:string
+}
 
 const config: AxiosRequestConfig = {
     validateStatus: () => true
@@ -146,5 +151,8 @@ export const server = {
     },
     async newLoginName(param: { loginName: string; userId: string }) {
         return await ajax(() => axios.post("/login_names", param, config))
+    },
+    async getWxConfig():Promise<WxConfig> {
+        return await ajax(() => axios.get("/wx_config", config))
     }
 }

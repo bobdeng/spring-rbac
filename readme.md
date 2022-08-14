@@ -61,4 +61,6 @@ cn.bobdeng.rbac.domain.AdminPassword.Store
 从用户页面，跳转到 /admin/user/login
 ## 第三方用户登录
 - 调用ThirdLoginService，得到UserToken，然后保存Token到Cookie
+## 读取当前用户所有可用权限
+- GET /permissions 返回 ["user.create"]，权限列表
 
