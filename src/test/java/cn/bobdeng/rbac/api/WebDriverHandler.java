@@ -30,13 +30,14 @@ public class WebDriverHandler {
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
+            .withReuse(true)
             .withNetwork(Network.SHARED);
 
     @PostConstruct
     private void init() {
         chrome.start();
+        WEBDRIVER = chrome.getWebDriver();
         if (webServerAppCtxt != null) {
-            WEBDRIVER = chrome.getWebDriver();
             this.port = webServerAppCtxt.getWebServer().getPort();
         }
     }

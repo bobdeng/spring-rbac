@@ -27,7 +27,7 @@ public class BasePage {
     private void waitClassDisappeared(String className) {
         while (true) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(1);
                 WebDriverHandler.WEBDRIVER.findElement(By.className(className));
             } catch (Exception e) {
                 break;

@@ -53,7 +53,7 @@ public abstract class E2ETest {
         long begin = System.currentTimeMillis();
         while (System.currentTimeMillis() - begin < time) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
