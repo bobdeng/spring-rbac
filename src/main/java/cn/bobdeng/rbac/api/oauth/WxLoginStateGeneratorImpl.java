@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class WxLoginStateGeneratorImpl implements WxLoginStateGenerator {
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     public WxLoginStateGeneratorImpl(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;

@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.JsonPage;
 import cn.bobdeng.rbac.domain.function.Function;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,9 @@ public class FunctionsTest extends E2ETest {
     }
 
     private Function[] getFunctions() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/functions"))
-                .andExpect(status().isOk())
-                .andReturn();
-        String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        JsonPage jsonPage = new JsonPage(webDriverHandler);
+        jsonPage.open("/functions");
+        String content = jsonPage.content();
         Function[] functions = new Gson().fromJson(content, Function[].class);
         return functions;
     }

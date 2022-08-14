@@ -6,7 +6,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestPropertySource(locations = "/wxconfig.properties")
 public class WxLoginTest extends E2ETest {
     @Test
     public void 当配置了微信显示微信登录按钮() {

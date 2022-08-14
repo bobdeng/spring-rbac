@@ -9,10 +9,10 @@ import lombok.Getter;
 @Getter
 public class WxLoginResult {
     private WxAccessTokenResult accessTokenResult;
-    private String code;
-    private WxConfig wxConfig;
     private WxUserInfo userInfo;
-    private HttpClient httpClient;
+    private final String code;
+    private final WxConfig wxConfig;
+    private final HttpClient httpClient;
 
     public WxLoginResult(HttpClient httpClient, String code, WxConfig wxConfig) {
         this.httpClient = httpClient;

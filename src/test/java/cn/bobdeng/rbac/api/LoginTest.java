@@ -72,12 +72,5 @@ public class LoginTest extends E2ETest {
         assertNotNull(testController.session);
     }
 
-    @Test
-    public void 当没有配置微信不显示微信登录按钮() {
-        AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
-        adminLoginPage.open();
-        adminLoginPage.waitUntilNoButtonSpin();
-        assertFalse(adminLoginPage.hasText("微信登录"));
-    }
 
 }

@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.api.role;
 
 import cn.bobdeng.rbac.Cookies;
+import cn.bobdeng.rbac.JsonPage;
 import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.pages.ListTenantRolePage;
@@ -92,13 +93,9 @@ public class RoleTest extends E2ETest {
 
     @Test
     public void should_show_error_when_role_not_found() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/tenants/" + (tenant.identity() - 100) + "/roles/12")
-                        .cookie(new Cookie(Cookies.ADMIN_AUTHORIZATION, new AdminToken().toString()))
-                )
-                .andExpect(status().isNotFound())
-                .andReturn();
-        String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
-        assertEquals("没有发现记录", content);
+        JsonPage jsonPage = new JsonPage(webDriverHandler);
+        jsonPage.open("/tenants/" + (tenant.identity() - 100) + "/roles/12");
+        assertEquals("没有发现记录", jsonPage.content());
     }
 
     @Test
