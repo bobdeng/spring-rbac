@@ -26,7 +26,7 @@ public class UserLoginController {
         if (!user.normal()) {
             throw new RuntimeException("账号被锁定");
         }
-        Cookie cookie = new Cookie(Cookies.AUTHORIZATION, new UserToken(user).toString());
+        Cookie cookie = new Cookie(Cookies.AUTHORIZATION, new UserToken(user).toTokenString());
         cookie.setPath("/");
         response.addCookie(cookie);
     }

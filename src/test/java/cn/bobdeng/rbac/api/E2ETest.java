@@ -5,6 +5,7 @@ import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.domain.User;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.function.Supplier;
 
+import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @RunWith(SpringRunner.class)
@@ -40,7 +42,7 @@ public abstract class E2ETest {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         webDriverHandler.removeAllCookies();
-        adminLoginPage.setCookie(Cookies.AUTHORIZATION, new UserToken(user).toString());
+        adminLoginPage.setCookie(Cookies.AUTHORIZATION, new UserToken(user).toTokenString());
     }
 
     protected void clearLogin() {
@@ -63,4 +65,7 @@ public abstract class E2ETest {
         fail();
     }
 
+    public Cookie getCookie(String name) {
+        return WEBDRIVER.manage().getCookieNamed(name);
+    }
 }

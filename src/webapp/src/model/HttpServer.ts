@@ -29,10 +29,11 @@ export class Organization {
         this.description = description;
     }
 }
-export class WxConfig{
-    appId:string
-    callback:string
-    code:string
+
+export class WxConfig {
+    appId: string
+    callback: string
+    code: string
 
     constructor(appId: string, callback: string, code: string) {
         this.appId = appId;
@@ -158,7 +159,7 @@ export const server = {
     async newLoginName(param: { loginName: string; userId: string }) {
         return await ajax(() => axios.post("/login_names", param, config))
     },
-    async getWxConfig():Promise<WxConfig> {
+    async getWxConfig(): Promise<WxConfig> {
         return await ajax(() => axios.get("/wx_config", config))
     }
 }

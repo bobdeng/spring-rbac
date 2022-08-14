@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ThirdLoginService {
     public UserToken login(Tenant tenant, ThirdLoginForm thirdLoginForm, HttpServletResponse response) {
         UserToken userToken = getUserToken(tenant, thirdLoginForm);
-        Cookie cookie = new Cookie(Cookies.AUTHORIZATION, userToken.toString());
+        Cookie cookie = new Cookie(Cookies.AUTHORIZATION, userToken.toTokenString());
         cookie.setPath("/");
         response.addCookie(cookie);
         return userToken;

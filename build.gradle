@@ -39,6 +39,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.20'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.seleniumhq.selenium:selenium-java:2.45.0'
     testImplementation 'org.testcontainers:mysql:1.17.3'

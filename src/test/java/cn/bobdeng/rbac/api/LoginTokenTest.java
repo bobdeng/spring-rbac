@@ -11,7 +11,7 @@ class LoginTokenTest {
         JwtConfig.expire = 86400;
         JwtConfig.token = "123456";
         UserToken loginToken = new UserToken(1, 2);
-        String token = loginToken.toString();
+        String token = loginToken.toTokenString();
         UserToken decode = UserToken.decode(token);
         assertEquals(decode,loginToken);
     }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WxConfigResultTest {
+
     @Test
     public void should_get_result() {
         WxConfig wxConfig = new WxConfig();

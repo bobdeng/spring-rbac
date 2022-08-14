@@ -1,9 +1,13 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @Data
 @EqualsAndHashCode
@@ -28,8 +32,13 @@ public class UserToken {
         return JwtToken.decode(token, UserToken.class);
     }
 
-    @Override
-    public String toString() {
+    public String toTokenString() {
         return new JwtToken<>(this).toString();
+    }
+
+    public void writeToResponse(HttpServletResponse response) {
+        Cookie cookie = new Cookie(Cookies.AUTHORIZATION, new JwtToken<>(this).toString());
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 }
