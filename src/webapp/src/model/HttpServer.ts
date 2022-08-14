@@ -33,6 +33,12 @@ export class WxConfig{
     appId:string
     callback:string
     code:string
+
+    constructor(appId: string, callback: string, code: string) {
+        this.appId = appId;
+        this.callback = callback;
+        this.code = code;
+    }
 }
 
 const config: AxiosRequestConfig = {

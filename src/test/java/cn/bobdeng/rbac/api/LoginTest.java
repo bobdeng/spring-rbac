@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AdminLoginTest extends E2ETest {
+public class LoginTest extends E2ETest {
     @Autowired
     AdminPasswordNotifierImpl adminPasswordNotifier;
     @Autowired
@@ -24,12 +24,14 @@ public class AdminLoginTest extends E2ETest {
         webDriverHandler.removeAllCookies();
         adminPasswordNotifier.clear();
     }
+
     @Test
-    public void should_show_tenant_name(){
+    public void should_show_tenant_name() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
-        waitUntil(()->adminLoginPage.hasText("租户1"),1000);
+        waitUntil(() -> adminLoginPage.hasText("租户1"), 1000);
     }
+
     @Test
     public void should_send_admin_password_when_fail() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
@@ -68,6 +70,14 @@ public class AdminLoginTest extends E2ETest {
         adminConsolePage.open();
         assertTrue(adminConsolePage.content().contains("hello"));
         assertNotNull(testController.session);
+    }
+
+    @Test
+    public void 当没有配置微信不显示微信登录按钮() {
+        AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
+        adminLoginPage.open();
+        adminLoginPage.waitUntilNoButtonSpin();
+        assertFalse(adminLoginPage.hasText("微信登录"));
     }
 
 }

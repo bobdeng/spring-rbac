@@ -11,6 +11,7 @@
         </FormItem>
         <FormItem :wrapper-col="{ offset: 8, span: 16 }">
           <Button type="primary" @click="login" id="buttonLogin" :loading="loading">登录</Button>
+          <WxLoginButton/>
         </FormItem>
       </Form>
     </Card>
@@ -22,6 +23,7 @@ import {Card, Form, FormItem, Input, InputPassword, Button, Alert} from 'ant-des
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {LoginForm, server} from "../model/HttpServer";
+import WxLoginButton from "../components/WxLoginButton.vue";
 
 const emit = defineEmits(['adminLogin', 'userLogin'])
 const password = ref("")
