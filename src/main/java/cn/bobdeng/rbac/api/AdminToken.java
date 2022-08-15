@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.api;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class AdminToken {
     private long timestamp;
 

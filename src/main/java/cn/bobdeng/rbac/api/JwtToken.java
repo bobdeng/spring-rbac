@@ -24,7 +24,6 @@ public class JwtToken<T> {
                     .parseClaimsJws(token.replace(JwtConfig.prefix, ""));
             return new Gson().fromJson(jws.getBody().getSubject(), clz);
         } catch (Exception e) {
-            log.info(token);
             throw new RuntimeException(e);
         }
     }

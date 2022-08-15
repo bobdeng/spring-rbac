@@ -11,11 +11,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
 @Entity
 @Table(name = "t_rbac_employee")
 public class EmployeeDO {
     @Id
+    @Getter
     private Integer id;
     private Integer organizationId;
 }

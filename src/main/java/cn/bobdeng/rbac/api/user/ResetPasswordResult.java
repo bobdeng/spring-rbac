@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.api.user;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class ResetPasswordResult {
     private String password;
 

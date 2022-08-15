@@ -1,13 +1,13 @@
 package cn.bobdeng.rbac.api.function;
 
 import cn.bobdeng.rbac.domain.function.Function;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
 public class FunctionVO {
     private String key;
     private String name;
