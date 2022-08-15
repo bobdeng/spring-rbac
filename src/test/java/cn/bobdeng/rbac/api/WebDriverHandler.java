@@ -70,12 +70,14 @@ public class WebDriverHandler {
         WEBDRIVER.get(getBaseUrl() + url);
     }
 
-    @NotNull
-    protected String getBaseUrl() {
+    public String getBaseUrl() {
         return "http://" + getDomain();
     }
 
-    @NotNull
+    public String getLocalhostUrl() {
+        return "http://localhost:" + this.port;
+    }
+
     private String getDomain() {
         return "host.docker.internal:" + port;
     }

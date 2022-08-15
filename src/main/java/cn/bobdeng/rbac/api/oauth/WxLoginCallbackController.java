@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -28,7 +29,7 @@ public record WxLoginCallbackController(HttpClient httpClient,
                              @RequestParam("code") String code,
                              @RequestParam("state") String state,
                              @RequestAttribute("tenant") Tenant tenant,
-                             @RequestAttribute(value = "session", required = false) Session session) {
+                             @RequestAttribute(value = "session", required = false) Session session) throws IOException {
         WxLoginResult wxLoginResult = new WxLoginResult(httpClient, code, wxConfig);
         wxLoginResult.read();
         if (!wxLoginResult.isSuccess() || !wxLoginStateGenerator.verify(state)) {

@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,7 +38,7 @@ public class WxLoginCallbackTest extends E2ETest {
     private String accessToken = "xxxbbbssss";
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws IOException {
         clearLogin();
         clearTable.clearTable("t_rbac_third_identity");
         userWithTenantFixture.init();
@@ -95,7 +97,7 @@ public class WxLoginCallbackTest extends E2ETest {
     }
 
     @Test
-    public void should_throw_when_get_access_token_fail() {
+    public void should_throw_when_get_access_token_fail() throws IOException {
         when(mockHttpClient.getHttpClient().execute(getAccessTokenRequest())).thenReturn(failedAccessTokenResponse());
         userLogin(userWithTenantFixture.user());
         WxCallbackPage wxCallbackPage = new WxCallbackPage(webDriverHandler);
@@ -104,7 +106,7 @@ public class WxLoginCallbackTest extends E2ETest {
     }
 
     @Test
-    public void should_throw_when_get_user_token_fail() {
+    public void should_throw_when_get_user_token_fail() throws IOException {
         when(mockHttpClient.getHttpClient().execute(getGetUserInfoRequest())).thenReturn(failedAccessTokenResponse());
         userLogin(userWithTenantFixture.user());
         WxCallbackPage wxCallbackPage = new WxCallbackPage(webDriverHandler);

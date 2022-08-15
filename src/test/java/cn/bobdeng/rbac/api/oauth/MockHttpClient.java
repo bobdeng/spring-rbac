@@ -6,13 +6,15 @@ import cn.bobdeng.rbac.utils.HttpResponse;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 @Primary
 public class MockHttpClient implements HttpClient {
     private HttpClient httpClient;
 
     @Override
-    public HttpResponse execute(HttpRequest request) {
+    public HttpResponse execute(HttpRequest request) throws IOException {
         return httpClient.execute(request);
     }
 

@@ -6,6 +6,8 @@ import cn.bobdeng.rbac.utils.HttpResponse;
 import com.google.gson.Gson;
 import lombok.Getter;
 
+import java.io.IOException;
+
 @Getter
 public class WxLoginResult {
     private WxAccessTokenResult accessTokenResult;
@@ -20,7 +22,7 @@ public class WxLoginResult {
         this.wxConfig = wxConfig;
     }
 
-    public void read() {
+    public void read() throws IOException {
         accessTokenResult = getWxAccessTokenResult(this.code);
         if (accessTokenResult.getAccessToken() == null) {
             return;
@@ -36,12 +38,12 @@ public class WxLoginResult {
         return accessTokenResult.getOpenid();
     }
 
-    private WxUserInfo getWxUserInfo(WxAccessTokenResult wxAccessTokenResult) {
+    private WxUserInfo getWxUserInfo(WxAccessTokenResult wxAccessTokenResult) throws IOException {
         HttpResponse response = httpClient.execute(new HttpRequest("https://api.weixin.qq.com/sns/userinfo?access_token=" + wxAccessTokenResult.getAccessToken() + "&openid=" + wxAccessTokenResult.getOpenid()));
         return new Gson().fromJson(response.getBody(), WxUserInfo.class);
     }
 
-    private WxAccessTokenResult getWxAccessTokenResult(String code) {
+    private WxAccessTokenResult getWxAccessTokenResult(String code) throws IOException {
         HttpResponse response = httpClient.execute(new HttpRequest("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + wxConfig.getAppId() + "&secret=" + wxConfig.getAppSecret() + "&code=" + code + "&grant_type=authorization_code"));
         return new Gson().fromJson(response.getBody(), WxAccessTokenResult.class);
     }
