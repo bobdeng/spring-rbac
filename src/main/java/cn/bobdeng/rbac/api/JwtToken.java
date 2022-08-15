@@ -18,14 +18,10 @@ public class JwtToken<T> {
     }
 
     public static <T> T decode(String token, Class<T> clz) {
-        try {
-            Jws<Claims> jws = Jwts.parser()
-                    .setSigningKey(JwtConfig.token)
-                    .parseClaimsJws(token.replace(JwtConfig.prefix, ""));
-            return new Gson().fromJson(jws.getBody().getSubject(), clz);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Jws<Claims> jws = Jwts.parser()
+                .setSigningKey(JwtConfig.token)
+                .parseClaimsJws(token.replace(JwtConfig.prefix, ""));
+        return new Gson().fromJson(jws.getBody().getSubject(), clz);
     }
 
     @Override

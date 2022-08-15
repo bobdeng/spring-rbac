@@ -1,13 +1,14 @@
 package cn.bobdeng.rbac.domain;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
+@Getter
 public class RoleDescription {
     private String name;
     private List<String> allows;

@@ -66,7 +66,7 @@ public class FieldChecker {
         return new FieldChecker(name, value, getErrors());
     }
 
-    @Data
+    @Getter
     static public class FieldError {
         private String field;
         private String error;

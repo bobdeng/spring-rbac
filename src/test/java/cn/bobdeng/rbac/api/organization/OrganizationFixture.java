@@ -30,6 +30,6 @@ public class OrganizationFixture {
     }
 
     public List<OrganizationDO> list(Tenant tenant) {
-        return organizationDAO.findAllByTenantId(tenant.getId());
+        return organizationDAO.findAllByTenantId(tenant.identity());
     }
 }

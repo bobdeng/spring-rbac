@@ -1,12 +1,10 @@
 package cn.bobdeng.rbac.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 @EqualsAndHashCode
-@Data
-@NoArgsConstructor
+@Getter
 public class UserDescription {
     private String name;
     private User.UserStatus status;

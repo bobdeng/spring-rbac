@@ -12,13 +12,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode
-@NoArgsConstructor
 public class User implements Entity<Integer, UserDescription> {
     @Getter
-    @Setter
     private Integer id;
     @Getter
-    @Setter
     private UserDescription description;
     @Setter
     private UserPassword userPassword;

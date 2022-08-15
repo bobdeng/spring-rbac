@@ -13,11 +13,6 @@ public class Password implements Entity<Integer, PasswordDescription> {
     private PasswordDescription description;
 
     @Override
-    public Integer identity() {
-        return id;
-    }
-
-    @Override
     public PasswordDescription description() {
         return description;
     }

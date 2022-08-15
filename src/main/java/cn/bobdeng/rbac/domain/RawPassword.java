@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.domain;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class RawPassword {
     private String rawPassword;
 

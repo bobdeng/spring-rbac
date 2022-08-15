@@ -22,8 +22,8 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Getter
     @Setter
     private Integer id;
-    @Getter
     @Setter
+    @Getter
     private TenantDescription description;
     @Setter
     private Users users;
@@ -55,11 +55,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Override
     public Integer identity() {
         return id;
-    }
-
-    @Override
-    public TenantDescription description() {
-        return description;
     }
 
     public User addUser(UserDescription userDescription) {

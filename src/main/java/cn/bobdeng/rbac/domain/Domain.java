@@ -29,11 +29,6 @@ public class Domain implements Entity<Integer, DomainDescription> {
     }
 
     @Override
-    public Integer identity() {
-        return id;
-    }
-
-    @Override
     public DomainDescription description() {
         return description;
     }

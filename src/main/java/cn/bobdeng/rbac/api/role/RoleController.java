@@ -29,10 +29,7 @@ public class RoleController {
 
     @GetMapping("/roles")
     public List<Role> listRoles(@RequestAttribute("tenant") Tenant tenant) {
-        Integer id = tenant.getId();
-        return tenantRepository.findByIdentity(id)
-                .map(Tenant::roles)
-                .orElse(Collections.emptyList());
+        return tenant.roles();
     }
 
     @PostMapping("/tenants/{id}/roles")

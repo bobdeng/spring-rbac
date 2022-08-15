@@ -1,10 +1,11 @@
 package cn.bobdeng.rbac.domain;
 
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
-@Data
-public class Page <T>{
+
+public class Page<T> {
+    @Getter
     List<T> elements;
     int totalPage;
     long totalElements;
