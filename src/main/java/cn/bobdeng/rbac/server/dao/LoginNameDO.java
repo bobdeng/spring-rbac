@@ -8,8 +8,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
 @RequiredArgsConstructor
 @Entity
 @Table(name = "t_rbac_login_name")

@@ -1,10 +1,10 @@
 package cn.bobdeng.rbac.api.oauth;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
+@Getter
 public class WxAccessTokenResult {
     private String accessToken;
     private String openid;

@@ -12,8 +12,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-@Setter
-@ToString
 @Entity
 @Table(name = "t_rbac_organization")
 public class OrganizationDO {

@@ -1,10 +1,10 @@
 package cn.bobdeng.rbac.utils;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
 @EqualsAndHashCode
+@Getter
 public class HttpRequest {
     private String url;
 

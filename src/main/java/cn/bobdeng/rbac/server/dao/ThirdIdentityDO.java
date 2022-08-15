@@ -6,12 +6,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
-@Getter
-@Setter
 @Table(name = "t_rbac_third_identity")
 public class ThirdIdentityDO {
     @Id

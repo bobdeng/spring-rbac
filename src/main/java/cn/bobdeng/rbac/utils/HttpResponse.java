@@ -1,9 +1,8 @@
 package cn.bobdeng.rbac.utils;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
+import lombok.Getter;
+@Getter
 @AllArgsConstructor
 public class HttpResponse {
     private int code;

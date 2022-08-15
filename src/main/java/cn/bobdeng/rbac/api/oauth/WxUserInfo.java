@@ -1,8 +1,12 @@
 package cn.bobdeng.rbac.api.oauth;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class WxUserInfo {
     private String nickname;
+
+    public WxUserInfo(String nickname) {
+        this.nickname = nickname;
+    }
 }

@@ -10,11 +10,6 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Builder
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "t_rbac_role")

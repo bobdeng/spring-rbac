@@ -8,7 +8,6 @@ import lombok.Getter;
 
 import java.io.IOException;
 
-@Getter
 public class WxLoginResult {
     private WxAccessTokenResult accessTokenResult;
     private WxUserInfo userInfo;

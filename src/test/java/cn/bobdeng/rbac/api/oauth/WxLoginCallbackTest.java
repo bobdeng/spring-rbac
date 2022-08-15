@@ -127,8 +127,7 @@ public class WxLoginCallbackTest extends E2ETest {
     }
 
     private HttpResponse userInfoResponse() {
-        WxUserInfo wxUserInfo = new WxUserInfo();
-        wxUserInfo.setNickname("李四");
+        WxUserInfo wxUserInfo = new WxUserInfo("李四");
         String userInfo = new Gson().toJson(wxUserInfo);
         HttpResponse response = new HttpResponse(200, userInfo);
         return response;
