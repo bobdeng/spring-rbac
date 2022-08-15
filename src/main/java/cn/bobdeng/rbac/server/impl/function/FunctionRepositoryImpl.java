@@ -18,10 +18,13 @@ public class FunctionRepositoryImpl implements FunctionRepository {
         this.externalFunctionReader = externalFunctionReader;
     }
 
-    @SneakyThrows
     @Override
     public Stream<Function> list() {
-        String content = Resources.toString(Resources.getResource("rbac/functions.json"), StandardCharsets.UTF_8);
-        return Stream.concat(Stream.of(new Gson().fromJson(content, Function[].class)), externalFunctionReader.read().stream());
+        try {
+            String content = Resources.toString(Resources.getResource("rbac/functions.json"), StandardCharsets.UTF_8);
+            return Stream.concat(Stream.of(new Gson().fromJson(content, Function[].class)), externalFunctionReader.read().stream());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
