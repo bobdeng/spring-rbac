@@ -34,8 +34,10 @@ public class WebDriverHandler {
 
     @PostConstruct
     private void init() {
-        chrome.start();
-        WEBDRIVER = chrome.getWebDriver();
+        if (WEBDRIVER == null) {
+            chrome.start();
+            WEBDRIVER = chrome.getWebDriver();
+        }
         if (webServerAppCtxt != null) {
             this.port = webServerAppCtxt.getWebServer().getPort();
         }

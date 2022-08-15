@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 public class DataSourceConfig {
     @Rule
     public GenericContainer redis = new GenericContainer("redis:6.2.4")
-            .withReuse(true)
             .withExposedPorts(6379);
 
     @Bean

@@ -1,9 +1,9 @@
 package cn.bobdeng.rbac.domain.tenant.organization;
 
 import cn.bobdeng.rbac.domain.FieldChecker;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class OrganizationDescription {
     private String name;
     private Integer parent;
