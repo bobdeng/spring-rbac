@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.server.dao;
 
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.parameter.Parameter;
-import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
+import cn.bobdeng.rbac.domain.config.Parameter;
+import cn.bobdeng.rbac.domain.config.ParameterDescription;
 import cn.bobdeng.rbac.server.impl.ParameterName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -29,7 +29,7 @@ public class OrganizationDO {
         this.parentId = entity.description().getParent();
     }
 
-    public Organization toEntity(TenantRepository tenantRepository) {
+    public Organization toEntity(TenantRepository tenantRepository, EmployeeDAO employeeDAO) {
         Organization organization = new Organization(id, new OrganizationDescription(name, parentId));
         organization.setEmployees(tenantRepository.employees(organization));
         return organization;

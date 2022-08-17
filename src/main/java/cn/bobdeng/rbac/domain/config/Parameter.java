@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.domain.parameter;
+package cn.bobdeng.rbac.domain.config;
 
 import cn.bobdeng.rbac.archtype.Entity;
 import lombok.Getter;

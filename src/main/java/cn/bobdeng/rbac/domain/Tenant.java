@@ -3,9 +3,6 @@ package cn.bobdeng.rbac.domain;
 import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasMany;
-import cn.bobdeng.rbac.domain.parameter.Parameter;
-import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
-import cn.bobdeng.rbac.domain.parameter.Parameters;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import cn.bobdeng.rbac.domain.third.ThirdDescription;
@@ -16,7 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,8 +33,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private Roles roles;
     @Setter
     private HasMany<Integer, Domain> domains;
-    @Setter
-    private Organizations organizations;
     @Setter
     private ThirdIdentities thirdIdentities;
 
@@ -106,14 +100,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return loginNames;
     }
 
-    public Organizations organizations() {
-        return organizations;
-    }
-
-    public void newOrganization(OrganizationDescription description) {
-        description.validate();
-        organizations.save(new Organization(description));
-    }
 
     public void newThirdIdentity(ThirdDescription thirdDescription) {
         thirdIdentities.save(new ThirdIdentity(thirdDescription));

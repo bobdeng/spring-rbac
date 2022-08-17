@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api.parameter;
 
-import cn.bobdeng.rbac.domain.parameter.Parameter;
-import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
+import cn.bobdeng.rbac.domain.config.Parameter;
+import cn.bobdeng.rbac.domain.config.ParameterDescription;
 import lombok.Setter;
 
 @Setter

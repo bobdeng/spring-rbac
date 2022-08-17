@@ -5,7 +5,7 @@ import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
-import cn.bobdeng.rbac.domain.parameter.Parameter;
+import cn.bobdeng.rbac.domain.config.Parameter;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
 import okhttp3.Request;

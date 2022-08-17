@@ -1,6 +1,8 @@
 package cn.bobdeng.rbac.api.organization;
 
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import cn.bobdeng.rbac.security.Permission;
@@ -12,10 +14,20 @@ import java.util.stream.Collectors;
 
 @RestController
 public class OrganizationController {
+    private final TenantRepository tenantRepository;
+
+    public OrganizationController(TenantRepository tenantRepository) {
+        this.tenantRepository = tenantRepository;
+    }
+
     @GetMapping("/organizations")
     @Transactional
     public List<Organization> list(@RequestAttribute("tenant") Tenant tenant) {
-        return tenant.organizations().list().collect(Collectors.toList());
+        return getOrganizationStructure(tenant).all();
+    }
+
+    private OrganizationContext.OrganizationStructure getOrganizationStructure(Tenant tenant) {
+        return tenantRepository.organizationContext().asOrganization(tenant);
     }
 
     @PostMapping("/organizations")
@@ -23,6 +35,6 @@ public class OrganizationController {
     @Permission(allows = "organization.create")
     public void create(@RequestAttribute("tenant") Tenant tenant,
                        @RequestBody NewOrganizationForm form) {
-        tenant.newOrganization(new OrganizationDescription(form.getName(), form.getParent()));
+        getOrganizationStructure(tenant).add(new OrganizationDescription(form.getName(), form.getParent()));
     }
 }

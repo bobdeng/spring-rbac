@@ -1,9 +1,9 @@
 package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.parameter.Parameter;
-import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
-import cn.bobdeng.rbac.domain.parameter.Parameters;
+import cn.bobdeng.rbac.domain.config.Parameter;
+import cn.bobdeng.rbac.domain.config.ParameterDescription;
+import cn.bobdeng.rbac.domain.config.Parameters;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
 import org.jetbrains.annotations.NotNull;

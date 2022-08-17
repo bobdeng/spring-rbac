@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.domain;
 
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
+import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 
 
@@ -21,5 +22,7 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
     Organization.Employees employees(Organization organization);
 
     ConfigurationContext configurationContext();
+
+    OrganizationContext organizationContext();
 
 }

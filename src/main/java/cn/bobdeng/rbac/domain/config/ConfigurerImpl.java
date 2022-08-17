@@ -1,9 +1,5 @@
 package cn.bobdeng.rbac.domain.config;
 
-import cn.bobdeng.rbac.domain.parameter.Parameter;
-import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
-import cn.bobdeng.rbac.domain.parameter.Parameters;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
