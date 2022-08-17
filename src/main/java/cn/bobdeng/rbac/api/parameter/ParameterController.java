@@ -22,8 +22,8 @@ public class ParameterController {
     @Permission(allows = {"parameters"})
     public void setParameters(@RequestBody List<SetParameterForm> form,
                               @RequestAttribute("tenant") Tenant tenant) {
-        List<ParameterDescription> parameterDescriptions = form.stream().map(SetParameterForm::toDescription).toList();
-        tenant.saveParameters(parameterDescriptions);
+        List<Parameter> parameters = form.stream().map(SetParameterForm::toEntity).toList();
+        tenant.saveParameters(parameters);
     }
 
     @GetMapping("/parameters/{key}")

@@ -25,10 +25,9 @@ export class Parameter {
     description: {
         name: string,
         value: string
-        key: string
     }
 
-    constructor(id: string, description: { name: string; value: string, key: string }) {
+    constructor(id: string, description: { name: string; value: string }) {
         this.id = id;
         this.description = description;
     }

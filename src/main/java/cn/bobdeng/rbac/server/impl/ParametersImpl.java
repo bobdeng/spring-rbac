@@ -37,13 +37,13 @@ public class ParametersImpl implements Parameters {
 
     @NotNull
     private Parameter getDefaultParameter(ParameterName name) {
-        return new Parameter(new ParameterDescription(name.getName(), name.getDefaultValue(), name.getKey()));
+        return new Parameter(name.getKey(), new ParameterDescription(name.getName(), name.getDefaultValue()));
     }
 
     @Override
     public Parameter save(Parameter entity) {
-        ParameterName parameterName = getParameterName(entity.description().getKey());
-        Integer id = parameterDAO.findByKeyAndTenantId(entity.description().getKey(), tenant.identity()).map(ParameterDO::getId)
+        ParameterName parameterName = getParameterName(entity.identity());
+        Integer id = parameterDAO.findByKeyAndTenantId(entity.identity(), tenant.identity()).map(ParameterDO::getId)
                 .orElse(null);
         return parameterDAO.save(new ParameterDO(id, entity, tenant)).toEntity(parameterName);
     }

@@ -31,6 +31,6 @@ public class Parameter implements Entity<String, ParameterDescription> {
     }
 
     public boolean isChanged(Map<String, String> values) {
-        return !description.getValue().equals(values.get(description.getKey()));
+        return !description.getValue().equals(values.get(id));
     }
 }

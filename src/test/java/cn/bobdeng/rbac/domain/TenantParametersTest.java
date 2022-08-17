@@ -19,9 +19,9 @@ public class TenantParametersTest {
         when(parameters.list()).thenReturn(Stream.of(new Parameter("param.key1", new ParameterDescription("100", "param.key1"))));
         tenant.setParameters(parameters);
 
-        tenant.saveParameters(Arrays.asList(new ParameterDescription("100", "param.key1")));
+        tenant.saveParameters(Arrays.asList(new Parameter("param.key1", new ParameterDescription("100", "param.key1"))));
 
-        verify(parameters,never()).save(any(Parameter.class));
+        verify(parameters, never()).save(any(Parameter.class));
     }
 
 }

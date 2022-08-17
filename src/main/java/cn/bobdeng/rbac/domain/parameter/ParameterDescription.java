@@ -2,20 +2,14 @@ package cn.bobdeng.rbac.domain.parameter;
 
 import lombok.Getter;
 
-@Getter
 public class ParameterDescription {
+    @Getter
     private String name;
+    @Getter
     private String value;
-    private String key;
 
-    public ParameterDescription(String name, String value, String key) {
+    public ParameterDescription(String name, String value) {
         this.name = name;
         this.value = value;
-        this.key = key;
-    }
-
-    public ParameterDescription(String value, String key) {
-        this.value = value;
-        this.key = key;
     }
 }

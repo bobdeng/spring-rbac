@@ -26,7 +26,7 @@ public class ParameterDO {
     private String value;
 
     public ParameterDO(Integer id, Parameter entity, Tenant tenant) {
-        this.key = entity.getDescription().getKey();
+        this.key = entity.identity();
         this.value = entity.getDescription().getValue();
         this.tenantId = tenant.identity();
         this.id = id;
@@ -39,6 +39,6 @@ public class ParameterDO {
     }
 
     public Parameter toEntity(ParameterName name) {
-        return new Parameter(key, new ParameterDescription(name.getName(), value, key));
+        return new Parameter(key, new ParameterDescription(name.getName(), value));
     }
 }

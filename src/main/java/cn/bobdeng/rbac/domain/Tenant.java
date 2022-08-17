@@ -125,13 +125,13 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         thirdIdentities.save(new ThirdIdentity(thirdDescription));
     }
 
-    public void saveParameters(List<ParameterDescription> parameterDescriptions) {
-        Map<String, String> values = parameterDescriptions.stream().collect(Collectors.toMap(ParameterDescription::getKey, ParameterDescription::getValue));
-        parameters.list()
+    public void saveParameters(List<Parameter> parameters) {
+        Map<String, String> values = parameters.stream().collect(Collectors.toMap(Parameter::identity, parameter -> parameter.description().getValue()));
+        this.parameters.list()
                 .filter(parameter -> parameter.isChanged(values))
                 .forEach(parameter -> {
-                    String key = parameter.description().getKey();
-                    parameters.save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
+                    String key = parameter.identity();
+                    this.parameters.save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
                 });
     }
 

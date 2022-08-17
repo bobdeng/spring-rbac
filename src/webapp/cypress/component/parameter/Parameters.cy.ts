@@ -2,7 +2,7 @@ import Parameters from '../../../src/views/parameter/Parameters.vue'
 
 describe('Parameters.cy.ts', () => {
     beforeEach(() => {
-        cy.intercept("GET", "/parameters", [{id: 100, description: {key: "param.key1", name: "参数名称", value: "100"}}])
+        cy.intercept("GET", "/parameters", [{id: "param.key1", description: {name: "参数名称", value: "100"}}])
             .as("list")
     })
     it('列出所有参数', () => {

@@ -34,7 +34,7 @@ async function save() {
   try {
     await server.setParameters(parameters.value.map(it => {
       return {
-        key: it.description.key,
+        key: it.id,
         value: it.description.value
       }
     }))
