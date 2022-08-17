@@ -3,6 +3,8 @@ package cn.bobdeng.rbac.api.parameter;
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.parameter.Parameter;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
@@ -22,6 +24,8 @@ public class ParametersTest extends E2ETest {
     UserWithTenantFixture userWithTenantFixture;
     @Autowired
     ParameterDAO parameterDAO;
+    @Autowired
+    TenantRepository tenantRepository;
 
     @BeforeEach
     public void setup() {
@@ -79,14 +83,20 @@ public class ParametersTest extends E2ETest {
     public void 读取参数当参数已经保存() {
         Tenant tenant = userWithTenantFixture.getTenant();
         parameterDAO.save(new ParameterDO(tenant.identity(), "param.key1", "99"));
-        Parameter parameter = tenant.parameters().findByIdentity("param.key1").get();
+        ConfigurationContext.Configurer configurer = getConfigurer(tenant);
+        Parameter parameter = configurer.parameters().findByIdentity("param.key1").get();
         assertEquals("99", parameter.description().getValue());
+    }
+
+    private ConfigurationContext.Configurer getConfigurer(Tenant tenant) {
+        ConfigurationContext.Configurer configurer = tenantRepository.configurationContext().asConfigurer(tenant);
+        return configurer;
     }
 
     @Test
     public void 读取参数当参数未保存() {
         Tenant tenant = userWithTenantFixture.getTenant();
-        Parameter parameter = tenant.parameters().findByIdentity("param.key1").get();
+        Parameter parameter = getConfigurer(tenant).parameters().findByIdentity("param.key1").get();
         assertEquals("102", parameter.description().getValue());
     }
 

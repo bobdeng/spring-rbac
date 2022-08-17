@@ -1,9 +1,9 @@
 package cn.bobdeng.rbac.domain;
 
 import cn.bobdeng.rbac.archtype.EntityList;
+import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 
-import java.util.Optional;
 
 public interface TenantRepository extends EntityList<Integer, Tenant> {
     Tenant save(Tenant tenant);
@@ -19,4 +19,7 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
     User.UserRoles userRoles(User user);
 
     Organization.Employees employees(Organization organization);
+
+    ConfigurationContext configurationContext();
+
 }

@@ -13,8 +13,7 @@ public class WebDriverDestroyer implements TestExecutionListener {
     @Override
     public void testPlanExecutionFinished(TestPlan testPlan) {
         if (WebDriverHandler.WEBDRIVER != null) {
-            WebDriverHandler.WEBDRIVER.close();
+            //WebDriverHandler.WEBDRIVER.close();
         }
-        System.exit(0);
     }
 }

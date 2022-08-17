@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.config.ConfigurerImpl;
 import cn.bobdeng.rbac.domain.parameter.Parameter;
 import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
 import cn.bobdeng.rbac.domain.parameter.Parameters;
@@ -14,12 +15,11 @@ public class TenantParametersTest {
 
     @Test
     void should_not_save_parameter_when_no_change() {
-        Tenant tenant = new Tenant();
         Parameters parameters = mock(Parameters.class);
+        ConfigurerImpl configurer = new ConfigurerImpl(parameters);
         when(parameters.list()).thenReturn(Stream.of(new Parameter("param.key1", new ParameterDescription("100", "param.key1"))));
-        tenant.setParameters(parameters);
 
-        tenant.saveParameters(Arrays.asList(new Parameter("param.key1", new ParameterDescription("100", "param.key1"))));
+        configurer.saveParameters(Arrays.asList(new Parameter("param.key1", new ParameterDescription("100", "param.key1"))));
 
         verify(parameters, never()).save(any(Parameter.class));
     }

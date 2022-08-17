@@ -72,4 +72,6 @@ wx.appSecret=333444
 wx.enabled=true
 wx.callback=https://test.com
 ```
-
+## 系统参数
+- 读取系统参数 GET /parameters/{key}
+- 代码读取系统参数 tenant.parameters().findByIdentity(key)

@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.server.impl;
 import cn.bobdeng.rbac.archtype.HasMany;
 import cn.bobdeng.rbac.archtype.Many;
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
 import org.springframework.data.domain.PageRequest;
@@ -23,13 +24,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final OrganizationDAO organizationDAO;
     private final EmployeeDAO employeeDAO;
     private final ThirdIdentityDAO thirdIdentityDAO;
-    private final ParameterDAO parameterDAO;
-    private final ExternalParameters externalParameters;
+    private final ConfigurationContext configurationContext;
+
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO, ParameterDAO parameterDAO, ExternalParameters externalParameters) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO, ConfigurationContext configurationContext) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
@@ -40,8 +41,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         this.organizationDAO = organizationDAO;
         this.employeeDAO = employeeDAO;
         this.thirdIdentityDAO = thirdIdentityDAO;
-        this.parameterDAO = parameterDAO;
-        this.externalParameters = externalParameters;
+        this.configurationContext = configurationContext;
     }
 
     @Override
@@ -82,6 +82,11 @@ public class TenantRepositoryImpl implements TenantRepository {
         return new OrganizationEmployee(organization, employeeDAO, this, userDAO);
     }
 
+    @Override
+    public ConfigurationContext configurationContext() {
+        return configurationContext;
+    }
+
 
     @Override
     public Optional<Tenant> findByIdentity(Integer integer) {
@@ -96,7 +101,6 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setRoles(new TenantRoles(roleDAO, tenant, userRoleDAO));
         tenant.setThirdIdentities(new TenantThirdIdentities(tenant, thirdIdentityDAO));
         tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO, this));
-        tenant.setParameters(new ParametersImpl(tenant, parameterDAO, externalParameters));
         return tenant;
     }
 

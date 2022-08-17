@@ -41,8 +41,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private Organizations organizations;
     @Setter
     private ThirdIdentities thirdIdentities;
-    @Setter
-    private Parameters parameters;
 
     public Tenant(TenantDescription tenantDescription) {
 
@@ -61,10 +59,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Override
     public Integer identity() {
         return id;
-    }
-
-    public Parameters parameters() {
-        return parameters;
     }
 
     public User addUser(UserDescription userDescription) {
@@ -123,16 +117,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
     public void newThirdIdentity(ThirdDescription thirdDescription) {
         thirdIdentities.save(new ThirdIdentity(thirdDescription));
-    }
-
-    public void saveParameters(List<Parameter> parameters) {
-        Map<String, String> values = parameters.stream().collect(Collectors.toMap(Parameter::identity, parameter -> parameter.description().getValue()));
-        this.parameters.list()
-                .filter(parameter -> parameter.isChanged(values))
-                .forEach(parameter -> {
-                    String key = parameter.identity();
-                    this.parameters.save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
-                });
     }
 
 
