@@ -21,7 +21,6 @@ public class ParameterDO {
     @Getter
     @Column(name = "param_key")
     private String key;
-    @Getter
     @Column(name = "param_value")
     private String value;
 

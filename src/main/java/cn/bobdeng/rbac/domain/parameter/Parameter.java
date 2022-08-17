@@ -16,10 +16,6 @@ public class Parameter implements Entity<String, ParameterDescription> {
         this.description = description;
     }
 
-    public Parameter(ParameterDescription description) {
-        this.description = description;
-    }
-
     @Override
     public String identity() {
         return id;
