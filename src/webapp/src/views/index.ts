@@ -9,6 +9,7 @@ import UsersView from './tenant/user/ListTenantUser.vue'
 import SetPasswordView from './tenant/user/UserPassword.vue'
 import OrganizationView from './tenant/organazation/Organizations.vue'
 import UserLoginView from './UserLogin.vue'
+import ParametersView from './parameter/Parameters.vue'
 
 export const Home = HomeView;
 export const Console = ConsoleView
@@ -21,6 +22,7 @@ export const Users = UsersView
 export const SetPassword = SetPasswordView
 export const Organizations = OrganizationView
 export const UserLogin = UserLoginView
+export const Parameters = ParametersView
 
 
 

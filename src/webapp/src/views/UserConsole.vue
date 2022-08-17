@@ -11,6 +11,9 @@
         <MenuItem key="organizations">
           组织管理
         </MenuItem>
+        <MenuItem key="parameters">
+          系统参数
+        </MenuItem>
         <MenuItem key="set_password">
           修改密码
         </MenuItem>
