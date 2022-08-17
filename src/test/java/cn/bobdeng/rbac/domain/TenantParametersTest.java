@@ -16,7 +16,7 @@ public class TenantParametersTest {
     void should_not_save_parameter_when_no_change() {
         Tenant tenant = new Tenant();
         Parameters parameters = mock(Parameters.class);
-        when(parameters.list()).thenReturn(Stream.of(new Parameter(1, new ParameterDescription("100", "param.key1"))));
+        when(parameters.list()).thenReturn(Stream.of(new Parameter("param.key1", new ParameterDescription("100", "param.key1"))));
         tenant.setParameters(parameters);
 
         tenant.saveParameters(Arrays.asList(new ParameterDescription("100", "param.key1")));

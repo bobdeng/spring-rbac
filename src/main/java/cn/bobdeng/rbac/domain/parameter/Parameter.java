@@ -5,13 +5,13 @@ import lombok.Getter;
 
 import java.util.Map;
 
-public class Parameter implements Entity<Integer, ParameterDescription> {
+public class Parameter implements Entity<String, ParameterDescription> {
     @Getter
-    private Integer id;
+    private String id;
     @Getter
     private ParameterDescription description;
 
-    public Parameter(Integer id, ParameterDescription description) {
+    public Parameter(String id, ParameterDescription description) {
         this.id = id;
         this.description = description;
     }
@@ -21,7 +21,7 @@ public class Parameter implements Entity<Integer, ParameterDescription> {
     }
 
     @Override
-    public Integer identity() {
+    public String identity() {
         return id;
     }
 

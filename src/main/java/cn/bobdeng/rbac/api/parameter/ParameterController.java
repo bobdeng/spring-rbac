@@ -29,6 +29,9 @@ public class ParameterController {
     @GetMapping("/parameters/{key}")
     @Transactional
     public String getParameter(@RequestAttribute("tenant") Tenant tenant, @PathVariable String key) {
-        return tenant.parameters().findByKey(key).description().getValue();
+        return tenant.parameters().findByIdentity(key)
+                .map(Parameter::description)
+                .map(ParameterDescription::getValue)
+                .orElse(null);
     }
 }

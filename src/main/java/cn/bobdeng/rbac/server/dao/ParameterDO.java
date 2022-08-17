@@ -25,20 +25,20 @@ public class ParameterDO {
     @Column(name = "param_value")
     private String value;
 
+    public ParameterDO(Integer id, Parameter entity, Tenant tenant) {
+        this.key = entity.getDescription().getKey();
+        this.value = entity.getDescription().getValue();
+        this.tenantId = tenant.identity();
+        this.id = id;
+    }
+
     public ParameterDO(Integer tenantId, String key, String value) {
         this.tenantId = tenantId;
         this.key = key;
         this.value = value;
     }
 
-    public ParameterDO(Parameter entity, Tenant tenant) {
-        this.id = entity.identity();
-        this.key = entity.getDescription().getKey();
-        this.value = entity.getDescription().getValue();
-        this.tenantId = tenant.identity();
-    }
-
     public Parameter toEntity(ParameterName name) {
-        return new Parameter(id, new ParameterDescription(name.getName(), value, key));
+        return new Parameter(key, new ParameterDescription(name.getName(), value, key));
     }
 }

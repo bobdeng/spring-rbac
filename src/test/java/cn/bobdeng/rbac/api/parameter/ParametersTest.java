@@ -50,11 +50,24 @@ public class ParametersTest extends E2ETest {
     }
 
     @Test
-    public void 当保存参数() {
+    public void 参数尚未设置当保存参数() {
         ParametersPage parametersPage = new ParametersPage(webDriverHandler);
         parametersPage.open();
         parametersPage.waitUntil(() -> parametersPage.hasText("系统参数1"), 1000);
         parametersPage.inputValue(0, "99");
+        parametersPage.save();
+        parametersPage.waitUntilNoButtonSpin();
+        parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
+        List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
+        assertEquals(1, parameters.size());
+    }
+    @Test
+    public void 参数已经设置当保存参数() {
+        parameterDAO.save(new ParameterDO(userWithTenantFixture.getTenant().identity(), "param.key1", "99"));
+        ParametersPage parametersPage = new ParametersPage(webDriverHandler);
+        parametersPage.open();
+        parametersPage.waitUntil(() -> parametersPage.hasText("系统参数1"), 1000);
+        parametersPage.inputValue(0, "199");
         parametersPage.save();
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
@@ -66,14 +79,14 @@ public class ParametersTest extends E2ETest {
     public void 读取参数当参数已经保存() {
         Tenant tenant = userWithTenantFixture.getTenant();
         parameterDAO.save(new ParameterDO(tenant.identity(), "param.key1", "99"));
-        Parameter parameter = tenant.parameters().findByKey("param.key1");
+        Parameter parameter = tenant.parameters().findByIdentity("param.key1").get();
         assertEquals("99", parameter.description().getValue());
     }
 
     @Test
     public void 读取参数当参数未保存() {
         Tenant tenant = userWithTenantFixture.getTenant();
-        Parameter parameter = tenant.parameters().findByKey("param.key1");
+        Parameter parameter = tenant.parameters().findByIdentity("param.key1").get();
         assertEquals("102", parameter.description().getValue());
     }
 

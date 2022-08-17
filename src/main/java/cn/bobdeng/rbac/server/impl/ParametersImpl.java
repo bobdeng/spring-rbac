@@ -43,21 +43,24 @@ public class ParametersImpl implements Parameters {
     @Override
     public Parameter save(Parameter entity) {
         ParameterName parameterName = getParameterName(entity.description().getKey());
-        return parameterDAO.save(new ParameterDO(entity, tenant)).toEntity(parameterName);
+        Integer id = parameterDAO.findByKeyAndTenantId(entity.description().getKey(), tenant.identity()).map(ParameterDO::getId)
+                .orElse(null);
+        return parameterDAO.save(new ParameterDO(id, entity, tenant)).toEntity(parameterName);
     }
 
     @NotNull
     private ParameterName getParameterName(String key) {
-        ParameterName parameterName = externalParameters.parameters().stream().filter(it -> it.getKey().equals(key))
+        return externalParameters.parameters().stream().filter(it -> it.getKey().equals(key))
                 .findFirst().orElseThrow();
-        return parameterName;
     }
 
     @Override
-    public Parameter findByKey(String key) {
-        ParameterName parameterName = getParameterName(key);
-        return parameterDAO.findByKeyAndTenantId(key, tenant.identity())
-                .map(parameterDO -> parameterDO.toEntity(parameterName))
-                .orElseGet(() -> getDefaultParameter(parameterName));
+    public Optional<Parameter> findByIdentity(String id) {
+        return externalParameters.parameters().stream().filter(it -> it.getKey().equals(id))
+                .findFirst()
+                .map(name -> parameterDAO.findByKeyAndTenantId(name.getKey(), tenant.identity())
+                        .map(parameterDO -> parameterDO.toEntity(name))
+                        .orElseGet(() -> getDefaultParameter(name))
+                );
     }
 }
