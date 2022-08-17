@@ -3,6 +3,9 @@ package cn.bobdeng.rbac.domain;
 import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasMany;
+import cn.bobdeng.rbac.domain.parameter.Parameter;
+import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
+import cn.bobdeng.rbac.domain.parameter.Parameters;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import cn.bobdeng.rbac.domain.third.ThirdDescription;
@@ -13,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,6 +41,8 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private Organizations organizations;
     @Setter
     private ThirdIdentities thirdIdentities;
+    @Setter
+    private Parameters parameters;
 
     public Tenant(TenantDescription tenantDescription) {
 
@@ -55,6 +61,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Override
     public Integer identity() {
         return id;
+    }
+
+    public Parameters parameters() {
+        return parameters;
     }
 
     public User addUser(UserDescription userDescription) {
@@ -113,6 +123,16 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
     public void newThirdIdentity(ThirdDescription thirdDescription) {
         thirdIdentities.save(new ThirdIdentity(thirdDescription));
+    }
+
+    public void saveParameters(List<ParameterDescription> parameterDescriptions) {
+        Map<String, String> values = parameterDescriptions.stream().collect(Collectors.toMap(ParameterDescription::getKey, ParameterDescription::getValue));
+        parameters.list()
+                //.filter(parameter -> !parameter.getDescription().getValue().equals(values.get(parameter.getDescription().getKey())))
+                .forEach(parameter -> {
+                    parameter = new Parameter(parameter.getId(), new ParameterDescription(values.get(parameter.getDescription().getKey()), parameter.getDescription().getKey()));
+                    parameters.save(parameter);
+                });
     }
 
 

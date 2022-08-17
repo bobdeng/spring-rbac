@@ -21,14 +21,14 @@ export class Function {
 }
 
 export class Parameter {
-    id: number
+    id: string
     description: {
         name: string,
-        key: string,
         value: string
+        key: string
     }
 
-    constructor(id: number, description: { name: string; key: string; value: string }) {
+    constructor(id: string, description: { name: string; value: string, key: string }) {
         this.id = id;
         this.description = description;
     }

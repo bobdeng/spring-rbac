@@ -23,12 +23,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final OrganizationDAO organizationDAO;
     private final EmployeeDAO employeeDAO;
     private final ThirdIdentityDAO thirdIdentityDAO;
-
+    private final ParameterDAO parameterDAO;
+    private final ExternalParameters externalParameters;
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, OrganizationDAO organizationDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO, ParameterDAO parameterDAO, ExternalParameters externalParameters) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
@@ -39,6 +40,8 @@ public class TenantRepositoryImpl implements TenantRepository {
         this.organizationDAO = organizationDAO;
         this.employeeDAO = employeeDAO;
         this.thirdIdentityDAO = thirdIdentityDAO;
+        this.parameterDAO = parameterDAO;
+        this.externalParameters = externalParameters;
     }
 
     @Override
@@ -91,8 +94,9 @@ public class TenantRepositoryImpl implements TenantRepository {
         tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
         tenant.setRoles(new TenantRoles(roleDAO, tenant, userRoleDAO));
-        tenant.setThirdIdentities(new TenantThirdIdentities(tenant,thirdIdentityDAO));
+        tenant.setThirdIdentities(new TenantThirdIdentities(tenant, thirdIdentityDAO));
         tenant.setOrganizations(new TenantOrganizationsImpl(tenant, organizationDAO, this));
+        tenant.setParameters(new ParametersImpl(tenant, parameterDAO, externalParameters));
         return tenant;
     }
 

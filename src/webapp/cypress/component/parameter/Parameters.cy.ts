@@ -2,7 +2,7 @@ import Parameters from '../../../src/views/parameter/Parameters.vue'
 
 describe('Parameters.cy.ts', () => {
     beforeEach(() => {
-        cy.intercept("GET", "/parameters", [{id: 1, description: {name: "参数名称", key: "param.key1", value: "100"}}])
+        cy.intercept("GET", "/parameters", [{id: 100, description: {key: "param.key1", name: "参数名称", value: "100"}}])
             .as("list")
     })
     it('列出所有参数', () => {
@@ -19,7 +19,7 @@ describe('Parameters.cy.ts', () => {
             cy.wait("@save").then((interception) => {
                 console.log(interception.request.body)
                 expect(interception.request.body).to.be.eql([
-                    {name: "param.key1", value: "100"}
+                    {key: "param.key1", value: "100"}
                 ])
             })
             cy.contains("保存成功")
