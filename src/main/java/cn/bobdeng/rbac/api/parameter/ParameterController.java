@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.api.parameter;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.parameter.Parameter;
 import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
+import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -18,9 +19,9 @@ public class ParameterController {
 
     @PutMapping("/parameters")
     @Transactional
+    @Permission(allows = {"parameters"})
     public void setParameters(@RequestBody List<SetParameterForm> form,
                               @RequestAttribute("tenant") Tenant tenant) {
-        System.out.println(form);
         List<ParameterDescription> parameterDescriptions = form.stream().map(SetParameterForm::toDescription).toList();
         tenant.saveParameters(parameterDescriptions);
     }

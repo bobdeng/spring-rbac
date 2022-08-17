@@ -3,6 +3,8 @@ package cn.bobdeng.rbac.domain.parameter;
 import cn.bobdeng.rbac.archtype.Entity;
 import lombok.Getter;
 
+import java.util.Map;
+
 public class Parameter implements Entity<Integer, ParameterDescription> {
     @Getter
     private Integer id;
@@ -26,5 +28,9 @@ public class Parameter implements Entity<Integer, ParameterDescription> {
     @Override
     public ParameterDescription description() {
         return description;
+    }
+
+    public boolean isChanged(Map<String, String> values) {
+        return !description.getValue().equals(values.get(description.getKey()));
     }
 }

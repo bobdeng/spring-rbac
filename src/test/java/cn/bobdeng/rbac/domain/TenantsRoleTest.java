@@ -42,4 +42,6 @@ public class TenantsRoleTest {
                 tenant.newRole(new RoleDescription("角色名", Collections.emptyList())));
         assertEquals(1, e.getErrors().size());
     }
+
+
 }

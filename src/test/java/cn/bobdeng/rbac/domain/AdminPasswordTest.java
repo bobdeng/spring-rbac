@@ -46,7 +46,7 @@ class AdminPasswordTest {
 
         assertTrue(adminPassword.verify("123456"));
 
-        verify(notifier, times(0)).notify(anyString());
-        verify(store, times(0)).save(anyString());
+        verify(notifier, never()).notify(anyString());
+        verify(store, never()).save(anyString());
     }
 }

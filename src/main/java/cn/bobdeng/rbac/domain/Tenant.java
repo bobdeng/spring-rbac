@@ -128,10 +128,10 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     public void saveParameters(List<ParameterDescription> parameterDescriptions) {
         Map<String, String> values = parameterDescriptions.stream().collect(Collectors.toMap(ParameterDescription::getKey, ParameterDescription::getValue));
         parameters.list()
-                //.filter(parameter -> !parameter.getDescription().getValue().equals(values.get(parameter.getDescription().getKey())))
+                .filter(parameter -> parameter.isChanged(values))
                 .forEach(parameter -> {
-                    parameter = new Parameter(parameter.getId(), new ParameterDescription(values.get(parameter.getDescription().getKey()), parameter.getDescription().getKey()));
-                    parameters.save(parameter);
+                    String key = parameter.description().getKey();
+                    parameters.save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
                 });
     }
 

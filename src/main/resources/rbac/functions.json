@@ -88,5 +88,11 @@
         }
       ]
     }
+  },
+  {
+    "key": "parameters",
+    "description": {
+      "name": "系统参数"
+    }
   }
 ]

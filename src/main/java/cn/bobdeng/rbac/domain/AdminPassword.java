@@ -18,8 +18,8 @@ public class AdminPassword {
     }
 
     public boolean verify(String password) {
-        if (!store.get().filter((encodedPassword) -> new BCryptPasswordEncoder().matches(password, encodedPassword))
-                .isPresent()) {
+        if (store.get().filter((encodedPassword) -> new BCryptPasswordEncoder().matches(password, encodedPassword))
+                .isEmpty()) {
             String newPassword = IntStream.range(0, 20)
                     .map(i -> new Random().nextInt(SEEDS.length()))
                     .mapToObj(i -> SEEDS.substring(i, i + 1))
