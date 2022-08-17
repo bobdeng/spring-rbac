@@ -20,6 +20,20 @@ export class Function {
     }
 }
 
+export class Parameter {
+    id: number
+    description: {
+        name: string,
+        key: string,
+        value: string
+    }
+
+    constructor(id: number, description: { name: string; key: string; value: string }) {
+        this.id = id;
+        this.description = description;
+    }
+}
+
 export class Organization {
     id: number
     description: { name: string, parent: number }
@@ -161,5 +175,11 @@ export const server = {
     },
     async getWxConfig(): Promise<WxConfig> {
         return await ajax(() => axios.get("/wx_config", config))
+    },
+    async listParameters(): Promise<Parameter[]> {
+        return await ajax(() => axios.get("/parameters", config));
+    },
+    async setParameters(values: any) {
+        return await ajax(() => axios.put("/parameters", values, config))
     }
 }

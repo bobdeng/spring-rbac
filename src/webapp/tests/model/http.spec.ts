@@ -20,7 +20,7 @@ describe("ajax test", () => {
             }))
             assert.fail("")
         } catch (e) {
-            expect(e).toEqual("第一条错误\n第二条错误");
+            expect(e).toEqual("第一条错误；第二条错误");
         }
     })
     test("axios返回错误,无内容", async (当) => {
