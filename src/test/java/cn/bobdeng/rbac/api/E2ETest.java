@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.ClearTable;
 import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.domain.User;
+import okhttp3.OkHttpClient;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.annotation.PostConstruct;
 import java.util.function.Supplier;
 
 import static cn.bobdeng.rbac.api.WebDriverHandler.WEBDRIVER;
@@ -28,6 +30,12 @@ public abstract class E2ETest {
     protected JdbcTemplate jdbcTemplate;
     @Autowired
     protected ClearTable clearTable;
+    protected OkHttpClient okHttpClient;
+
+    @PostConstruct
+    public void init() {
+        okHttpClient = new OkHttpClient.Builder().build();
+    }
 
     protected void adminLogin() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);

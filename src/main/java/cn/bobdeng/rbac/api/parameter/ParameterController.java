@@ -25,4 +25,10 @@ public class ParameterController {
         List<ParameterDescription> parameterDescriptions = form.stream().map(SetParameterForm::toDescription).toList();
         tenant.saveParameters(parameterDescriptions);
     }
+
+    @GetMapping("/parameters/{key}")
+    @Transactional
+    public String getParameter(@RequestAttribute("tenant") Tenant tenant, @PathVariable String key) {
+        return tenant.parameters().findByKey(key).description().getValue();
+    }
 }

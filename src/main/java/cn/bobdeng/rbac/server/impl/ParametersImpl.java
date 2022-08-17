@@ -6,9 +6,8 @@ import cn.bobdeng.rbac.domain.parameter.ParameterDescription;
 import cn.bobdeng.rbac.domain.parameter.Parameters;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,14 +31,33 @@ public class ParametersImpl implements Parameters {
                 .collect(Collectors.toMap(ParameterDO::getKey, it -> it));
         return externalParameters.parameters().stream()
                 .map(name -> Optional.ofNullable(parameters.get(name.getKey()))
-                        .map(parameterDO -> parameterDO.toEntity(name)).orElseGet(() -> new Parameter(new ParameterDescription(name.getName(), name.getDefaultValue(), name.getKey()))
-                        ));
+                        .map(parameterDO -> parameterDO.toEntity(name))
+                        .orElseGet(() -> getDefaultParameter(name)));
+    }
+
+    @NotNull
+    private Parameter getDefaultParameter(ParameterName name) {
+        return new Parameter(new ParameterDescription(name.getName(), name.getDefaultValue(), name.getKey()));
     }
 
     @Override
     public Parameter save(Parameter entity) {
-        ParameterName parameterName = externalParameters.parameters().stream().filter(it -> it.getKey().equals(entity.description().getKey()))
-                .findFirst().orElseThrow();
+        ParameterName parameterName = getParameterName(entity.description().getKey());
         return parameterDAO.save(new ParameterDO(entity, tenant)).toEntity(parameterName);
+    }
+
+    @NotNull
+    private ParameterName getParameterName(String key) {
+        ParameterName parameterName = externalParameters.parameters().stream().filter(it -> it.getKey().equals(key))
+                .findFirst().orElseThrow();
+        return parameterName;
+    }
+
+    @Override
+    public Parameter findByKey(String key) {
+        ParameterName parameterName = getParameterName(key);
+        return parameterDAO.findByKeyAndTenantId(key, tenant.identity())
+                .map(parameterDO -> parameterDO.toEntity(parameterName))
+                .orElseGet(() -> getDefaultParameter(parameterName));
     }
 }

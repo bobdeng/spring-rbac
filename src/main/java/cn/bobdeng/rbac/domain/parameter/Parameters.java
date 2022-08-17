@@ -4,4 +4,5 @@ import cn.bobdeng.rbac.archtype.EntityList;
 
 public interface Parameters extends EntityList<Integer, Parameter> {
 
+    Parameter findByKey(String key);
 }
