@@ -5,6 +5,7 @@ import cn.bobdeng.rbac.archtype.Many;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
 import org.springframework.data.domain.PageRequest;
@@ -26,11 +27,12 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final ThirdIdentityDAO thirdIdentityDAO;
     private final ConfigurationContext configurationContext;
     private final OrganizationContext organizationContext;
+    private final RbacContext rbacContext;
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO, ConfigurationContext configurationContext, OrganizationContext organizationContext) {
+                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO, ConfigurationContext configurationContext, OrganizationContext organizationContext, RbacContext rbacContext) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
@@ -42,6 +44,7 @@ public class TenantRepositoryImpl implements TenantRepository {
         this.thirdIdentityDAO = thirdIdentityDAO;
         this.configurationContext = configurationContext;
         this.organizationContext = organizationContext;
+        this.rbacContext = rbacContext;
     }
 
     @Override
@@ -90,6 +93,11 @@ public class TenantRepositoryImpl implements TenantRepository {
     @Override
     public OrganizationContext organizationContext() {
         return organizationContext;
+    }
+
+    @Override
+    public RbacContext rbacContext() {
+        return rbacContext;
     }
 
 

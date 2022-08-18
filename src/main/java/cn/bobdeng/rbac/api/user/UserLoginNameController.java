@@ -1,10 +1,7 @@
 package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.api.ObjectNotFoundException;
-import cn.bobdeng.rbac.domain.LoginNameDescription;
-import cn.bobdeng.rbac.domain.LoginName;
-import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +9,12 @@ import javax.transaction.Transactional;
 
 @RestController
 public class UserLoginNameController {
+    private final TenantRepository tenantRepository;
+
+    public UserLoginNameController(TenantRepository tenantRepository) {
+        this.tenantRepository = tenantRepository;
+    }
+
     @GetMapping("/users/{id}/login_name")
     @Transactional
     public LoginName getUserLoginName(@RequestAttribute("tenant") Tenant tenant,
@@ -31,6 +34,6 @@ public class UserLoginNameController {
     @Permission(allows = {"user.login_name"})
     public void newLoginName(@RequestBody NewLoginNameForm form, @RequestAttribute("tenant") Tenant tenant) {
         User user = tenant.users().findByIdentity(form.getUserId()).orElseThrow(ObjectNotFoundException::new);
-        tenant.addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
+        tenantRepository.rbacContext().asRbac(tenant).addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
     }
 }

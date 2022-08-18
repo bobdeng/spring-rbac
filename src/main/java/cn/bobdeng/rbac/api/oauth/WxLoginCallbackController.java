@@ -2,8 +2,10 @@ package cn.bobdeng.rbac.api.oauth;
 
 import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.domain.UserDescription;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.third.ThirdDescription;
 import cn.bobdeng.rbac.domain.third.ThirdIdentity;
 import cn.bobdeng.rbac.security.Session;
@@ -21,7 +23,8 @@ import java.util.Optional;
 @Controller
 public record WxLoginCallbackController(HttpClient httpClient,
                                         WxConfig wxConfig,
-                                        WxLoginStateGenerator wxLoginStateGenerator) {
+                                        WxLoginStateGenerator wxLoginStateGenerator,
+                                        TenantRepository tenantRepository) {
 
     @GetMapping("/wx_callback")
     public String wxCallback(Model model,
@@ -49,10 +52,11 @@ public record WxLoginCallbackController(HttpClient httpClient,
     }
 
     private User bindOrCreateUser(Tenant tenant, Session session, WxLoginResult wxLoginResult) {
+        RbacContext.Rbac rbac = tenantRepository.rbacContext().asRbac(tenant);
         User user = Optional.ofNullable(session)
                 .map(Session::userId)
-                .flatMap(userId -> tenant.users().findByIdentity(userId))
-                .orElseGet(() -> tenant.addUser(new UserDescription(wxLoginResult.nickname())));
+                .flatMap(userId -> rbac.users().findByIdentity(userId))
+                .orElseGet(() -> rbac.addUser(new UserDescription(wxLoginResult.nickname())));
         tenant.newThirdIdentity(new ThirdDescription(wxLoginResult.openId(), OAuthNames.WX, user.identity()));
         return user;
     }

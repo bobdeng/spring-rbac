@@ -102,7 +102,7 @@ public class RoleTest extends E2ETest {
     public void should_delete_role() {
         Role role1 = roleDAO.save(new RoleDO(new Role(null, new RoleDescription("角色1", Arrays.asList("role.create"))), tenant))
                 .toEntity();
-        User bob = tenant.addUser(new UserDescription("bob"));
+        User bob = tenantRepository.rbacContext().asRbac(tenant).addUser(new UserDescription("bob"));
         bob.setRoles(Arrays.asList(role1));
 
         ListTenantRolePage listTenantRolePage = new ListTenantRolePage(webDriverHandler);

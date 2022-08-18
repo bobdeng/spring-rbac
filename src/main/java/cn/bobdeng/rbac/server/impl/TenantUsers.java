@@ -15,7 +15,7 @@ public class TenantUsers implements Tenant.Users {
     private UserDAO userDAO;
     private TenantRepository tenantRepository;
 
-    public TenantUsers(Tenant tenant, UserDAO userDAO, TenantRepositoryImpl tenantRepository) {
+    public TenantUsers(Tenant tenant, UserDAO userDAO, TenantRepository tenantRepository) {
         this.tenant = tenant;
         this.userDAO = userDAO;
         this.tenantRepository = tenantRepository;

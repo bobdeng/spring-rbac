@@ -55,17 +55,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return id;
     }
 
-    public User addUser(UserDescription userDescription) {
-        return users.save(new User(userDescription));
-    }
-
-    public LoginName addLoginName(LoginNameDescription description) {
-        if (loginNames.findByLoginName(description.getName()).isPresent()) {
-            throw new DuplicateLoginNameException();
-        }
-        return loginNames.save(new LoginName(description));
-    }
-
     public List<Domain> domains() {
         return domains.findAll().stream().collect(Collectors.toList());
     }
