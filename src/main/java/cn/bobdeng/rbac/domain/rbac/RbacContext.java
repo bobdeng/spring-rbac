@@ -15,7 +15,7 @@ public interface RbacContext {
 
         LoginName addLoginName(LoginNameDescription description);
 
-        List<Role> roles();
+        List<Role> listRoles();
 
         Role newRole(RoleDescription description);
 
@@ -25,14 +25,28 @@ public interface RbacContext {
 
         Optional<Role> getRole(Integer roleId);
 
-        Users users();
+        void newThirdIdentity(ThirdDescription thirdDescription);
+
+        Roles roles();
 
         LoginNames loginNames();
 
-        void newThirdIdentity(ThirdDescription thirdDescription);
+        Users users();
 
         ThirdIdentities thirdIdentities();
     }
+
+    User.UserRoles userRoles(User user);
+
+    RbacContext.Roles roles(Tenant tenant);
+
+    RbacContext.Users users(Tenant tenant);
+
+    RbacContext.LoginNames loginNames(Tenant tenant);
+
+    ThirdIdentities thirdIdentities(Tenant tenant);
+
+    User.UserPassword userPassword(User user);
 
     Rbac asRbac(Tenant tenant);
 

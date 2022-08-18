@@ -21,10 +21,7 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final LoginNameDAO loginNameDAO;
     private final PasswordDAO passwordDAO;
     private final DomainDAO domainDAO;
-    private final UserRoleDAO userRoleDAO;
-    private final RoleDAO roleDAO;
     private final EmployeeDAO employeeDAO;
-    private final ThirdIdentityDAO thirdIdentityDAO;
     private final ConfigurationContext configurationContext;
     private final OrganizationContext organizationContext;
     private final RbacContext rbacContext;
@@ -32,16 +29,13 @@ public class TenantRepositoryImpl implements TenantRepository {
                                 UserDAO userDAO,
                                 LoginNameDAO loginNameDAO,
                                 PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, UserRoleDAO userRoleDAO, RoleDAO roleDAO, EmployeeDAO employeeDAO, ThirdIdentityDAO thirdIdentityDAO, ConfigurationContext configurationContext, OrganizationContext organizationContext, RbacContext rbacContext) {
+                                DomainDAO domainDAO, EmployeeDAO employeeDAO, ConfigurationContext configurationContext, OrganizationContext organizationContext, RbacContext rbacContext) {
         this.tenantDAO = tenantDAO;
         this.userDAO = userDAO;
         this.loginNameDAO = loginNameDAO;
         this.passwordDAO = passwordDAO;
         this.domainDAO = domainDAO;
-        this.userRoleDAO = userRoleDAO;
-        this.roleDAO = roleDAO;
         this.employeeDAO = employeeDAO;
-        this.thirdIdentityDAO = thirdIdentityDAO;
         this.configurationContext = configurationContext;
         this.organizationContext = organizationContext;
         this.rbacContext = rbacContext;
@@ -61,28 +55,8 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public RbacContext.Users users(Tenant tenant) {
-        return new TenantUsers(tenant, userDAO, this);
-    }
-
-    @Override
-    public RbacContext.LoginNames loginNames(Tenant tenant) {
-        return new TenantLoginNames(tenant, loginNameDAO, this);
-    }
-
-    @Override
-    public User.UserPassword userPassword(User user) {
-        return new UserPasswordImpl(passwordDAO);
-    }
-
-    @Override
-    public User.UserRoles userRoles(User user) {
-        return new UserRolesImpl(user, userRoleDAO, roleDAO);
-    }
-
-    @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, this, userDAO);
+        return new OrganizationEmployee(organization, employeeDAO, this, userDAO, rbacContext);
     }
 
     @Override

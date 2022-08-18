@@ -23,7 +23,7 @@ public class UserController extends RbacController{
     public void newUser(@RequestBody NewUserForm form, @RequestAttribute("tenant") Tenant tenant) {
         RbacContext.Rbac rbac = getRbac(tenant);
         User user = rbac.addUser(new UserDescription(form.getName()));
-        user.setRoles(rbac.roles().stream().filter(role -> form.getRoles().contains(role.identity())).collect(Collectors.toList()));
+        user.setRoles(rbac.listRoles().stream().filter(role -> form.getRoles().contains(role.identity())).collect(Collectors.toList()));
         user.savePassword(new RawPassword(form.getPassword()));
         rbac.addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
     }

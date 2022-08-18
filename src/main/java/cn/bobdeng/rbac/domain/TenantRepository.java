@@ -12,14 +12,6 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
 
     Page<Tenant> findByName(String name, int page, int size);
 
-    RbacContext.Users users(Tenant tenant);
-
-    RbacContext.LoginNames loginNames(Tenant tenant);
-
-    User.UserPassword userPassword(User user);
-
-    User.UserRoles userRoles(User user);
-
     Organization.Employees employees(Organization organization);
 
     ConfigurationContext configurationContext();

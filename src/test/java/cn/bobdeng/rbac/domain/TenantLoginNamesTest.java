@@ -19,7 +19,10 @@ public class TenantLoginNamesTest {
                 new LoginName(1, new LoginNameDescription("bob", user.identity()))
         );
         LoginNameDescription description = new LoginNameDescription("bob", user.identity());
-        RbacImpl rbac = new RbacImpl(null, null, loginNames, null);
+        RbacContext rbacContext = mock(RbacContext.class);
+        Tenant tenant = new Tenant();
+        RbacImpl rbac = new RbacImpl(tenant, rbacContext);
+        when(rbacContext.loginNames(tenant)).thenReturn(loginNames);
 
         LoginName result = rbac.addLoginName(description);
 
@@ -32,7 +35,10 @@ public class TenantLoginNamesTest {
         RbacContext.LoginNames loginNames = mock(RbacContext.LoginNames.class);
         when(loginNames.findByLoginName("bob")).thenReturn(Optional.of(new LoginName()));
         LoginNameDescription description = new LoginNameDescription("bob", user.identity());
-        RbacImpl rbac = new RbacImpl(null, null, loginNames, null);
+        RbacContext rbacContext = mock(RbacContext.class);
+        Tenant tenant = new Tenant();
+        RbacImpl rbac = new RbacImpl(tenant, rbacContext);
+        when(rbacContext.loginNames(tenant)).thenReturn(loginNames);
 
         assertThrows(DuplicateLoginNameException.class, () -> rbac.addLoginName(description));
 

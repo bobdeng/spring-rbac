@@ -4,8 +4,7 @@ import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.RbacImpl;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class TenantUserTest {
 
@@ -13,7 +12,10 @@ public class TenantUserTest {
     public void add_user_to_tenant() {
         RbacContext.Users users = mock(RbacContext.Users.class);
         UserDescription userDescription = new UserDescription("bob");
-        RbacImpl rbac = new RbacImpl(users, null, null, null);
+        RbacContext rbacContext = mock(RbacContext.class);
+        Tenant tenant = new Tenant();
+        RbacImpl rbac = new RbacImpl(tenant, rbacContext);
+        when(rbacContext.users(tenant)).thenReturn(users);
 
         rbac.addUser(userDescription);
 

@@ -9,16 +9,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RbacImpl implements RbacContext.Rbac {
-    private RbacContext.Users users;
-    private RbacContext.Roles roles;
-    private RbacContext.LoginNames loginNames;
-    private RbacContext.ThirdIdentities thirdIdentities;
+    private Tenant tenant;
+    private RbacContext rbacContext;
 
-    public RbacImpl(RbacContext.Users users, RbacContext.Roles roles, RbacContext.LoginNames loginNames, RbacContext.ThirdIdentities thirdIdentities) {
-        this.users = users;
-        this.roles = roles;
-        this.loginNames = loginNames;
-        this.thirdIdentities = thirdIdentities;
+    public RbacImpl(Tenant tenant, RbacContext rbacContext) {
+        this.tenant = tenant;
+        this.rbacContext = rbacContext;
     }
 
     public RbacImpl() {
@@ -26,60 +22,66 @@ public class RbacImpl implements RbacContext.Rbac {
 
     @Override
     public User addUser(UserDescription userDescription) {
-        return users.save(new User(userDescription));
+        return rbacContext.users(tenant).save(new User(userDescription));
     }
 
     @Override
     public LoginName addLoginName(LoginNameDescription description) {
-        if (loginNames.findByLoginName(description.getName()).isPresent()) {
+        if (rbacContext.loginNames(tenant).findByLoginName(description.getName()).isPresent()) {
             throw new DuplicateLoginNameException();
         }
-        return loginNames.save(new LoginName(description));
+        return rbacContext.loginNames(tenant).save(new LoginName(description));
     }
 
     @Override
-    public List<Role> roles() {
-        return roles.list().collect(Collectors.toList());
+    public List<Role> listRoles() {
+        return rbacContext.roles(tenant).list().collect(Collectors.toList());
     }
 
     @Override
     public Role newRole(RoleDescription description) {
         description.validate();
-        return roles.save(new Role(description));
+        return rbacContext.roles(tenant).save(new Role(description));
     }
 
     @Override
     public void saveRole(Role role) {
         role.description().validate();
-        roles.save(role);
+        rbacContext.roles(tenant).save(role);
     }
 
     @Override
     public void deleteRole(Integer roleId) {
-        roles.findByIdentity(roleId).ifPresent(roles::delete);
+        rbacContext.roles(tenant).findByIdentity(roleId).ifPresent(rbacContext.roles(tenant)::delete);
     }
 
     @Override
     public Optional<Role> getRole(Integer roleId) {
-        return roles.findByIdentity(roleId);
+        return rbacContext.roles(tenant).findByIdentity(roleId);
     }
 
     @Override
     public RbacContext.Users users() {
-        return users;
+        return rbacContext.users(tenant);
     }
 
     @Override
     public RbacContext.LoginNames loginNames() {
-        return loginNames;
+        return rbacContext.loginNames(tenant);
     }
 
     @Override
     public void newThirdIdentity(ThirdDescription thirdDescription) {
-        thirdIdentities.save(new ThirdIdentity(thirdDescription));
+        rbacContext.thirdIdentities(tenant).save(new ThirdIdentity(thirdDescription));
     }
+
+    @Override
+    public RbacContext.Roles roles() {
+        return rbacContext.roles(tenant);
+    }
+
     @Override
     public RbacContext.ThirdIdentities thirdIdentities() {
-        return thirdIdentities;
+        return rbacContext.thirdIdentities(tenant);
     }
 }

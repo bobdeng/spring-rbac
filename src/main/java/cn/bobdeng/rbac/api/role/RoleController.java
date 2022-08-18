@@ -25,13 +25,13 @@ public class RoleController extends RbacController {
     public List<Role> listRolesOfTenant(@PathVariable int id) {
         return tenantRepository.findByIdentity(id)
                 .map(this::getRbac)
-                .map(RbacContext.Rbac::roles)
+                .map(RbacContext.Rbac::listRoles)
                 .orElse(Collections.emptyList());
     }
 
     @GetMapping("/roles")
     public List<Role> listRoles(@RequestAttribute("tenant") Tenant tenant) {
-        return getRbac(tenant).roles();
+        return getRbac(tenant).listRoles();
     }
 
     @PostMapping("/tenants/{id}/roles")

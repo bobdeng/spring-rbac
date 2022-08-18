@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.domain.UserDescription;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.server.impl.TenantUsers;
 import lombok.*;
 
@@ -24,12 +25,11 @@ public final class UserDO {
         this.status = user.description().getStatus().getStatus();
     }
 
-    public User toUser(TenantRepository tenantRepository, TenantUsers tenantUsers) {
+
+    public User toUser(TenantRepository tenantRepository, RbacContext rbacContext) {
         User user = new User(id, new UserDescription(name, User.UserStatus.of(status)));
-        user.setUserPassword(tenantRepository.userPassword(user));
-        user.setUserRoles(tenantRepository.userRoles(user));
+        user.setRbacContext(rbacContext);
         user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
-        user.setUsers(tenantUsers);
         return user;
     }
 

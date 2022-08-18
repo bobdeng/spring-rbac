@@ -21,7 +21,7 @@ public class UserPermissionController extends RbacController {
                                       @RequestAttribute("session") Session session) {
         return getRbac(tenant).users().findByIdentity(session.userId())
                 .stream()
-                .flatMap(user -> user.roles().list())
+                .flatMap(user -> user.userRoles().list())
                 .flatMap(role -> role.description().getAllows().stream())
                 .distinct().toList();
     }

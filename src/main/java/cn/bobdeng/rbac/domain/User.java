@@ -18,13 +18,9 @@ public class User implements Entity<Integer, UserDescription> {
     @Getter
     private UserDescription description;
     @Setter
-    private UserPassword userPassword;
-    @Setter
     private HasOne<Tenant> tenant;
     @Setter
-    private UserRoles userRoles;
-    @Setter
-    private RbacContext.Users users;
+    private RbacContext rbacContext;
 
 
     public User(Integer id, UserDescription description) {
@@ -32,8 +28,8 @@ public class User implements Entity<Integer, UserDescription> {
         this.description = description;
     }
 
-    public UserRoles roles() {
-        return userRoles;
+    public UserRoles userRoles() {
+        return rbacContext.userRoles(this);
     }
 
     public Tenant tenant() {
@@ -55,32 +51,40 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public void savePassword(RawPassword rawPassword) {
-        Password password = new Password(this.identity(), new PasswordDescription(rawPassword, userPassword));
-        userPassword.save(password);
+        Password password = new Password(this.identity(), new PasswordDescription(rawPassword, getUserPassword()));
+        getUserPassword().save(password);
+    }
+
+    private UserPassword getUserPassword() {
+        return rbacContext.userPassword(this);
     }
 
     public boolean verifyPassword(String rawPassword) {
-        return userPassword.findByIdentity(identity())
-                .map(password -> userPassword.match(rawPassword, password.description().getPassword()))
+        return getUserPassword().findByIdentity(identity())
+                .map(password -> getUserPassword().match(rawPassword, password.description().getPassword()))
                 .orElse(false);
     }
 
     public boolean hasSomePermission(String[] allows) {
-        return userRoles.list().anyMatch(role -> role.hasSomePermission(allows));
+        return userRoles().list().anyMatch(role -> role.hasSomePermission(allows));
     }
 
     public void setRoles(List<Role> roles) {
-        roles.forEach(userRoles::save);
+        roles.forEach(role -> userRoles().save(role));
     }
 
     public void lock() {
         this.description = new UserDescription(description.getName(), UserStatus.Locked);
-        users.save(this);
+        getUsers().save(this);
+    }
+
+    private RbacContext.Users getUsers() {
+        return rbacContext.users(tenant.get());
     }
 
     public void unlock() {
         this.description = new UserDescription(description.getName(), UserStatus.Normal);
-        users.save(this);
+        getUsers().save(this);
     }
 
     public boolean normal() {

@@ -46,7 +46,7 @@ public class UserTest extends E2ETest {
         User lisi = userWithTenantFixture.getRbac().users().findByName("李四").get(0);
         assertTrue(lisi.verifyPassword("1344444"));
         assertEquals(User.UserStatus.Normal, lisi.description().getStatus());
-        List<Role> roles = lisi.roles().list().collect(Collectors.toList());
+        List<Role> roles = lisi.userRoles().list().collect(Collectors.toList());
         assertEquals(1, roles.size());
         LoginName loginNameOfLisi = userWithTenantFixture.getRbac().loginNames().findByLoginName("lisi").get();
         assertEquals("lisi", loginNameOfLisi.description().getName());
