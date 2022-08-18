@@ -13,14 +13,11 @@ import java.util.stream.Stream;
 public class OrganizationEmployee implements Organization.Employees {
     private final Organization organization;
     private final EmployeeDAO employeeDAO;
-    private final TenantRepository tenantRepository;
-    private final UserDAO userDAO;
     private final RbacContext rbacContext;
+
     public OrganizationEmployee(Organization organization, EmployeeDAO employeeDAO, TenantRepository tenantRepository, UserDAO userDAO, RbacContext rbacContext) {
         this.organization = organization;
         this.employeeDAO = employeeDAO;
-        this.tenantRepository = tenantRepository;
-        this.userDAO = userDAO;
         this.rbacContext = rbacContext;
     }
 
@@ -28,15 +25,17 @@ public class OrganizationEmployee implements Organization.Employees {
     public Stream<User> list() {
         return employeeDAO.findAllByOrganizationId(organization.identity())
                 .stream()
-                .flatMap(employeeDO -> userDAO.findById(employeeDO.getId()).map(Stream::of).orElse(Stream.empty()))
-                .map(userDO -> userDO.toUser(tenantRepository, rbacContext));
+                .flatMap(employeeDO -> getUsers().findByIdentity(employeeDO.getId()).stream());
+    }
+
+    private RbacContext.Users getUsers() {
+        return rbacContext.users(organization.tenant());
     }
 
     @Override
     public Optional<User> findByIdentity(Integer integer) {
         return employeeDAO.findById(integer)
-                .flatMap(employeeDO -> userDAO.findById(integer))
-                .map(userDO -> userDO.toUser(tenantRepository, rbacContext));
+                .flatMap(employeeDO -> getUsers().findByIdentity(employeeDO.getId()));
     }
 
 

@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server.dao;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import lombok.*;
@@ -29,9 +30,10 @@ public class OrganizationDO {
         this.parentId = entity.description().getParent();
     }
 
-    public Organization toEntity(TenantRepository tenantRepository, EmployeeDAO employeeDAO) {
+    public Organization toEntity(Tenant tenant, OrganizationContext organizationContext) {
         Organization organization = new Organization(id, new OrganizationDescription(name, parentId));
-        organization.setEmployees(tenantRepository.employees(organization));
+        organization.setTenant(() -> tenant);
+        organization.setOrganizationContext(organizationContext);
         return organization;
     }
 }

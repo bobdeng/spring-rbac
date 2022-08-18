@@ -4,7 +4,6 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
-import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDO;
 
@@ -14,29 +13,27 @@ import java.util.stream.Stream;
 public class TenantOrganizationsImpl implements OrganizationContext.Organizations {
     private final Tenant tenant;
     private final OrganizationDAO organizationDAO;
-    private final TenantRepository tenantRepository;
-    private EmployeeDAO employeeDAO;
+    private OrganizationContext organizationContext;
 
-    public TenantOrganizationsImpl(Tenant tenant, OrganizationDAO organizationDAO, TenantRepository tenantRepository, EmployeeDAO employeeDAO) {
+    public TenantOrganizationsImpl(Tenant tenant, OrganizationDAO organizationDAO, OrganizationContext organizationContext) {
         this.tenant = tenant;
         this.organizationDAO = organizationDAO;
-        this.tenantRepository = tenantRepository;
-        this.employeeDAO = employeeDAO;
+        this.organizationContext = organizationContext;
     }
 
     @Override
     public Stream<Organization> list() {
         return organizationDAO.findAllByTenantId(tenant.identity()).stream()
-                .map(organizationDO -> organizationDO.toEntity(tenantRepository,employeeDAO));
+                .map(organizationDO -> organizationDO.toEntity(tenant, organizationContext));
     }
 
     @Override
     public Optional<Organization> findByIdentity(Integer integer) {
-        return organizationDAO.findById(integer).map(organizationDO -> organizationDO.toEntity(tenantRepository, employeeDAO));
+        return organizationDAO.findById(integer).map(organizationDO -> organizationDO.toEntity(tenant, organizationContext));
     }
 
     @Override
     public Organization save(Organization entity) {
-        return organizationDAO.save(new OrganizationDO(entity, tenant)).toEntity(tenantRepository, employeeDAO);
+        return organizationDAO.save(new OrganizationDO(entity, tenant)).toEntity(tenant, organizationContext);
     }
 }
