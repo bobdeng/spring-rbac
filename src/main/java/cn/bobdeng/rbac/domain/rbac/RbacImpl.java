@@ -22,42 +22,42 @@ public class RbacImpl implements RbacContext.Rbac {
 
     @Override
     public User addUser(UserDescription userDescription) {
-        return rbacContext.users(tenant).save(new User(userDescription));
+        return users().save(new User(userDescription));
     }
 
     @Override
     public LoginName addLoginName(LoginNameDescription description) {
-        if (rbacContext.loginNames(tenant).findByLoginName(description.getName()).isPresent()) {
+        if (loginNames().findByLoginName(description.getName()).isPresent()) {
             throw new DuplicateLoginNameException();
         }
-        return rbacContext.loginNames(tenant).save(new LoginName(description));
+        return loginNames().save(new LoginName(description));
     }
 
     @Override
     public List<Role> listRoles() {
-        return rbacContext.roles(tenant).list().collect(Collectors.toList());
+        return roles().list().collect(Collectors.toList());
     }
 
     @Override
     public Role newRole(RoleDescription description) {
         description.validate();
-        return rbacContext.roles(tenant).save(new Role(description));
+        return roles().save(new Role(description));
     }
 
     @Override
     public void saveRole(Role role) {
         role.description().validate();
-        rbacContext.roles(tenant).save(role);
+        roles().save(role);
     }
 
     @Override
     public void deleteRole(Integer roleId) {
-        rbacContext.roles(tenant).findByIdentity(roleId).ifPresent(rbacContext.roles(tenant)::delete);
+        roles().findByIdentity(roleId).ifPresent(roles()::delete);
     }
 
     @Override
     public Optional<Role> getRole(Integer roleId) {
-        return rbacContext.roles(tenant).findByIdentity(roleId);
+        return roles().findByIdentity(roleId);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class RbacImpl implements RbacContext.Rbac {
 
     @Override
     public void newThirdIdentity(ThirdDescription thirdDescription) {
-        rbacContext.thirdIdentities(tenant).save(new ThirdIdentity(thirdDescription));
+        thirdIdentities().save(new ThirdIdentity(thirdDescription));
     }
 
     @Override
