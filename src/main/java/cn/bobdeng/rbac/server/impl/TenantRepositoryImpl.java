@@ -6,7 +6,6 @@ import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,25 +16,17 @@ import java.util.Optional;
 @Service
 public class TenantRepositoryImpl implements TenantRepository {
     private final TenantDAO tenantDAO;
-    private final UserDAO userDAO;
-    private final LoginNameDAO loginNameDAO;
-    private final PasswordDAO passwordDAO;
     private final DomainDAO domainDAO;
-    private final EmployeeDAO employeeDAO;
     private final ConfigurationContext configurationContext;
     private final OrganizationContext organizationContext;
     private final RbacContext rbacContext;
     public TenantRepositoryImpl(TenantDAO tenantDAO,
-                                UserDAO userDAO,
-                                LoginNameDAO loginNameDAO,
-                                PasswordDAO passwordDAO,
-                                DomainDAO domainDAO, EmployeeDAO employeeDAO, ConfigurationContext configurationContext, OrganizationContext organizationContext, RbacContext rbacContext) {
+                                DomainDAO domainDAO,
+                                ConfigurationContext configurationContext,
+                                OrganizationContext organizationContext,
+                                RbacContext rbacContext) {
         this.tenantDAO = tenantDAO;
-        this.userDAO = userDAO;
-        this.loginNameDAO = loginNameDAO;
-        this.passwordDAO = passwordDAO;
         this.domainDAO = domainDAO;
-        this.employeeDAO = employeeDAO;
         this.configurationContext = configurationContext;
         this.organizationContext = organizationContext;
         this.rbacContext = rbacContext;
@@ -52,11 +43,6 @@ public class TenantRepositoryImpl implements TenantRepository {
         PageRequest pageable = PageRequest.of(page, size);
         org.springframework.data.domain.Page<Tenant> result = tenantDAO.findByDescriptionNameContaining(Optional.ofNullable(name).orElse(""), pageable);
         return new Page<>(result.getContent(), result.getTotalPages(), result.getTotalElements(), result.getNumber());
-    }
-
-    @Override
-    public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, rbacContext);
     }
 
     @Override
