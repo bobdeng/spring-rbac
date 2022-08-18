@@ -5,7 +5,7 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.organization.OrganizationStructureImpl;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.domain.tenant.organization.Organization;
+import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
@@ -38,6 +38,6 @@ public class OrganizationContextImpl implements OrganizationContext {
 
     @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, tenantRepository.get(), userDAO, rbacContext);
+        return new OrganizationEmployee(organization, employeeDAO, rbacContext);
     }
 }

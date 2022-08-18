@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.domain;
 
 import cn.bobdeng.rbac.domain.organization.OrganizationStructureImpl;
-import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
+import cn.bobdeng.rbac.domain.organization.OrganizationDescription;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

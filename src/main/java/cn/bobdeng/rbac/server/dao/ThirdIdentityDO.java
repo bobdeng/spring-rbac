@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.server.dao;
 
-import cn.bobdeng.rbac.domain.third.ThirdDescription;
-import cn.bobdeng.rbac.domain.third.ThirdIdentity;
+import cn.bobdeng.rbac.domain.rbac.ThirdDescription;
+import cn.bobdeng.rbac.domain.rbac.ThirdIdentity;
 import lombok.*;
 
 import javax.persistence.*;

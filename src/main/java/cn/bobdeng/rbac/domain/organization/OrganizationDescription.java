@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.domain.tenant.organization;
+package cn.bobdeng.rbac.domain.organization;
 
 import cn.bobdeng.rbac.domain.FieldChecker;
 import lombok.Getter;

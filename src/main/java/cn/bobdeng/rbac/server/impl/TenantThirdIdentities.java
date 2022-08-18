@@ -2,7 +2,7 @@ package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.domain.third.ThirdIdentity;
+import cn.bobdeng.rbac.domain.rbac.ThirdIdentity;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDAO;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDO;
 

@@ -1,8 +1,6 @@
 package cn.bobdeng.rbac.domain.rbac;
 
 import cn.bobdeng.rbac.domain.*;
-import cn.bobdeng.rbac.domain.third.ThirdDescription;
-import cn.bobdeng.rbac.domain.third.ThirdIdentity;
 
 import java.util.List;
 import java.util.Optional;

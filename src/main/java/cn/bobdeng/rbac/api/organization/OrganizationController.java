@@ -3,14 +3,13 @@ package cn.bobdeng.rbac.api.organization;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
-import cn.bobdeng.rbac.domain.tenant.organization.Organization;
-import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
+import cn.bobdeng.rbac.domain.organization.Organization;
+import cn.bobdeng.rbac.domain.organization.OrganizationDescription;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class OrganizationController {

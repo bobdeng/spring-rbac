@@ -6,7 +6,7 @@ import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.domain.tenant.organization.Organization;
+import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -56,7 +56,7 @@ public class TenantRepositoryImpl implements TenantRepository {
 
     @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, this, userDAO, rbacContext);
+        return new OrganizationEmployee(organization, employeeDAO, rbacContext);
     }
 
     @Override

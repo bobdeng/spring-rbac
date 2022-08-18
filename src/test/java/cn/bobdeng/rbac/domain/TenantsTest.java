@@ -1,10 +1,5 @@
 package cn.bobdeng.rbac.domain;
 
-import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.TenantDescription;
-import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.Tenants;
-import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

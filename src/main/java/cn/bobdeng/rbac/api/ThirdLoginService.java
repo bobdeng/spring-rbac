@@ -6,8 +6,8 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.domain.UserDescription;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.domain.third.ThirdDescription;
-import cn.bobdeng.rbac.domain.third.ThirdIdentity;
+import cn.bobdeng.rbac.domain.rbac.ThirdDescription;
+import cn.bobdeng.rbac.domain.rbac.ThirdIdentity;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;

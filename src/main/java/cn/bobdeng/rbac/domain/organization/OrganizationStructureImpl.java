@@ -1,8 +1,5 @@
 package cn.bobdeng.rbac.domain.organization;
 
-import cn.bobdeng.rbac.domain.tenant.organization.Organization;
-import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
-
 import java.util.List;
 
 public class OrganizationStructureImpl implements OrganizationContext.OrganizationStructure {

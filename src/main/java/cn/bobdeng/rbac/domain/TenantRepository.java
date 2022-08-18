@@ -4,7 +4,7 @@ import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.domain.tenant.organization.Organization;
+import cn.bobdeng.rbac.domain.organization.Organization;
 
 
 public interface TenantRepository extends EntityList<Integer, Tenant> {

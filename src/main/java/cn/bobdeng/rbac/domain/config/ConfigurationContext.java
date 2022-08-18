@@ -13,5 +13,7 @@ public interface ConfigurationContext {
         Parameters parameters();
     }
 
+    Parameters parameters(Tenant tenant);
+
     Configurer asConfigurer(Tenant tenant);
 }

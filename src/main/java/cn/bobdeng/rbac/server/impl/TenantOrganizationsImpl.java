@@ -1,9 +1,8 @@
 package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
-import cn.bobdeng.rbac.domain.tenant.organization.Organization;
+import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.OrganizationDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDO;
 

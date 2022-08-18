@@ -1,8 +1,7 @@
-package cn.bobdeng.rbac.domain.third;
+package cn.bobdeng.rbac.domain.rbac;
 
 import cn.bobdeng.rbac.archtype.Entity;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 public class ThirdIdentity implements Entity<Integer, ThirdDescription> {
