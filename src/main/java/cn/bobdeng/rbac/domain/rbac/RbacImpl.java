@@ -52,7 +52,8 @@ public class RbacImpl implements RbacContext.Rbac {
 
     @Override
     public void deleteRole(Integer roleId) {
-        roles().findByIdentity(roleId).ifPresent(roles()::delete);
+        RbacContext.Roles roles = roles();
+        roles.findByIdentity(roleId).ifPresent(roles::delete);
     }
 
     @Override
