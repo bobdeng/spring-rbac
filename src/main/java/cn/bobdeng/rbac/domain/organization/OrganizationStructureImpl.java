@@ -1,15 +1,14 @@
 package cn.bobdeng.rbac.domain.organization;
 
-import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.domain.tenant.organization.OrganizationDescription;
 
 import java.util.List;
 
 public class OrganizationStructureImpl implements OrganizationContext.OrganizationStructure {
-    private final Tenant.Organizations organizations;
+    private final OrganizationContext.Organizations organizations;
 
-    public OrganizationStructureImpl(Tenant.Organizations organizations) {
+    public OrganizationStructureImpl(OrganizationContext.Organizations organizations) {
         this.organizations = organizations;
     }
 
@@ -19,7 +18,7 @@ public class OrganizationStructureImpl implements OrganizationContext.Organizati
     }
 
     @Override
-    public Tenant.Organizations organizations() {
+    public OrganizationContext.Organizations organizations() {
         return organizations;
     }
 

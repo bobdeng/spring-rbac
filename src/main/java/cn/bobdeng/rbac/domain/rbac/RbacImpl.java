@@ -9,16 +9,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RbacImpl implements RbacContext.Rbac {
-    private Tenant.Users users;
-    private Tenant.Roles roles;
-    private Tenant.LoginNames loginNames;
-    private Tenant.ThirdIdentities thirdIdentities;
+    private RbacContext.Users users;
+    private RbacContext.Roles roles;
+    private RbacContext.LoginNames loginNames;
+    private RbacContext.ThirdIdentities thirdIdentities;
 
-    public RbacImpl(Tenant.Users users, Tenant.Roles roles, Tenant.LoginNames loginNames, Tenant.ThirdIdentities thirdIdentities) {
+    public RbacImpl(RbacContext.Users users, RbacContext.Roles roles, RbacContext.LoginNames loginNames, RbacContext.ThirdIdentities thirdIdentities) {
         this.users = users;
         this.roles = roles;
         this.loginNames = loginNames;
         this.thirdIdentities = thirdIdentities;
+    }
+
+    public RbacImpl() {
     }
 
     @Override
@@ -62,12 +65,12 @@ public class RbacImpl implements RbacContext.Rbac {
     }
 
     @Override
-    public Tenant.Users users() {
+    public RbacContext.Users users() {
         return users;
     }
 
     @Override
-    public Tenant.LoginNames loginNames() {
+    public RbacContext.LoginNames loginNames() {
         return loginNames;
     }
 
@@ -76,7 +79,7 @@ public class RbacImpl implements RbacContext.Rbac {
         thirdIdentities.save(new ThirdIdentity(thirdDescription));
     }
     @Override
-    public Tenant.ThirdIdentities thirdIdentities() {
+    public RbacContext.ThirdIdentities thirdIdentities() {
         return thirdIdentities;
     }
 }

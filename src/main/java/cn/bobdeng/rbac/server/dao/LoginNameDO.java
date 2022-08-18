@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.LoginNameDescription;
 import cn.bobdeng.rbac.domain.LoginName;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class LoginNameDO {
         this.loginName = entity.description().getName();
     }
 
-    public LoginName toEntity(Tenant.Users users) {
+    public LoginName toEntity(RbacContext.Users users) {
         User user = new User(userId, null);
         LoginName loginName = getLoginName(user);
         loginName.setUser(() -> users.findByIdentity(userId).orElse(null));

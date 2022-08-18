@@ -4,9 +4,8 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.User;
 import cn.bobdeng.rbac.domain.UserDescription;
+import cn.bobdeng.rbac.server.impl.TenantUsers;
 import lombok.*;
-
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,11 +24,12 @@ public final class UserDO {
         this.status = user.description().getStatus().getStatus();
     }
 
-    public User toUser(TenantRepository tenantRepository) {
+    public User toUser(TenantRepository tenantRepository, TenantUsers tenantUsers) {
         User user = new User(id, new UserDescription(name, User.UserStatus.of(status)));
         user.setUserPassword(tenantRepository.userPassword(user));
         user.setUserRoles(tenantRepository.userRoles(user));
         user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
+        user.setUsers(tenantUsers);
         return user;
     }
 

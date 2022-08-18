@@ -55,7 +55,7 @@ public class LoginFromThirdIdentityTest {
 
         UserToken token = thirdLoginService.login(tenant, thirdLoginForm, response);
 
-        List<User> users = tenant.users().findByName("李四");
+        List<User> users = userWithTenantFixture.getRbac().users().findByName("李四");
         assertEquals(1, users.size());
         List<ThirdIdentityDO> thirdIdentities = thirdIdentityDAO.findAllByTenantId(tenant.identity());
         assertEquals(1, thirdIdentities.size());
@@ -80,7 +80,7 @@ public class LoginFromThirdIdentityTest {
                 .build());
         UserToken token = thirdLoginService.login(tenant, thirdLoginForm, response);
 
-        List<User> users = tenant.users().findByName("李四");
+        List<User> users = userWithTenantFixture.getRbac().users().findByName("李四");
         assertEquals(0, users.size());
         List<ThirdIdentityDO> thirdIdentities = thirdIdentityDAO.findAllByTenantId(tenant.identity());
         assertEquals(1, thirdIdentities.size());

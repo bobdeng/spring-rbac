@@ -11,8 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class UserController {
-    private final TenantRepository tenantRepository;
+public class UserController extends RbacController{
 
     public UserController(TenantRepository tenantRepository) {
         this.tenantRepository = tenantRepository;
@@ -27,10 +26,6 @@ public class UserController {
         user.setRoles(rbac.roles().stream().filter(role -> form.getRoles().contains(role.identity())).collect(Collectors.toList()));
         user.savePassword(new RawPassword(form.getPassword()));
         rbac.addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
-    }
-
-    private RbacContext.Rbac getRbac(Tenant tenant) {
-        return tenantRepository.rbacContext().asRbac(tenant);
     }
 
     @GetMapping("/users")

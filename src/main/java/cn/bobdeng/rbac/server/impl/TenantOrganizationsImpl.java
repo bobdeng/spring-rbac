@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.tenant.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDAO;
@@ -10,7 +11,7 @@ import cn.bobdeng.rbac.server.dao.OrganizationDO;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class TenantOrganizationsImpl implements Tenant.Organizations {
+public class TenantOrganizationsImpl implements OrganizationContext.Organizations {
     private final Tenant tenant;
     private final OrganizationDAO organizationDAO;
     private final TenantRepository tenantRepository;

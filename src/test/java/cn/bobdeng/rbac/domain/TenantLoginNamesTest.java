@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.RbacImpl;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ public class TenantLoginNamesTest {
     @Test
     public void save_account() {
         User user = new User(101, null);
-        Tenant.LoginNames loginNames = mock(Tenant.LoginNames.class);
+        RbacContext.LoginNames loginNames = mock(RbacContext.LoginNames.class);
         when(loginNames.save(any(LoginName.class))).thenReturn(
                 new LoginName(1, new LoginNameDescription("bob", user.identity()))
         );
@@ -29,7 +29,7 @@ public class TenantLoginNamesTest {
     @Test
     public void throw_when_login_name_exist() {
         User user = new User(101, null);
-        Tenant.LoginNames loginNames = mock(Tenant.LoginNames.class);
+        RbacContext.LoginNames loginNames = mock(RbacContext.LoginNames.class);
         when(loginNames.findByLoginName("bob")).thenReturn(Optional.of(new LoginName()));
         LoginNameDescription description = new LoginNameDescription("bob", user.identity());
         RbacImpl rbac = new RbacImpl(null, null, loginNames, null);

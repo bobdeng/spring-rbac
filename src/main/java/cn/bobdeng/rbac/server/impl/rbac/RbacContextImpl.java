@@ -38,10 +38,10 @@ public class RbacContextImpl implements RbacContext {
 
     @Override
     public Rbac asRbac(Tenant tenant) {
-        Tenant.Users users=new TenantUsers(tenant,userDAO,tenantRepositoryProvider.get());
-        Tenant.Roles roles=new TenantRoles(roleDAO,tenant,userRoleDAO);
-        Tenant.LoginNames loginNames=new TenantLoginNames(tenant,loginNameDAO,tenantRepositoryProvider.get());
-        Tenant.ThirdIdentities thirdIdentities=new TenantThirdIdentities(tenant,thirdIdentityDAO);
+        Users users=new TenantUsers(tenant,userDAO,tenantRepositoryProvider.get());
+        Roles roles=new TenantRoles(roleDAO,tenant,userRoleDAO);
+        LoginNames loginNames=new TenantLoginNames(tenant,loginNameDAO,tenantRepositoryProvider.get());
+        ThirdIdentities thirdIdentities=new TenantThirdIdentities(tenant,thirdIdentityDAO);
         return new RbacImpl(users,roles,loginNames,thirdIdentities);
     }
 }

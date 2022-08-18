@@ -6,6 +6,7 @@ import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.function.Function;
 import cn.bobdeng.rbac.domain.function.FunctionRepository;
 import cn.bobdeng.rbac.domain.function.Functions;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,16 +41,15 @@ public class UserWithTenantFixture {
         domainRepository.save(new Domain(new DomainDescription("localhost", tenant.identity())));
         domainRepository.save(new Domain(new DomainDescription("host.docker.internal", tenant.identity())));
 
-        user = tenantRepository.rbacContext().asRbac(tenant).addUser(new UserDescription("张三"));
+        user = getRbac().addUser(new UserDescription("张三"));
         user.savePassword(new RawPassword("123456"));
-        tenantRepository.rbacContext().asRbac(tenant).addLoginName(new LoginNameDescription("bobdeng", user.identity()));
-        Role role = tenant.newRole(new RoleDescription("角色1", getAllFunctions()));
+        getRbac().addLoginName(new LoginNameDescription("bobdeng", user.identity()));
+        Role role = getRbac().newRole(new RoleDescription("角色1", getAllFunctions()));
         user.setRoles(Collections.singletonList(role));
     }
 
-    private void extracted() {
-
-        user = tenantRepository.rbacContext().asRbac(tenant).addUser(new UserDescription("张三"));
+    public RbacContext.Rbac getRbac() {
+        return tenantRepository.rbacContext().asRbac(tenant);
     }
 
     @NotNull

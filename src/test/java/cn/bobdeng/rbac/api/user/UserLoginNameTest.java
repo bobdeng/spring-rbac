@@ -39,13 +39,13 @@ public class UserLoginNameTest extends E2ETest {
         waitUntil(() -> listUserPage.hasText("解 绑"), 1000);
         listUserPage.clickUnbind();
         waitUntil(() -> listUserPage.hasText("解绑成功"), 1000);
-        assertFalse(userWithTenantFixture.getTenant().loginNames().findByUser(userWithTenantFixture.user().identity()).isPresent());
+        assertFalse(userWithTenantFixture.getRbac().loginNames().findByUser(userWithTenantFixture.user().identity()).isPresent());
     }
 
     @Test
     public void should_bind_login_name_to_user() {
-        userWithTenantFixture.getTenant().loginNames().findByLoginName("bobdeng").ifPresent(loginName -> {
-            userWithTenantFixture.getTenant().loginNames().delete(loginName.getId());
+        userWithTenantFixture.getRbac().loginNames().findByLoginName("bobdeng").ifPresent(loginName -> {
+            userWithTenantFixture.getRbac().loginNames().delete(loginName.getId());
         });
         ListUserPage listUserPage = new ListUserPage(webDriverHandler);
         listUserPage.open();
@@ -55,7 +55,7 @@ public class UserLoginNameTest extends E2ETest {
         listUserPage.inputLoginName("bobdeng1");
         listUserPage.clickBind();
         waitUntil(() -> listUserPage.hasText("绑定成功"), 1000);
-        LoginName loginName = userWithTenantFixture.getTenant().loginNames().findByUser(userWithTenantFixture.user().identity()).get();
+        LoginName loginName = userWithTenantFixture.getRbac().loginNames().findByUser(userWithTenantFixture.user().identity()).get();
         assertEquals("bobdeng1", loginName.description().getName());
     }
 

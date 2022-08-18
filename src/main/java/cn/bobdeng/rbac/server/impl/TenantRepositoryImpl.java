@@ -61,12 +61,12 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     @Override
-    public Tenant.Users users(Tenant tenant) {
+    public RbacContext.Users users(Tenant tenant) {
         return new TenantUsers(tenant, userDAO, this);
     }
 
     @Override
-    public Tenant.LoginNames loginNames(Tenant tenant) {
+    public RbacContext.LoginNames loginNames(Tenant tenant) {
         return new TenantLoginNames(tenant, loginNameDAO, this);
     }
 
@@ -108,11 +108,7 @@ public class TenantRepositoryImpl implements TenantRepository {
     }
 
     private Tenant injectDependencies(Tenant tenant) {
-        tenant.setUsers(this.users(tenant));
-        tenant.setLoginNames(this.loginNames(tenant));
         tenant.setDomains(getDomains(tenant));
-        tenant.setRoles(new TenantRoles(roleDAO, tenant, userRoleDAO));
-        tenant.setThirdIdentities(new TenantThirdIdentities(tenant, thirdIdentityDAO));
         return tenant;
     }
 

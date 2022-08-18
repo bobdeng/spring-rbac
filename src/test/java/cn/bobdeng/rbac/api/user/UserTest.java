@@ -43,12 +43,12 @@ public class UserTest extends E2ETest {
         newUserPage.waitUntilNoButtonSpin();
 
         assertTrue(newUserPage.hasText("新增成功"));
-        User lisi = userWithTenantFixture.getTenant().users().findByName("李四").get(0);
+        User lisi = userWithTenantFixture.getRbac().users().findByName("李四").get(0);
         assertTrue(lisi.verifyPassword("1344444"));
         assertEquals(User.UserStatus.Normal, lisi.description().getStatus());
         List<Role> roles = lisi.roles().list().collect(Collectors.toList());
         assertEquals(1, roles.size());
-        LoginName loginNameOfLisi = userWithTenantFixture.getTenant().loginNames().findByLoginName("lisi").get();
+        LoginName loginNameOfLisi = userWithTenantFixture.getRbac().loginNames().findByLoginName("lisi").get();
         assertEquals("lisi", loginNameOfLisi.description().getName());
     }
 
@@ -114,7 +114,7 @@ public class UserTest extends E2ETest {
         listUserPage.clickButton("锁定");
         listUserPage.waitUntilNoSpin();
         assertTrue(listUserPage.hasText("用户已锁定"));
-        User user = userWithTenantFixture.getTenant().users().findByIdentity(userWithTenantFixture.user().identity()).get();
+        User user = userWithTenantFixture.getRbac().users().findByIdentity(userWithTenantFixture.user().identity()).get();
         assertEquals(User.UserStatus.Locked, user.description().getStatus());
     }
 
@@ -127,7 +127,7 @@ public class UserTest extends E2ETest {
         listUserPage.clickButton("解锁");
         listUserPage.waitUntilNoSpin();
         assertTrue(listUserPage.hasText("用户已解锁"));
-        User user = userWithTenantFixture.getTenant().users().findByIdentity(userWithTenantFixture.user().identity()).get();
+        User user = userWithTenantFixture.getRbac().users().findByIdentity(userWithTenantFixture.user().identity()).get();
         assertEquals(User.UserStatus.Normal, user.description().getStatus());
     }
 }

@@ -3,12 +3,13 @@ package cn.bobdeng.rbac.server.impl;
 import cn.bobdeng.rbac.domain.LoginName;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.server.dao.LoginNameDAO;
 import cn.bobdeng.rbac.server.dao.LoginNameDO;
 
 import java.util.Optional;
 
-public class TenantLoginNames implements Tenant.LoginNames {
+public class TenantLoginNames implements RbacContext.LoginNames {
     private Tenant tenant;
     private LoginNameDAO loginNameDAO;
     private TenantRepository tenantRepository;

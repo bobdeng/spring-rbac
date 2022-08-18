@@ -1,13 +1,14 @@
 package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.third.ThirdIdentity;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDAO;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDO;
 
 import java.util.Optional;
 
-public class TenantThirdIdentities implements Tenant.ThirdIdentities {
+public class TenantThirdIdentities implements RbacContext.ThirdIdentities {
     private Tenant tenant;
     private ThirdIdentityDAO thirdIdentityDAO;
 

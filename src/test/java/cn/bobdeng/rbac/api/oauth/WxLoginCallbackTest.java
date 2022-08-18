@@ -52,7 +52,7 @@ public class WxLoginCallbackTest extends E2ETest {
     public void should_login_when_already_bind_to_wx() {
         Integer userId = userWithTenantFixture.user().identity();
         ThirdDescription thirdDescription = new ThirdDescription(openId, "微信", userId);
-        userWithTenantFixture.getTenant().newThirdIdentity(thirdDescription);
+        userWithTenantFixture.getRbac().newThirdIdentity(thirdDescription);
         WxCallbackPage wxCallbackPage = new WxCallbackPage(webDriverHandler);
         wxCallbackPage.open(code, state);
         waitUntil(() -> wxCallbackPage.hasText("登录成功"), 100);
@@ -82,7 +82,7 @@ public class WxLoginCallbackTest extends E2ETest {
         wxCallbackPage.open(code, state);
         waitUntil(() -> wxCallbackPage.hasText("登录成功"), 100);
         waitUntil(() -> wxCallbackPage.hasText("李四"), 100);
-        User lisi = userWithTenantFixture.getTenant().users().findByName("李四").get(0);
+        User lisi = userWithTenantFixture.getRbac().users().findByName("李四").get(0);
         assertLoginWithUser(lisi.identity());
     }
 

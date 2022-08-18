@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 
 @RestController
-public class UserLockController {
-    private final TenantRepository tenantRepository;
+public class UserLockController extends RbacController {
 
     public UserLockController(TenantRepository tenantRepository) {
         this.tenantRepository = tenantRepository;
@@ -23,10 +22,6 @@ public class UserLockController {
     public void lockUser(@PathVariable int id, @RequestAttribute("tenant") Tenant tenant) {
         RbacContext.Rbac rbac = getRbac(tenant);
         rbac.users().findByIdentity(id).ifPresent(User::lock);
-    }
-
-    private RbacContext.Rbac getRbac(Tenant tenant) {
-        return tenantRepository.rbacContext().asRbac(tenant);
     }
 
     @DeleteMapping("/users/{id}/lock")

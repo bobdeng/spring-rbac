@@ -3,9 +3,9 @@ package cn.bobdeng.rbac.domain;
 import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasOne;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -23,12 +23,15 @@ public class User implements Entity<Integer, UserDescription> {
     private HasOne<Tenant> tenant;
     @Setter
     private UserRoles userRoles;
+    @Setter
+    private RbacContext.Users users;
 
 
     public User(Integer id, UserDescription description) {
         this.id = id;
         this.description = description;
     }
+
     public UserRoles roles() {
         return userRoles;
     }
@@ -72,16 +75,16 @@ public class User implements Entity<Integer, UserDescription> {
 
     public void lock() {
         this.description = new UserDescription(description.getName(), UserStatus.Locked);
-        tenant().users().save(this);
+        users.save(this);
     }
 
     public void unlock() {
         this.description = new UserDescription(description.getName(), UserStatus.Normal);
-        tenant().users().save(this);
+        users.save(this);
     }
 
     public boolean normal() {
-        return description.getStatus()==UserStatus.Normal;
+        return description.getStatus() == UserStatus.Normal;
     }
 
     public interface UserPassword extends EntityList<Integer, Password> {

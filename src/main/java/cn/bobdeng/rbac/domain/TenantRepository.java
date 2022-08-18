@@ -12,9 +12,9 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
 
     Page<Tenant> findByName(String name, int page, int size);
 
-    Tenant.Users users(Tenant tenant);
+    RbacContext.Users users(Tenant tenant);
 
-    Tenant.LoginNames loginNames(Tenant tenant);
+    RbacContext.LoginNames loginNames(Tenant tenant);
 
     User.UserPassword userPassword(User user);
 
