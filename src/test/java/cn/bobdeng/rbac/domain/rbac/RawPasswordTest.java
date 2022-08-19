@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.domain.rbac;
 
-import org.junit.jupiter.api.Test;
+import cn.bobdeng.rbac.archtype.FieldIllegalException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -17,7 +17,7 @@ class RawPasswordTest {
     })
     public void should_not_pass_weak(String password) {
         RawPassword rawPassword = new RawPassword(password);
-        assertThrows(WeakPasswordException.class, () -> rawPassword.ensureWeakStrength("weak"));
+        assertThrows(FieldIllegalException.class, () -> rawPassword.ensureWeakStrength("weak"));
     }
 
     @ParameterizedTest
@@ -39,7 +39,7 @@ class RawPasswordTest {
     })
     public void should_not_pass_strong(String password) {
         RawPassword rawPassword = new RawPassword(password);
-        assertThrows(WeakPasswordException.class, () -> rawPassword.ensureWeakStrength("strong"));
+        assertThrows(FieldIllegalException.class, () -> rawPassword.ensureWeakStrength("strong"));
     }
 
     @ParameterizedTest

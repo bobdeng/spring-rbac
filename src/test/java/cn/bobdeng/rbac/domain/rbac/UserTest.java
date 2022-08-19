@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain.rbac;
 
+import cn.bobdeng.rbac.archtype.FieldIllegalException;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.config.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +54,7 @@ class UserTest {
         when(rbacContext.userPassword(user)).thenReturn(userPassword);
         when(userPassword.encodePassword("123456")).thenReturn("654321");
 
-        assertThrows(WeakPasswordException.class, () ->
+        assertThrows(FieldIllegalException.class, () ->
                 user.savePassword(new RawPassword("123456")));
 
     }

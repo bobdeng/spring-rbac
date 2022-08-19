@@ -65,6 +65,10 @@ public class FieldChecker {
         return new FieldChecker(name, value, getErrors());
     }
 
+    public FieldChecker lengthBiggerThan(int len, String message) {
+        return check(() -> value != null && value.toString().length() < len, message);
+    }
+
     @Getter
     static public class FieldError {
         private String field;

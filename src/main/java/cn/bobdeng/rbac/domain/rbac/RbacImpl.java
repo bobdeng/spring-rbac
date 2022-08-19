@@ -25,6 +25,7 @@ public class RbacImpl implements RbacContext.Rbac {
 
     @Override
     public LoginName addLoginName(LoginNameDescription description) {
+        description.validate();
         if (loginNames().findByLoginName(description.getName()).isPresent()) {
             throw new DuplicateLoginNameException();
         }

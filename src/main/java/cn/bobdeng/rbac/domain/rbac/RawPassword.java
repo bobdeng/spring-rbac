@@ -1,5 +1,7 @@
 package cn.bobdeng.rbac.domain.rbac;
 
+import cn.bobdeng.rbac.archtype.FieldChecker;
+import cn.bobdeng.rbac.archtype.FieldIllegalException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -40,7 +42,7 @@ public class RawPassword {
 
     private void check(List<Predicate<String>> strongChecker) {
         if (strongChecker.stream().anyMatch(checker -> checker.test(rawPassword))) {
-            throw new WeakPasswordException();
+            throw new FieldIllegalException(List.of(new FieldChecker.FieldError("password", "密码强度不足")));
         }
     }
 }
