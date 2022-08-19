@@ -15,7 +15,7 @@ public class ClearTable {
     @Autowired
     JdbcTemplate jdbcTemplate;
     private final Set<String> AutoIncrementTables = Stream.of("t_rbac_tenant", "t_rbac_user", "t_rbac_login_name"
-            , "t_rbac_password", "t_rbac_domain", "t_rbac_role", "t_rbac_user_role", "t_rbac_organization").collect(Collectors.toSet());
+            , "t_rbac_password", "t_rbac_domain", "t_rbac_role", "t_rbac_user_role", "t_rbac_organization","t_rbac_third_identity","t_rbac_parameter").collect(Collectors.toSet());
 
     public void clearTable(String name) {
         jdbcTemplate.execute("truncate table " + name);
