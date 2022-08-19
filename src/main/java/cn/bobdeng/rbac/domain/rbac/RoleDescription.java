@@ -1,8 +1,7 @@
 package cn.bobdeng.rbac.domain.rbac;
 
-import cn.bobdeng.rbac.domain.FieldChecker;
-import cn.bobdeng.rbac.domain.FieldIllegalException;
-import lombok.Data;
+import cn.bobdeng.rbac.archtype.FieldChecker;
+import cn.bobdeng.rbac.archtype.FieldIllegalException;
 import lombok.Getter;
 
 import java.util.Collection;

@@ -1,6 +1,5 @@
-package cn.bobdeng.rbac.domain;
+package cn.bobdeng.rbac.archtype;
 
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.ArrayList;

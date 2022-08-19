@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api;
 
+import cn.bobdeng.rbac.archtype.Page;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.security.Admin;
 import org.springframework.web.bind.annotation.*;

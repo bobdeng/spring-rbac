@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.archtype.FieldChecker;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

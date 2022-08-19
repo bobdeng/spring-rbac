@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api;
 
-import cn.bobdeng.rbac.domain.FieldChecker;
-import cn.bobdeng.rbac.domain.FieldIllegalException;
+import cn.bobdeng.rbac.archtype.FieldChecker;
+import cn.bobdeng.rbac.archtype.FieldIllegalException;
 import cn.bobdeng.rbac.security.PermissionDeniedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

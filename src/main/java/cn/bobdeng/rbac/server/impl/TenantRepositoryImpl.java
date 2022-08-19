@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server.impl;
 
 import cn.bobdeng.rbac.archtype.HasMany;
 import cn.bobdeng.rbac.archtype.Many;
+import cn.bobdeng.rbac.archtype.Page;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;

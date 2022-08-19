@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.domain.organization;
 
-import cn.bobdeng.rbac.domain.FieldChecker;
+import cn.bobdeng.rbac.archtype.FieldChecker;
 import lombok.Getter;
 
 @Getter

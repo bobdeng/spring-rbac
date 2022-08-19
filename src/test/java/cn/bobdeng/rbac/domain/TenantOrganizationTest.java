@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.archtype.FieldIllegalException;
 import cn.bobdeng.rbac.domain.organization.OrganizationStructureImpl;
 import cn.bobdeng.rbac.domain.organization.OrganizationDescription;
 import org.junit.jupiter.api.Test;
