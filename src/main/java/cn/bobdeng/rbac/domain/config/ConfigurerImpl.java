@@ -22,6 +22,8 @@ public class ConfigurerImpl implements ConfigurationContext.Configurer {
 
     @Override
     public void saveParameters(List<Parameter> parameters) {
+        parameters.stream().map(Parameter::getDescription)
+                .forEach(ParameterDescription::validate);
         Map<String, String> values = parameters.stream().collect(Collectors.toMap(Parameter::identity, parameter -> parameter.description().getValue()));
         parameters().list()
                 .filter(parameter -> parameter.isChanged(values))
