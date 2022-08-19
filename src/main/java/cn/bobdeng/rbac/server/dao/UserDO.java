@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.server.dao;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.UserDescription;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
@@ -25,10 +26,11 @@ public final class UserDO {
     }
 
 
-    public User toUser(TenantRepository tenantRepository, RbacContext rbacContext) {
+    public User toUser(TenantRepository tenantRepository, RbacContext rbacContext, ConfigurationContext configurationContext) {
         User user = new User(id, new UserDescription(name, User.UserStatus.of(status)));
         user.setRbacContext(rbacContext);
         user.setTenant(() -> tenantRepository.findByIdentity(tenantId).orElse(null));
+        user.setConfigurationContext(configurationContext);
         return user;
     }
 

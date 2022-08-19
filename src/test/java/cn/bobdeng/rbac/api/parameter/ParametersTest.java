@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.config.BaseParameters;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.config.Parameter;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
@@ -63,7 +64,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
         List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
-        assertEquals(1, parameters.size());
+        assertEquals(BaseParameters.list().size()+1, parameters.size());
     }
     @Test
     public void 参数已经设置当保存参数() {
@@ -76,7 +77,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
         List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
-        assertEquals(1, parameters.size());
+        assertEquals(BaseParameters.list().size()+1, parameters.size());
     }
 
     @Test

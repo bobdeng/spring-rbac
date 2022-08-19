@@ -31,13 +31,13 @@ public class RawPassword {
     }
 
     public void ensureWeakStrength(String passwordPolicy) {
-        if ("none".equals(passwordPolicy)) {
-            return;
-        }
         if ("strong".equals(passwordPolicy)) {
+            check(WEAK_CHECKERS);
             check(STRONG_CHECKERS);
         }
-        check(WEAK_CHECKERS);
+        if ("weak".equals(passwordPolicy)) {
+            check(WEAK_CHECKERS);
+        }
     }
 
     private void check(List<Predicate<String>> strongChecker) {

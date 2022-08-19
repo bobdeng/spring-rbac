@@ -39,7 +39,7 @@ public class UserTest extends E2ETest {
         NewUserPage newUserPage = new NewUserPage(webDriverHandler);
         newUserPage.inputById("李四", "inputName");
         newUserPage.inputById("lisi", "inputLoginName");
-        newUserPage.inputById("1344444", "inputPassword");
+        newUserPage.inputById("123Ab*&$#", "inputPassword");
         newUserPage.clickContent("角色1");
 
         newUserPage.clickButton("保 存");
@@ -47,7 +47,7 @@ public class UserTest extends E2ETest {
 
         assertTrue(newUserPage.hasText("新增成功"));
         User lisi = userWithTenantFixture.getRbac().users().findByName("李四").get(0);
-        assertTrue(lisi.verifyPassword("1344444"));
+        assertTrue(lisi.verifyPassword("123Ab*&$#"));
         assertEquals(User.UserStatus.Normal, lisi.description().getStatus());
         List<Role> roles = lisi.userRoles().list().collect(Collectors.toList());
         assertEquals(1, roles.size());
@@ -100,8 +100,8 @@ public class UserTest extends E2ETest {
         SetPasswordPage setPasswordPage = new SetPasswordPage(webDriverHandler);
         setPasswordPage.open();
         setPasswordPage.inputCurrentPassword("123456");
-        setPasswordPage.inputNewPassword("cwkidSd2");
-        setPasswordPage.inputConfirmation("cwkidSd2");
+        setPasswordPage.inputNewPassword("cwki*&Sd2");
+        setPasswordPage.inputConfirmation("cwki*&Sd2");
         setPasswordPage.save();
         setPasswordPage.waitUntilNoButtonSpin();
         assertTrue(setPasswordPage.hasText("修改成功"));

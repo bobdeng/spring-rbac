@@ -25,7 +25,7 @@ public class UserPasswordController extends RbacController {
     public ResetPasswordResult resetPassword(@PathVariable int id,
                                              @RequestAttribute("tenant") Tenant tenant) {
         User user = getRbac(tenant).users().findByIdentity(id).orElseThrow(PermissionDeniedException::new);
-        String newPassword = RandomStringUtils.randomAlphanumeric(10);
+        String newPassword = "abcd1234#$%%";
         user.savePassword(new RawPassword(newPassword));
         return new ResetPasswordResult(newPassword);
     }

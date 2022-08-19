@@ -6,6 +6,7 @@ import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.function.Function;
 import cn.bobdeng.rbac.domain.function.FunctionRepository;
 import cn.bobdeng.rbac.domain.function.Functions;
+import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,6 +30,7 @@ public class UserWithTenantFixture {
     private User user;
 
     public void init() {
+        clearTable.clearTable("t_rbac_parameter");
         clearTable.clearTable("t_rbac_tenant");
         clearTable.clearTable("t_rbac_user");
         clearTable.clearTable("t_rbac_domain");
