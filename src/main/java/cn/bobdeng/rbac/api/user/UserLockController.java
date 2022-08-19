@@ -2,7 +2,7 @@ package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;

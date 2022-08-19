@@ -1,9 +1,9 @@
-package cn.bobdeng.rbac.domain;
+package cn.bobdeng.rbac.domain.rbac;
 
 import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasOne;
-import cn.bobdeng.rbac.domain.rbac.RbacContext;
+import cn.bobdeng.rbac.domain.Tenant;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

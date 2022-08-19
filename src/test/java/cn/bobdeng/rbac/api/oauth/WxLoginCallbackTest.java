@@ -6,7 +6,7 @@ import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.JwtToken;
 import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.ThirdDescription;
 import cn.bobdeng.rbac.utils.HttpClient;
 import cn.bobdeng.rbac.utils.HttpRequest;

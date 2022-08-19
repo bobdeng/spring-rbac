@@ -2,6 +2,8 @@ package cn.bobdeng.rbac.domain;
 
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.RbacImpl;
+import cn.bobdeng.rbac.domain.rbac.User;
+import cn.bobdeng.rbac.domain.rbac.UserDescription;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;

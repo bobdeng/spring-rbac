@@ -1,29 +1,27 @@
 package cn.bobdeng.rbac.api.role;
 
-import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.JsonPage;
-import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.pages.ListTenantRolePage;
 import cn.bobdeng.rbac.api.pages.NewTenantRolePage;
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.rbac.Role;
+import cn.bobdeng.rbac.domain.rbac.RoleDescription;
+import cn.bobdeng.rbac.domain.rbac.User;
+import cn.bobdeng.rbac.domain.rbac.UserDescription;
 import cn.bobdeng.rbac.server.dao.RoleDAO;
 import cn.bobdeng.rbac.server.dao.RoleDO;
 import cn.bobdeng.rbac.server.dao.UserRoleDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MvcResult;
 
-import javax.servlet.http.Cookie;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class RoleTest extends E2ETest {
     @Autowired

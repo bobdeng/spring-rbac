@@ -2,7 +2,7 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

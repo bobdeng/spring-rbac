@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac;
 
-import cn.bobdeng.rbac.domain.AdminPassword;
+import cn.bobdeng.rbac.domain.rbac.AdminPassword;
 
 import java.util.Optional;
 

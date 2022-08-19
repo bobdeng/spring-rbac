@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.domain;
 
 import cn.bobdeng.rbac.domain.rbac.RbacImpl;
+import cn.bobdeng.rbac.domain.rbac.RoleDescription;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

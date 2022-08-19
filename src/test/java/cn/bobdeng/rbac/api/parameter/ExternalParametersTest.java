@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api.parameter;
 
-import cn.bobdeng.rbac.server.impl.ExternalParameters;
-import cn.bobdeng.rbac.server.impl.ParameterName;
+import cn.bobdeng.rbac.server.impl.configuration.ExternalParameters;
+import cn.bobdeng.rbac.server.impl.configuration.ParameterName;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

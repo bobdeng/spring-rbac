@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.api.role;
 
-import cn.bobdeng.rbac.domain.RoleDescription;
+import cn.bobdeng.rbac.domain.rbac.RoleDescription;
 import lombok.Data;
 
 import java.util.List;

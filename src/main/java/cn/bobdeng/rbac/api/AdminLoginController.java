@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.Cookies;
-import cn.bobdeng.rbac.domain.AdminPassword;
+import cn.bobdeng.rbac.domain.rbac.AdminPassword;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

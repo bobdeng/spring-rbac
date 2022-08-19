@@ -2,7 +2,7 @@ package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
-import cn.bobdeng.rbac.domain.LoginName;
+import cn.bobdeng.rbac.domain.rbac.LoginName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

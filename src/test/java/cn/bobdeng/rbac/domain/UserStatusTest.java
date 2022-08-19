@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.rbac.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

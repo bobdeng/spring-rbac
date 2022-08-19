@@ -6,7 +6,7 @@ import cn.bobdeng.rbac.api.ThirdLoginService;
 import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDAO;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDO;
 import org.junit.jupiter.api.BeforeEach;

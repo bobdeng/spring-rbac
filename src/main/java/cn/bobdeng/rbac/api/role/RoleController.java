@@ -2,7 +2,7 @@ package cn.bobdeng.rbac.api.role;
 
 import cn.bobdeng.rbac.api.ObjectNotFoundException;
 import cn.bobdeng.rbac.api.user.RbacController;
-import cn.bobdeng.rbac.domain.Role;
+import cn.bobdeng.rbac.domain.rbac.Role;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;

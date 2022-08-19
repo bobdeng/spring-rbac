@@ -1,14 +1,12 @@
 package cn.bobdeng.rbac.server.dao;
 
-import cn.bobdeng.rbac.domain.Role;
-import cn.bobdeng.rbac.domain.RoleDescription;
+import cn.bobdeng.rbac.domain.rbac.Role;
+import cn.bobdeng.rbac.domain.rbac.RoleDescription;
 import cn.bobdeng.rbac.domain.Tenant;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Arrays;
-import java.util.Objects;
 
 @NoArgsConstructor
 @Entity

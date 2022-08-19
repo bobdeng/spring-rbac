@@ -1,12 +1,11 @@
 package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.ClearTable;
-import cn.bobdeng.rbac.domain.LoginNameDescription;
+import cn.bobdeng.rbac.domain.rbac.*;
 import cn.bobdeng.rbac.domain.*;
 import cn.bobdeng.rbac.domain.function.Function;
 import cn.bobdeng.rbac.domain.function.FunctionRepository;
 import cn.bobdeng.rbac.domain.function.Functions;
-import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

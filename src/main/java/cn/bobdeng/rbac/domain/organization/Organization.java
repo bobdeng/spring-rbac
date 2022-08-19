@@ -4,7 +4,7 @@ import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasOne;
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import lombok.Getter;
 import lombok.Setter;
 

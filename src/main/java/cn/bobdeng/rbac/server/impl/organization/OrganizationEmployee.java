@@ -1,6 +1,6 @@
-package cn.bobdeng.rbac.server.impl;
+package cn.bobdeng.rbac.server.impl.organization;
 
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;

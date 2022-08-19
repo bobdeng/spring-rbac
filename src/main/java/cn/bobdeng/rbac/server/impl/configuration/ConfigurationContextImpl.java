@@ -5,8 +5,6 @@ import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.config.ConfigurerImpl;
 import cn.bobdeng.rbac.domain.config.Parameters;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
-import cn.bobdeng.rbac.server.impl.ExternalParameters;
-import cn.bobdeng.rbac.server.impl.ParametersImpl;
 import org.springframework.stereotype.Service;
 
 @Service

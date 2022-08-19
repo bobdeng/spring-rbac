@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.rbac.AdminPassword;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

@@ -1,7 +1,7 @@
 package cn.bobdeng.rbac.api.organization;
 
 import cn.bobdeng.rbac.ClearTable;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.EmployeeDO;
 import org.springframework.beans.factory.annotation.Autowired;

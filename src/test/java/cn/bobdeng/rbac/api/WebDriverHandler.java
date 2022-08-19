@@ -30,7 +30,8 @@ public class WebDriverHandler {
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
-            .withNetwork(Network.SHARED);
+            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.SKIP, new File(""));
+            //.withNetwork(Network.SHARED);
 
     @PostConstruct
     private void init() {

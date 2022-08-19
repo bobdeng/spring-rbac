@@ -49,8 +49,8 @@ jwt.prefix=Token:
 ```
 - 实现管理员密码发送/存储
 ```java
-cn.bobdeng.rbac.domain.AdminPassword.Notifier
-cn.bobdeng.rbac.domain.AdminPassword.Store
+cn.bobdeng.rbac.domain.rbac.AdminPassword.Notifier
+cn.bobdeng.rbac.domain.rbac.AdminPassword.Store
 ```
 - 扩展应用功能
 实现接口：ExternalFunctionReader，并标记为primary

@@ -21,11 +21,11 @@
         <property name="tenantId" column="tenant_id"/>
 
     </class>
-    <class name="Password" table="t_rbac_password">
+    <class name="cn.bobdeng.rbac.domain.rbac.Password" table="t_rbac_password">
         <id name="id" type="int" column="id">
             <generator class="assigned"></generator>
         </id>
-        <component name="description" class="PasswordDescription">
+        <component name="description" class="cn.bobdeng.rbac.domain.rbac.PasswordDescription">
             <property name="password" column="password"/>
         </component>
     </class>

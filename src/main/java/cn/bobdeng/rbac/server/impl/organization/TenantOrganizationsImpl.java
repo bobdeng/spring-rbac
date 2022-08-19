@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.server.impl;
+package cn.bobdeng.rbac.server.impl.organization;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;

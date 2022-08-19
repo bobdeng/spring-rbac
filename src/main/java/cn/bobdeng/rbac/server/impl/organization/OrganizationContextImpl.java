@@ -9,8 +9,6 @@ import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
 import cn.bobdeng.rbac.server.dao.OrganizationDAO;
 import cn.bobdeng.rbac.server.dao.UserDAO;
-import cn.bobdeng.rbac.server.impl.OrganizationEmployee;
-import cn.bobdeng.rbac.server.impl.TenantOrganizationsImpl;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Provider;

@@ -1,7 +1,7 @@
-package cn.bobdeng.rbac.server.impl;
+package cn.bobdeng.rbac.server.impl.rbac;
 
-import cn.bobdeng.rbac.domain.Role;
-import cn.bobdeng.rbac.domain.User;
+import cn.bobdeng.rbac.domain.rbac.Role;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.server.dao.RoleDAO;
 import cn.bobdeng.rbac.server.dao.RoleDO;
 import cn.bobdeng.rbac.server.dao.UserRoleDAO;

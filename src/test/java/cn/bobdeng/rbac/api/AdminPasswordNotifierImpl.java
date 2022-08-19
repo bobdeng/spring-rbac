@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.api;
 
-import cn.bobdeng.rbac.domain.AdminPassword;
+import cn.bobdeng.rbac.domain.rbac.AdminPassword;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,6 @@ public class AdminPasswordNotifierImpl implements AdminPassword.Notifier, AdminP
     @Override
     public void notify(String password) {
         this.password = password;
-        System.out.println(password);
     }
 
     public void clear() {

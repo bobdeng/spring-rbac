@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
-import cn.bobdeng.rbac.domain.rbac.RbacContext;
+import cn.bobdeng.rbac.domain.rbac.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

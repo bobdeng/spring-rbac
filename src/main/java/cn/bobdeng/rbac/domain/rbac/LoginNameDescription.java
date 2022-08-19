@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.domain;
+package cn.bobdeng.rbac.domain.rbac;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

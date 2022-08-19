@@ -27,12 +27,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
         this.description = tenantDescription;
     }
-
-    public Tenant(Integer id, TenantDescription tenantDescription) {
-        this.id = id;
-        this.description = tenantDescription;
-    }
-
     @Override
     public Integer identity() {
         return id;

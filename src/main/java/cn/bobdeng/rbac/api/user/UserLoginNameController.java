@@ -2,7 +2,10 @@ package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.api.ObjectNotFoundException;
 import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.rbac.LoginName;
+import cn.bobdeng.rbac.domain.rbac.LoginNameDescription;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
+import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
 

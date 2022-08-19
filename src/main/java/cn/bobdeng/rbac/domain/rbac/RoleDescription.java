@@ -1,5 +1,7 @@
-package cn.bobdeng.rbac.domain;
+package cn.bobdeng.rbac.domain.rbac;
 
+import cn.bobdeng.rbac.domain.FieldChecker;
+import cn.bobdeng.rbac.domain.FieldIllegalException;
 import lombok.Data;
 import lombok.Getter;
 
