@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
+import cn.bobdeng.rbac.domain.config.*;
 import cn.bobdeng.rbac.domain.rbac.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,16 +15,24 @@ public class UserPasswordTest {
     private RbacContext rbacContext;
 
     @BeforeEach
-    public void setup(){
-        rbacContext= mock(RbacContext.class);
+    public void setup() {
+        rbacContext = mock(RbacContext.class);
     }
+
     @Test
     public void save_user_password() {
         User.UserPassword userPassword = mock(User.UserPassword.class);
-        when(userPassword.encodePassword("123456")).thenReturn("654321");
         User user = new User(1, null);
         user.setRbacContext(rbacContext);
+        user.setTenant(Tenant::new);
+        ConfigurationContext configurationContext = mock(ConfigurationContext.class);
+        Parameters parameters = mock(Parameters.class);
+        user.setConfigurationContext(configurationContext);
+        when(userPassword.encodePassword("123456")).thenReturn("654321");
+        when(parameters.findByIdentity(BaseParameters.PASSWORD_POLICY)).thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "none"))));
+        when(configurationContext.parameters(any())).thenReturn(parameters);
         when(rbacContext.userPassword(user)).thenReturn(userPassword);
+
         user.savePassword(new RawPassword("123456"));
 
         Password password = new Password(1, new PasswordDescription("654321"));

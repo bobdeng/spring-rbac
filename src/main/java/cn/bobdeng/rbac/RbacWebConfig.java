@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.Filter;
 
 @Configuration
-public class AdminPermissionConfig {
+public class RbacWebConfig {
     @Bean
     public FilterRegistrationBean<Filter> loginFilterRegistration(SessionStore sessionStore, DomainRepository domainRepository) {
         SessionCheckFilter loginFilter = new SessionCheckFilter(sessionStore, domainRepository);

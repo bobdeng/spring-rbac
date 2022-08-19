@@ -34,8 +34,8 @@ class ParametersImplTest {
     public void should_return_default_value_when_not_set() {
         List<Parameter> list = parameters.list().toList();
         assertEquals(BaseParameters.list().size(), list.size());
-        assertEquals("strong", list.get(0).getDescription().getValue());
-        assertEquals("strong", parameters.findByIdentity(BaseParameters.PASSWORD_POLICY).get().getDescription().getValue());
+        assertEquals("none", list.get(0).getDescription().getValue());
+        assertEquals("none", parameters.findByIdentity(BaseParameters.PASSWORD_POLICY).get().getDescription().getValue());
     }
 
     @Test
