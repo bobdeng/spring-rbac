@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasOne;
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.config.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,8 @@ public class User implements Entity<Integer, UserDescription> {
     private HasOne<Tenant> tenant;
     @Setter
     private RbacContext rbacContext;
+    @Setter
+    ConfigurationContext configurationContext;
 
 
     public User(Integer id, UserDescription description) {
@@ -51,8 +54,18 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public void savePassword(RawPassword rawPassword) {
+        checkPasswordStrength(rawPassword);
         Password password = new Password(this.identity(), new PasswordDescription(rawPassword, getUserPassword()));
         getUserPassword().save(password);
+    }
+
+    private void checkPasswordStrength(RawPassword rawPassword) {
+        Parameters parameters = configurationContext.parameters(tenant.get());
+        String passwordPolicy = parameters.findByIdentity(BaseParameters.PASSWORD_POLICY)
+                .map(Parameter::getDescription)
+                .map(ParameterDescription::getValue)
+                .orElse("none");
+        rawPassword.ensureWeakStrength(passwordPolicy);
     }
 
     private UserPassword getUserPassword() {
