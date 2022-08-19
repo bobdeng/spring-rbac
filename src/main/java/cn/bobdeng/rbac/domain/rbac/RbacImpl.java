@@ -20,6 +20,7 @@ public class RbacImpl implements RbacContext.Rbac {
 
     @Override
     public User addUser(UserDescription userDescription) {
+        userDescription.validate();
         return users().save(new User(userDescription));
     }
 

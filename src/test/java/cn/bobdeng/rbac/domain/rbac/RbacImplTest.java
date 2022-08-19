@@ -20,4 +20,13 @@ class RbacImplTest {
         assertThrows(FieldIllegalException.class, () -> rbac.addLoginName(new LoginNameDescription("abcee12345abcde123451", 1)));
 
     }
+    @Test
+    public void should_throw_when_user_name_too_long(){
+        assertThrows(FieldIllegalException.class,()->new RbacImpl().addUser(new UserDescription("这是一个超长的名字这是一个超长的名字xx2")));
+    }
+    @Test
+    public void should_throw_when_user_name_null(){
+        assertThrows(FieldIllegalException.class,()->new RbacImpl().addUser(new UserDescription("")));
+        assertThrows(FieldIllegalException.class,()->new RbacImpl().addUser(new UserDescription(null)));
+    }
 }
