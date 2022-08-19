@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.domain.rbac;
 
 import cn.bobdeng.rbac.archtype.FieldIllegalException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -49,5 +50,11 @@ class RawPasswordTest {
     public void should_pass_strong(String password) {
         RawPassword rawPassword = new RawPassword(password);
         assertDoesNotThrow(() -> rawPassword.ensureWeakStrength("strong"));
+    }
+
+    @Test
+    public void random_should_pass_strong() {
+        RawPassword random = RawPassword.random();
+        assertDoesNotThrow(() -> random.ensureWeakStrength("strong"));
     }
 }
