@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.server.impl.configuration;
 
-import cn.bobdeng.rbac.server.impl.configuration.ParameterName;
+import cn.bobdeng.rbac.domain.config.ParameterName;
 
 import java.util.List;
 

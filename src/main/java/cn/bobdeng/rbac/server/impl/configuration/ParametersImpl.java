@@ -1,9 +1,7 @@
 package cn.bobdeng.rbac.server.impl.configuration;
 
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.config.Parameter;
-import cn.bobdeng.rbac.domain.config.ParameterDescription;
-import cn.bobdeng.rbac.domain.config.Parameters;
+import cn.bobdeng.rbac.domain.config.*;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
 import org.jetbrains.annotations.NotNull;
@@ -24,18 +22,21 @@ public class ParametersImpl implements Parameters {
         this.externalParameters = externalParameters;
     }
 
+    private Stream<ParameterName> parameterNameStream() {
+        return Stream.concat(externalParameters.parameters().stream(), BaseParameters.list().stream());
+    }
+
     @Override
     public Stream<Parameter> list() {
         Map<String, ParameterDO> parameters = parameterDAO.findAllByTenantId(tenant.identity())
                 .stream()
                 .collect(Collectors.toMap(ParameterDO::getKey, it -> it));
-        return externalParameters.parameters().stream()
+        return parameterNameStream()
                 .map(name -> Optional.ofNullable(parameters.get(name.getKey()))
                         .map(parameterDO -> parameterDO.toEntity(name))
                         .orElseGet(() -> getDefaultParameter(name)));
     }
 
-    @NotNull
     private Parameter getDefaultParameter(ParameterName name) {
         return new Parameter(name.getKey(), new ParameterDescription(name.getName(), name.getDefaultValue()));
     }
@@ -48,15 +49,14 @@ public class ParametersImpl implements Parameters {
         return parameterDAO.save(new ParameterDO(id, entity, tenant)).toEntity(parameterName);
     }
 
-    @NotNull
     private ParameterName getParameterName(String key) {
-        return externalParameters.parameters().stream().filter(it -> it.getKey().equals(key))
+        return parameterNameStream().filter(it -> it.getKey().equals(key))
                 .findFirst().orElseThrow();
     }
 
     @Override
     public Optional<Parameter> findByIdentity(String id) {
-        return externalParameters.parameters().stream().filter(it -> it.getKey().equals(id))
+        return parameterNameStream().filter(it -> it.getKey().equals(id))
                 .findFirst()
                 .map(name -> parameterDAO.findByKeyAndTenantId(name.getKey(), tenant.identity())
                         .map(parameterDO -> parameterDO.toEntity(name))

@@ -23,6 +23,11 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Setter
     private HasMany<Integer, Domain> domains;
 
+    public Tenant(Integer id, TenantDescription description) {
+        this.id = id;
+        this.description = description;
+    }
+
     public Tenant(TenantDescription tenantDescription) {
 
         this.description = tenantDescription;

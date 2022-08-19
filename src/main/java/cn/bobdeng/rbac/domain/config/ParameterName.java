@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.server.impl.configuration;
+package cn.bobdeng.rbac.domain.config;
 
 import lombok.Getter;
 
