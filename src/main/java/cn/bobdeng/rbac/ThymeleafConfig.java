@@ -9,10 +9,10 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
-public class WebConfig {
+public class ThymeleafConfig {
     final ApplicationContext applicationContext;
 
-    public WebConfig(ApplicationContext applicationContext) {
+    public ThymeleafConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
