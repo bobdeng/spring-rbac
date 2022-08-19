@@ -44,7 +44,7 @@ public class RawPassword {
     }
 
     private static String takeFrom(String seed, int length) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             result.append(seed.charAt(random.nextInt(seed.length())));

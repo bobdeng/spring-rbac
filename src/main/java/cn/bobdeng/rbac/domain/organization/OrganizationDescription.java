@@ -16,6 +16,7 @@ public class OrganizationDescription {
     public void validate() {
         FieldChecker.of("name", this.name)
                 .notEmpty("名称不能为空")
+                .lengthLessThan(20,"组织名称必须小于等于20个字")
                 .throwIfHasErrors();
     }
 }
