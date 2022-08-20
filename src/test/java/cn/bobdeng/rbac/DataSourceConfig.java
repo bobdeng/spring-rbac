@@ -22,6 +22,7 @@ public class DataSourceConfig {
     @Rule
     public GenericContainer redis = new GenericContainer("redis:6.2.4")
             .withExposedPorts(6379);
+    public static RedissonClient redissonClient;
 
     @Bean
     public DataSource dataSource() {
@@ -44,7 +45,9 @@ public class DataSourceConfig {
         config.useSingleServer().setAddress("redis://" + redis.getHost() + ":" + redis.getMappedPort(6379));
         config.setThreads(1);
         config.setNettyThreads(0);
-        return Redisson.create(config);
+        RedissonClient redissonClient = Redisson.create(config);
+        DataSourceConfig.redissonClient = redissonClient;
+        return redissonClient;
     }
 
 

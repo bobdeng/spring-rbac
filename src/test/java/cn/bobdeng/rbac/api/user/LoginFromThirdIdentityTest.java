@@ -1,10 +1,7 @@
 package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.Cookies;
-import cn.bobdeng.rbac.api.ThirdLoginForm;
-import cn.bobdeng.rbac.api.ThirdLoginService;
-import cn.bobdeng.rbac.api.UserToken;
-import cn.bobdeng.rbac.api.UserWithTenantFixture;
+import cn.bobdeng.rbac.api.*;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDAO;
@@ -25,9 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-@Transactional
-public class LoginFromThirdIdentityTest {
+public class LoginFromThirdIdentityTest extends E2ETest {
     @Autowired
     UserWithTenantFixture userWithTenantFixture;
     @Autowired
@@ -40,6 +35,7 @@ public class LoginFromThirdIdentityTest {
 
     @BeforeEach
     public void setup() {
+        clearTable.clearTable("t_rbac_third_identity");
         userWithTenantFixture.init();
         tenant = userWithTenantFixture.getTenant();
         response = mock(HttpServletResponse.class);
