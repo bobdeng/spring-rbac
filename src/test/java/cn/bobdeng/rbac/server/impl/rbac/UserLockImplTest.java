@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.server.impl.rbac;
 
+import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.archtype.SystemDate;
 import cn.bobdeng.rbac.domain.rbac.Lock;
 import cn.bobdeng.rbac.domain.rbac.LockDescription;
@@ -14,8 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class UserLockImplTest {
+class UserLockImplTest extends E2ETest {
     @Autowired
     RedissonClient redissonClient;
 

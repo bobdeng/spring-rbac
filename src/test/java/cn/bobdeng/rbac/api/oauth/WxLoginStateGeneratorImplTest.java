@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.api.oauth;
 
+import cn.bobdeng.rbac.api.E2ETest;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
-class WxLoginStateGeneratorImplTest {
+class WxLoginStateGeneratorImplTest extends E2ETest {
     @Autowired
     WxLoginStateGeneratorImpl wxLoginStateGenerator;
     @Autowired
