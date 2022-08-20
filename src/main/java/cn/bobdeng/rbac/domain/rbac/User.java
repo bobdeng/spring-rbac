@@ -73,6 +73,14 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public boolean verifyPassword(String rawPassword) {
+        if (!normal()) {
+            throw new RuntimeException("账号被锁定");
+        }
+        UserLock userLock = rbacContext.userLock(this);
+        if (userLock.findByIdentity(identity()).isPresent()) {
+            throw new RuntimeException("登录太频繁");
+        }
+        userLock.save(new Lock(identity(), new LockDescription()));
         return getUserPassword().findByIdentity(identity())
                 .map(password -> getUserPassword().match(rawPassword, password.description().getPassword()))
                 .orElse(false);
@@ -111,6 +119,10 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public interface UserRoles extends EntityList<Integer, Role> {
+
+    }
+
+    public interface UserLock extends EntityList<Integer, Lock> {
 
     }
 

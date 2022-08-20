@@ -7,6 +7,7 @@ import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.RbacImpl;
 import cn.bobdeng.rbac.server.dao.*;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Provider;
@@ -21,13 +22,14 @@ public class RbacContextImpl implements RbacContext {
     private final ThirdIdentityDAO thirdIdentityDAO;
     private final PasswordDAO passwordDAO;
     private final ConfigurationContext configurationContext;
+    private final RedissonClient redissonClient;
 
     public RbacContextImpl(UserDAO userDAO,
                            Provider<TenantRepository> tenantRepositoryProvider,
                            RoleDAO roleDAO,
                            UserRoleDAO userRoleDAO,
                            LoginNameDAO loginNameDAO,
-                           ThirdIdentityDAO thirdIdentityDAO, PasswordDAO passwordDAO, ConfigurationContext configurationContext) {
+                           ThirdIdentityDAO thirdIdentityDAO, PasswordDAO passwordDAO, ConfigurationContext configurationContext, RedissonClient redissonClient) {
         this.userDAO = userDAO;
         this.tenantRepositoryProvider = tenantRepositoryProvider;
         this.roleDAO = roleDAO;
@@ -36,6 +38,7 @@ public class RbacContextImpl implements RbacContext {
         this.thirdIdentityDAO = thirdIdentityDAO;
         this.passwordDAO = passwordDAO;
         this.configurationContext = configurationContext;
+        this.redissonClient = redissonClient;
     }
 
     @Override
@@ -56,6 +59,11 @@ public class RbacContextImpl implements RbacContext {
     @Override
     public LoginNames loginNames(Tenant tenant) {
         return new TenantLoginNames(tenant, loginNameDAO, this);
+    }
+
+    @Override
+    public User.UserLock userLock(User user) {
+        return new UserLockImpl(user, redissonClient);
     }
 
     @Override

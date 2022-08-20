@@ -42,6 +42,8 @@ public interface RbacContext {
 
     RbacContext.LoginNames loginNames(Tenant tenant);
 
+    User.UserLock userLock(User user);
+
     ThirdIdentities thirdIdentities(Tenant tenant);
 
     User.UserPassword userPassword(User user);
