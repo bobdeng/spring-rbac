@@ -2,10 +2,8 @@ package cn.bobdeng.rbac.domain.rbac;
 
 import cn.bobdeng.rbac.archtype.Entity;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @EqualsAndHashCode
-@ToString
 public class Lock implements Entity<Integer, LockDescription> {
     private Integer id;
     private LockDescription description;

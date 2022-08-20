@@ -18,7 +18,7 @@ class RawPasswordTest {
     })
     public void should_not_pass_weak(String password) {
         RawPassword rawPassword = new RawPassword(password);
-        assertThrows(FieldIllegalException.class, () -> rawPassword.ensureWeakStrength("weak"));
+        assertThrows(FieldIllegalException.class, () -> rawPassword.ensureStrength("weak"));
     }
 
     @ParameterizedTest
@@ -27,7 +27,7 @@ class RawPasswordTest {
     })
     public void should_pass_weak(String password) {
         RawPassword rawPassword = new RawPassword(password);
-        assertDoesNotThrow(() -> rawPassword.ensureWeakStrength("weak"));
+        assertDoesNotThrow(() -> rawPassword.ensureStrength("weak"));
     }
 
     @ParameterizedTest
@@ -40,7 +40,7 @@ class RawPasswordTest {
     })
     public void should_not_pass_strong(String password) {
         RawPassword rawPassword = new RawPassword(password);
-        assertThrows(FieldIllegalException.class, () -> rawPassword.ensureWeakStrength("strong"));
+        assertThrows(FieldIllegalException.class, () -> rawPassword.ensureStrength("strong"));
     }
 
     @ParameterizedTest
@@ -49,12 +49,12 @@ class RawPasswordTest {
     })
     public void should_pass_strong(String password) {
         RawPassword rawPassword = new RawPassword(password);
-        assertDoesNotThrow(() -> rawPassword.ensureWeakStrength("strong"));
+        assertDoesNotThrow(() -> rawPassword.ensureStrength("strong"));
     }
 
     @Test
     public void random_should_pass_strong() {
         RawPassword random = RawPassword.random();
-        assertDoesNotThrow(() -> random.ensureWeakStrength("strong"));
+        assertDoesNotThrow(() -> random.ensureStrength("strong"));
     }
 }

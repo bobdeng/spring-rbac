@@ -20,27 +20,12 @@ public class RoleDescription {
     }
 
     public void validate() {
-        List<FieldChecker.FieldError> errors =
-                Stream.of(validateAllows(), validateName())
-                        .flatMap(Collection::stream)
-                        .collect(Collectors.toList());
-        if (errors.size() > 0) {
-            throw new FieldIllegalException(errors);
-        }
-
-    }
-
-    private List<FieldChecker.FieldError> validateAllows() {
-        return FieldChecker.of("allows", allows)
+        FieldChecker.of("allows", allows)
                 .notEmpty("角色权限不能为空")
-                .getErrors();
-    }
-
-    private List<FieldChecker.FieldError> validateName() {
-        return FieldChecker.of("name", name)
+                .concat("name", name)
                 .notEmpty("角色名不能为空")
                 .lengthLessThan(20, "角色名不能大于20位")
-                .getErrors();
+                .throwIfHasErrors();
     }
 
     public boolean hasSomePermission(String[] allows) {

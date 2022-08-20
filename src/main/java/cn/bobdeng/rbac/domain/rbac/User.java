@@ -65,7 +65,7 @@ public class User implements Entity<Integer, UserDescription> {
                 .map(Parameter::getDescription)
                 .map(ParameterDescription::getValue)
                 .orElse("none");
-        rawPassword.ensureWeakStrength(passwordPolicy);
+        rawPassword.ensureStrength(passwordPolicy);
     }
 
     private UserPassword getUserPassword() {

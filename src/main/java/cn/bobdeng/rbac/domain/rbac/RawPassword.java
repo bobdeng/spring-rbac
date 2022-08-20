@@ -52,7 +52,7 @@ public class RawPassword {
         return result.toString();
     }
 
-    public void ensureWeakStrength(String passwordPolicy) {
+    public void ensureStrength(String passwordPolicy) {
         if ("strong".equals(passwordPolicy)) {
             check(STRONG_CHECKERS);
         }
