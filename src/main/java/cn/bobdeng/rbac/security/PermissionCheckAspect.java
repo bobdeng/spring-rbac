@@ -1,6 +1,5 @@
 package cn.bobdeng.rbac.security;
 
-import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,15 +18,10 @@ public class PermissionCheckAspect {
     }
 
     @Before("@annotation(permission)")
-    public void before(JoinPoint joinPoint, Permission permission) {
+    public void before(Permission permission) {
         Session session = sessionStore.get().orElseThrow(PermissionDeniedException::new);
-        if (session.isAdmin()) {
-            return;
+        if (!session.hasPermission(permission.allows(), tenantRepository)) {
+            throw new PermissionDeniedException();
         }
-        UserToken userToken = session.userToken();
-        tenantRepository.findByIdentity(userToken.getTenant())
-                .flatMap(tenant -> tenantRepository.rbacContext().asRbac(tenant).users().findByIdentity(userToken.getId()))
-                .filter(user -> user.hasSomePermission(permission.allows()))
-                .orElseThrow(PermissionDeniedException::new);
     }
 }
