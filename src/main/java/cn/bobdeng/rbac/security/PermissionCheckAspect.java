@@ -1,6 +1,5 @@
 package cn.bobdeng.rbac.security;
 
-import cn.bobdeng.rbac.domain.TenantRepository;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Service;
@@ -9,11 +8,9 @@ import org.springframework.stereotype.Service;
 @Aspect
 public class PermissionCheckAspect {
     private final SessionStore sessionStore;
-    private final TenantRepository tenantRepository;
 
-    public PermissionCheckAspect(SessionStore sessionStore, TenantRepository tenantRepository) {
+    public PermissionCheckAspect(SessionStore sessionStore) {
         this.sessionStore = sessionStore;
-        this.tenantRepository = tenantRepository;
     }
 
     @Before("@annotation(permission)")

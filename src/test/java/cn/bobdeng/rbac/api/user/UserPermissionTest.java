@@ -17,11 +17,19 @@ public class UserPermissionTest extends E2ETest {
     @BeforeEach
     public void setup() {
         userWithTenantFactory.init();
-        userLogin(userWithTenantFactory.user());
     }
 
     @Test
     public void should_can_visit_function_permission_granted() {
+        userLogin(userWithTenantFactory.user());
+        TestPermissionGrantedPage page = new TestPermissionGrantedPage(webDriverHandler);
+        page.open();
+        assertTrue(page.hasText("permission_granted"));
+    }
+
+    @Test
+    public void should_admin_can_visit_function() {
+        adminLogin();
         TestPermissionGrantedPage page = new TestPermissionGrantedPage(webDriverHandler);
         page.open();
         assertTrue(page.hasText("permission_granted"));
@@ -29,6 +37,7 @@ public class UserPermissionTest extends E2ETest {
 
     @Test
     public void should_not_can_visit_function_permission_denied() {
+        userLogin(userWithTenantFactory.user());
         TestPermissionDeniedPage page = new TestPermissionDeniedPage(webDriverHandler);
         page.open();
         assertTrue(page.hasText("无权限"));
@@ -36,6 +45,7 @@ public class UserPermissionTest extends E2ETest {
 
     @Test
     public void should_get_all_permissions_json() {
+        userLogin(userWithTenantFactory.user());
         UserPermissionsPage page = new UserPermissionsPage(webDriverHandler);
         page.open();
         assertTrue(page.hasText("user.create"));
