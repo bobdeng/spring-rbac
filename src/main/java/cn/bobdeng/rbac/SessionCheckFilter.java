@@ -5,6 +5,7 @@ import cn.bobdeng.rbac.api.JwtToken;
 import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.DomainRepository;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.security.Session;
 import cn.bobdeng.rbac.security.SessionStore;
 
@@ -18,10 +19,11 @@ import java.util.Optional;
 public class SessionCheckFilter implements Filter {
     private final SessionStore sessionStore;
     private final DomainRepository domainRepository;
-
-    public SessionCheckFilter(SessionStore sessionStore, DomainRepository domainRepository) {
+    private final TenantRepository tenantRepository;
+    public SessionCheckFilter(SessionStore sessionStore, DomainRepository domainRepository, TenantRepository tenantRepository) {
         this.sessionStore = sessionStore;
         this.domainRepository = domainRepository;
+        this.tenantRepository = tenantRepository;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class SessionCheckFilter implements Filter {
     private void checkUserSession(HttpServletRequest request) {
         getCookie(request, Cookies.AUTHORIZATION)
                 .map(cookie -> JwtToken.decode(cookie.getValue(), UserToken.class))
-                .ifPresent(userToken -> sessionStore.set(new Session(userToken)));
+                .ifPresent(userToken -> sessionStore.set(new Session(userToken,tenantRepository)));
     }
 
     private Optional<Cookie> getCookie(HttpServletRequest request, String name) {

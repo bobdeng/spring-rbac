@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.security;
 import cn.bobdeng.rbac.api.AdminToken;
 import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.rbac.User;
 import lombok.ToString;
 
 import java.util.Optional;
@@ -12,14 +13,19 @@ public class Session {
 
     private UserToken userToken;
     private AdminToken adminToken;
+    private User user;
 
     public Session(AdminToken adminToken) {
 
         this.adminToken = adminToken;
     }
 
-    public Session(UserToken loginToken) {
+    public Session(UserToken loginToken, TenantRepository tenantRepository) {
         this.userToken = loginToken;
+        this.user = tenantRepository.findByIdentity(userToken.getTenant())
+                .flatMap(tenant -> tenantRepository.rbacContext().asRbac(tenant).users().findByIdentity(userToken.getId()))
+                .orElse(null);
+
     }
 
     public boolean isAdmin() {
@@ -40,13 +46,10 @@ public class Session {
         return this;
     }
 
-    public boolean hasPermission(String[] allows, TenantRepository tenantRepository) {
+    public boolean hasPermission(String[] allows) {
         if (isAdmin()) {
             return true;
         }
-        return tenantRepository.findByIdentity(userToken.getTenant())
-                .flatMap(tenant -> tenantRepository.rbacContext().asRbac(tenant).users().findByIdentity(userToken.getId()))
-                .filter(user -> user.hasSomePermission(allows))
-                .isPresent();
+        return user.hasSomePermission(allows);
     }
 }

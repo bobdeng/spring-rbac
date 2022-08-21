@@ -1,7 +1,6 @@
 package cn.bobdeng.rbac.security;
 
 import cn.bobdeng.rbac.domain.TenantRepository;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class PermissionCheckAspect {
     @Before("@annotation(permission)")
     public void before(Permission permission) {
         Session session = sessionStore.get().orElseThrow(PermissionDeniedException::new);
-        if (!session.hasPermission(permission.allows(), tenantRepository)) {
+        if (!session.hasPermission(permission.allows())) {
             throw new PermissionDeniedException();
         }
     }
