@@ -10,12 +10,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class WxLoginStateGeneratorImpl implements WxLoginStateGenerator {
     private final RedissonClient redissonClient;
-
     public WxLoginStateGeneratorImpl(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 
-    @Override
     public String generate() {
         String result = UUID.randomUUID().toString();
         redissonClient.getBucket(result).set(System.currentTimeMillis(), 5, TimeUnit.MINUTES);
