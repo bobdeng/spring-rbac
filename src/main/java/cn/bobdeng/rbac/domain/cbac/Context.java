@@ -1,14 +1,16 @@
 package cn.bobdeng.rbac.domain.cbac;
 
 import cn.bobdeng.rbac.archtype.Entity;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class Context implements Entity<Integer, ContextDescription> {
     private Integer id;
     private ContextDescription description;
 
-    @Override
-    public Integer identity() {
-        return id;
+    public Context(Integer id, ContextDescription description) {
+        this.id = id;
+        this.description = description;
     }
 
     @Override

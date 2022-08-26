@@ -1,10 +1,13 @@
 package cn.bobdeng.rbac.domain.cbac;
 
-import java.util.Arrays;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@EqualsAndHashCode
 public class ContextAuthority {
     private Integer userId;
     private String[] roles;

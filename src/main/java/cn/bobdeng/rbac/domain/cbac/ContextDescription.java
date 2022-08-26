@@ -1,7 +1,12 @@
 package cn.bobdeng.rbac.domain.cbac;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+@EqualsAndHashCode
 public class ContextDescription {
+    @Getter
     private ContextObject object;
+    @Getter
     private ContextAuthority authority;
 
     public ContextDescription(ContextObject contextObject, ContextAuthority contextAuthority) {

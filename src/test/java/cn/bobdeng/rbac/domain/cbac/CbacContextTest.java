@@ -16,8 +16,7 @@ class CbacContextTest {
     @BeforeEach
     public void setup() {
         contexts = mock(CbacContext.Contexts.class);
-        cbac = new CbacImpl();
-        cbac.setContexts(contexts);
+        cbac = new CbacImpl(contexts);
     }
 
     @Test

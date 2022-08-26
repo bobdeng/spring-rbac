@@ -26,6 +26,7 @@ public class FunctionsTest extends E2ETest {
         JsonPage jsonPage = new JsonPage(webDriverHandler);
         jsonPage.open("/functions");
         String content = jsonPage.content();
+        System.out.println(content);
         Function[] functions = new Gson().fromJson(content, Function[].class);
         return functions;
     }

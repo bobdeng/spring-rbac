@@ -1,10 +1,11 @@
 package cn.bobdeng.rbac.domain.cbac;
 
-import lombok.Setter;
-
 public class CbacImpl implements CbacContext.Cbac {
-    @Setter
     private CbacContext.Contexts contexts;
+
+    public CbacImpl(CbacContext.Contexts contexts) {
+        this.contexts = contexts;
+    }
 
     @Override
     public Context newContext(Context context) {

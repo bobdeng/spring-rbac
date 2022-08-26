@@ -2,8 +2,10 @@ package cn.bobdeng.rbac.domain.cbac;
 
 import cn.bobdeng.rbac.archtype.FieldChecker;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 @EqualsAndHashCode
+@Getter
 public class ContextObject {
     private String type;
     private String identity;

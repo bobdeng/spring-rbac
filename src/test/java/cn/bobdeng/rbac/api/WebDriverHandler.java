@@ -31,7 +31,6 @@ public class WebDriverHandler {
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.SKIP, new File(""));
-            //.withNetwork(Network.SHARED);
 
     @PostConstruct
     private void init() {
