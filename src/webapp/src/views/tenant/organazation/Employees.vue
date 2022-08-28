@@ -50,7 +50,7 @@ function showAdd() {
 
 function onUserSelect(user: any) {
   loading.value = true
-  server.putUserToOrganization({userId: user.id, organizationId: props.organization.id})
+  server.putUserToOrganization({userId: user, organizationId: props.organization.id})
       .then(() => {
         notification.success({message: "操作成功"});
         reload()

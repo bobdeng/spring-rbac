@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.api.organization;
 
 import cn.bobdeng.rbac.domain.Tenant;
-import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +15,11 @@ import java.util.stream.Stream;
 @RestController
 public class EmployeeController {
     private final OrganizationContext organizationContext;
+    private final RbacContext rbacContext;
 
-    public EmployeeController(OrganizationContext organizationContext) {
+    public EmployeeController(OrganizationContext organizationContext, RbacContext rbacContext) {
         this.organizationContext = organizationContext;
+        this.rbacContext = rbacContext;
     }
 
     @GetMapping("/organizations/{organizationId}/employees")
@@ -36,5 +38,17 @@ public class EmployeeController {
                                @RequestAttribute("tenant") Tenant tenant) {
         organizationContext.asOrganization(tenant).organizations().findByIdentity(organizationId)
                 .ifPresent(organization -> organization.removeEmployee(userId));
+    }
+
+    @PutMapping("/organizations/{organizationId}/employees")
+    @Permission(allows = "organization.employee")
+    @Transactional
+    public void addEmployee(@PathVariable int organizationId,
+                            @RequestAttribute("tenant") Tenant tenant,
+                            @RequestBody AddEmployeeForm form) {
+        User user = rbacContext.users(tenant).findByIdentity(form.getUserId()).orElseThrow();
+        organizationContext.asOrganization(tenant)
+                .organizations().findByIdentity(organizationId)
+                .ifPresent(organization -> organization.addEmployee(user));
     }
 }
