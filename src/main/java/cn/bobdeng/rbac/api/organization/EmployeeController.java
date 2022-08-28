@@ -1,6 +1,7 @@
 package cn.bobdeng.rbac.api.organization;
 
 import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.organization.Employee;
 import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.User;
@@ -26,7 +27,9 @@ public class EmployeeController {
     public List<User> listEmployees(@PathVariable Integer organizationId,
                                     @RequestAttribute("tenant") Tenant tenant) {
         return organizationContext.asOrganization(tenant).organizations().findByIdentity(organizationId)
-                .map(organization -> organization.employees().list())
+                .map(organization -> organization.employees().list()
+                        .map(Employee::user)
+                )
                 .orElseGet(Stream::empty)
                 .collect(Collectors.toList());
     }

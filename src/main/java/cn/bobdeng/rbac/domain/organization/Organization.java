@@ -50,11 +50,11 @@ public class Organization implements Entity<Integer, OrganizationDescription> {
     }
 
     public void addEmployee(User user) {
-        employees().save(user);
+        employees().save(new Employee(user));
     }
 
-    public interface Employees extends EntityList<Integer, User> {
+    public interface Employees extends EntityList<Integer, Employee> {
 
-        void delete(User user);
+        void delete(Employee employee);
     }
 }

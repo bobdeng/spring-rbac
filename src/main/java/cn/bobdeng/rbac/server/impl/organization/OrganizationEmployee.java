@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac.server.impl.organization;
 
+import cn.bobdeng.rbac.domain.organization.Employee;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.organization.Organization;
@@ -21,10 +22,10 @@ public class OrganizationEmployee implements Organization.Employees {
     }
 
     @Override
-    public Stream<User> list() {
+    public Stream<Employee> list() {
         return employeeDAO.findAllByOrganizationId(organization.identity())
                 .stream()
-                .flatMap(employeeDO -> getUsers().findByIdentity(employeeDO.getId()).stream());
+                .map(employeeDO -> employeeDO.toEntity(getUsers()));
     }
 
     private RbacContext.Users getUsers() {
@@ -32,22 +33,22 @@ public class OrganizationEmployee implements Organization.Employees {
     }
 
     @Override
-    public Optional<User> findByIdentity(Integer integer) {
+    public Optional<Employee> findByIdentity(Integer integer) {
         return employeeDAO.findById(integer)
-                .flatMap(employeeDO -> getUsers().findByIdentity(employeeDO.getId()));
+                .map(employeeDO -> employeeDO.toEntity(getUsers()));
     }
 
     @Override
-    public User save(User entity) {
+    public Employee save(Employee employee) {
         employeeDAO.save(EmployeeDO.builder()
                 .organizationId(organization.identity())
-                .id(entity.identity())
+                .id(employee.identity())
                 .build());
-        return entity;
+        return employee;
     }
 
     @Override
-    public void delete(User user) {
-        employeeDAO.deleteById(user.identity());
+    public void delete(Employee employee) {
+        employeeDAO.deleteById(employee.identity());
     }
 }

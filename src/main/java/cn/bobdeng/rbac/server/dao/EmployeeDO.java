@@ -4,13 +4,12 @@ import cn.bobdeng.rbac.domain.organization.Employee;
 import cn.bobdeng.rbac.domain.organization.EmployeeDescription;
 import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.domain.organization.OrganizationDescription;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,10 +22,11 @@ public class EmployeeDO {
     private Integer id;
     private Integer organizationId;
 
-    public Employee toEntity() {
+    public Employee toEntity(RbacContext.Users users) {
         Employee employee = new Employee(id, new EmployeeDescription());
         Organization organization = new Organization(new OrganizationDescription("部门1", 1));
         employee.setOrganization(() -> organization);
+        employee.setUser(() -> users.findByIdentity(id).orElse(null));
         return employee;
     }
 }
