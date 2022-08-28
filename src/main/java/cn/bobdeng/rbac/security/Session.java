@@ -52,4 +52,8 @@ public class Session {
         }
         return user.hasSomePermission(allows);
     }
+
+    public User user() {
+        return user;
+    }
 }

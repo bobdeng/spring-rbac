@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.organization.Organization;
 import cn.bobdeng.rbac.server.dao.EmployeeDAO;
+import cn.bobdeng.rbac.server.dao.EmployeeDO;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -36,6 +37,14 @@ public class OrganizationEmployee implements Organization.Employees {
                 .flatMap(employeeDO -> getUsers().findByIdentity(employeeDO.getId()));
     }
 
+    @Override
+    public User save(User entity) {
+        employeeDAO.save(EmployeeDO.builder()
+                .organizationId(organization.identity())
+                .id(entity.identity())
+                .build());
+        return entity;
+    }
 
     @Override
     public void delete(User user) {

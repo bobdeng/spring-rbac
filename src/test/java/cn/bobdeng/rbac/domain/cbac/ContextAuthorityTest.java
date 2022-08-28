@@ -22,4 +22,21 @@ class ContextAuthorityTest {
                         .build());
         assertTrue(match);
     }
+
+    @Test
+    public void should_not_match_when_has_no_organization() {
+        boolean match = ContextAuthority.builder()
+                .build().match(ContextAuthority.builder()
+                        .withOrganizations("部门2")
+                        .build());
+        assertFalse(match);
+    }
+    @Test
+    public void should_not_match_when_user_has_no_organization() {
+        boolean match = ContextAuthority.builder()
+                .withOrganizations("部门1")
+                .build().match(ContextAuthority.builder()
+                        .build());
+        assertFalse(match);
+    }
 }

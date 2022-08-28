@@ -6,7 +6,6 @@ import cn.bobdeng.rbac.archtype.Page;
 import cn.bobdeng.rbac.domain.Domain;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
-import cn.bobdeng.rbac.domain.cbac.CbacContext;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.server.dao.DomainDAO;
 import cn.bobdeng.rbac.server.dao.TenantDAO;
@@ -21,15 +20,13 @@ public class TenantRepositoryImpl implements TenantRepository {
     private final TenantDAO tenantDAO;
     private final DomainDAO domainDAO;
     private final RbacContext rbacContext;
-    private final CbacContext cbacContext;
 
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 DomainDAO domainDAO,
-                                RbacContext rbacContext, CbacContext cbacContext) {
+                                RbacContext rbacContext) {
         this.tenantDAO = tenantDAO;
         this.domainDAO = domainDAO;
         this.rbacContext = rbacContext;
-        this.cbacContext = cbacContext;
     }
 
     @Override
@@ -48,11 +45,6 @@ public class TenantRepositoryImpl implements TenantRepository {
     @Override
     public RbacContext rbacContext() {
         return rbacContext;
-    }
-
-    @Override
-    public CbacContext cbacContext() {
-        return cbacContext;
     }
 
 

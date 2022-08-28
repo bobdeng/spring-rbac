@@ -15,6 +15,4 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
 
     RbacContext rbacContext();
 
-    CbacContext cbacContext();
-
 }

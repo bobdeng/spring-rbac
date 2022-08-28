@@ -32,7 +32,7 @@ public class ContextAuthority {
     }
 
     private boolean anyPropsMatch(String[] expect, String[] actual) {
-        if (expect == null || expect.length <= 0) {
+        if (isEmpty(expect) || isEmpty(actual)) {
             return false;
         }
         Set<String> roleNameSet = Stream.of(expect).collect(Collectors.toSet());

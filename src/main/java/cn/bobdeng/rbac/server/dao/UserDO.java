@@ -3,10 +3,14 @@ package cn.bobdeng.rbac.server.dao;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
+import cn.bobdeng.rbac.domain.organization.Organization;
+import cn.bobdeng.rbac.domain.organization.OrganizationDescription;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.UserDescription;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import lombok.*;
+
+import java.util.Optional;
 
 @Getter
 @Setter

@@ -49,6 +49,10 @@ public class Organization implements Entity<Integer, OrganizationDescription> {
         employees().findByIdentity(userId).ifPresent(user -> employees().delete(user));
     }
 
+    public void addEmployee(User user) {
+        employees().save(user);
+    }
+
     public interface Employees extends EntityList<Integer, User> {
 
         void delete(User user);

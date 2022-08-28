@@ -3,13 +3,16 @@ package cn.bobdeng.rbac.domain.rbac;
 import cn.bobdeng.rbac.archtype.Entity;
 import cn.bobdeng.rbac.archtype.EntityList;
 import cn.bobdeng.rbac.archtype.HasOne;
+import cn.bobdeng.rbac.archtype.HasOptional;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.config.*;
+import cn.bobdeng.rbac.domain.organization.Organization;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode

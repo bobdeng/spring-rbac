@@ -20,6 +20,7 @@ public class SessionCheckFilter implements Filter {
     private final SessionStore sessionStore;
     private final DomainRepository domainRepository;
     private final TenantRepository tenantRepository;
+
     public SessionCheckFilter(SessionStore sessionStore, DomainRepository domainRepository, TenantRepository tenantRepository) {
         this.sessionStore = sessionStore;
         this.domainRepository = domainRepository;
@@ -49,7 +50,7 @@ public class SessionCheckFilter implements Filter {
     private void checkUserSession(HttpServletRequest request) {
         getCookie(request, Cookies.AUTHORIZATION)
                 .map(cookie -> JwtToken.decode(cookie.getValue(), UserToken.class))
-                .ifPresent(userToken -> sessionStore.set(new Session(userToken,tenantRepository)));
+                .ifPresent(userToken -> sessionStore.set(new Session(userToken, tenantRepository)));
     }
 
     private Optional<Cookie> getCookie(HttpServletRequest request, String name) {
@@ -60,7 +61,10 @@ public class SessionCheckFilter implements Filter {
 
     private void readTenant(ServletRequest request, HttpServletRequest httpRequest) {
         domainRepository.findByDomain(httpRequest.getServerName())
-                .map(Domain::tenant).ifPresent(tenant -> request.setAttribute("tenant", tenant));
+                .map(Domain::tenant).ifPresent(tenant -> {
+                    request.setAttribute("tenant", tenant);
+                    sessionStore.setTenant(tenant);
+                });
     }
 
     private void checkAdminSession(HttpServletRequest request) {

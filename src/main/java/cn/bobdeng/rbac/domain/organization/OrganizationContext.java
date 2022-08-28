@@ -15,8 +15,16 @@ public interface OrganizationContext {
     }
 
     OrganizationStructure asOrganization(Tenant tenant);
+
+    Employees asEmployees(Tenant tenant);
+
     Organization.Employees employees(Organization organization);
+
     interface Organizations extends EntityList<Integer, Organization> {
+
+    }
+
+    interface Employees extends EntityList<Integer, Employee> {
 
     }
 }
