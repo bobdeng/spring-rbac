@@ -1,15 +1,13 @@
 package cn.bobdeng.rbac.server.dao;
 
-import cn.bobdeng.rbac.domain.organization.Employee;
-import cn.bobdeng.rbac.domain.organization.EmployeeDescription;
-import cn.bobdeng.rbac.domain.organization.Organization;
-import cn.bobdeng.rbac.domain.organization.OrganizationDescription;
+import cn.bobdeng.rbac.domain.organization.*;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.function.Function;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +20,9 @@ public class EmployeeDO {
     private Integer id;
     private Integer organizationId;
 
-    public Employee toEntity(RbacContext.Users users) {
+    public Employee toEntity(RbacContext.Users users, Function<Integer, Organization> organizationFetcher) {
         Employee employee = new Employee(id, new EmployeeDescription());
-        Organization organization = new Organization(new OrganizationDescription("部门1", 1));
-        employee.setOrganization(() -> organization);
+        employee.setOrganization(() -> organizationFetcher.apply(organizationId));
         employee.setUser(() -> users.findByIdentity(id).orElse(null));
         return employee;
     }

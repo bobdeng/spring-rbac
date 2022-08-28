@@ -28,11 +28,11 @@ public class OrganizationContextImpl implements OrganizationContext {
 
     @Override
     public Employees asEmployees(Tenant tenant) {
-        return new EmployeesImpl(employeeDAO,rbacContext,tenant);
+        return new EmployeesImpl(employeeDAO,rbacContext,this,tenant);
     }
 
     @Override
     public Organization.Employees employees(Organization organization) {
-        return new OrganizationEmployee(organization, employeeDAO, rbacContext);
+        return new OrganizationEmployee(organization, employeeDAO, rbacContext,this);
     }
 }
