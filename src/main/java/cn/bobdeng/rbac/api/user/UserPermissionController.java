@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api.user;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.security.Session;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -12,8 +13,8 @@ import java.util.List;
 @RestController
 public class UserPermissionController extends RbacController {
 
-    public UserPermissionController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public UserPermissionController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @GetMapping("/permissions")

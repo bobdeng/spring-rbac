@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.api.user;
 import cn.bobdeng.rbac.domain.rbac.RawPassword;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.security.Permission;
 import cn.bobdeng.rbac.security.PermissionDeniedException;
@@ -15,8 +16,8 @@ import javax.transaction.Transactional;
 @RestController
 public class UserPasswordController extends RbacController {
 
-    public UserPasswordController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public UserPasswordController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @PatchMapping("/users/{id}/password")

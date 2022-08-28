@@ -37,6 +37,7 @@ public class WebDriverHandler {
         if (WEBDRIVER == null) {
             chrome.start();
             WEBDRIVER = chrome.getWebDriver();
+            //WEBDRIVER = createWebDriver();
         }
         if (webServerAppCtxt != null) {
             this.port = webServerAppCtxt.getWebServer().getPort();

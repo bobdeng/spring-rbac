@@ -13,10 +13,6 @@ public interface TenantRepository extends EntityList<Integer, Tenant> {
 
     Page<Tenant> findByName(String name, int page, int size);
 
-    ConfigurationContext configurationContext();
-
-    OrganizationContext organizationContext();
-
     RbacContext rbacContext();
 
     CbacContext cbacContext();

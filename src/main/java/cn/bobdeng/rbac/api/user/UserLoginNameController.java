@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 
 @RestController
-public class UserLoginNameController extends RbacController{
+public class UserLoginNameController extends RbacController {
 
-    public UserLoginNameController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public UserLoginNameController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @GetMapping("/users/{id}/login_name")

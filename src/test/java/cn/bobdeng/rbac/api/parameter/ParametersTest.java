@@ -7,6 +7,7 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.config.BaseParameters;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.config.Parameter;
+import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
 import okhttp3.Request;
@@ -27,6 +28,8 @@ public class ParametersTest extends E2ETest {
     ParameterDAO parameterDAO;
     @Autowired
     TenantRepository tenantRepository;
+    @Autowired
+    ConfigurationContext configurationContext;
 
     @BeforeEach
     public void setup() {
@@ -64,8 +67,9 @@ public class ParametersTest extends E2ETest {
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
         List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
-        assertEquals(BaseParameters.list().size()+1, parameters.size());
+        assertEquals(BaseParameters.list().size() + 1, parameters.size());
     }
+
     @Test
     public void 参数已经设置当保存参数() {
         parameterDAO.save(new ParameterDO(userWithTenantFixture.getTenant().identity(), "param.key1", "99"));
@@ -77,7 +81,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
         List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
-        assertEquals(BaseParameters.list().size()+1, parameters.size());
+        assertEquals(BaseParameters.list().size() + 1, parameters.size());
     }
 
     @Test
@@ -90,7 +94,7 @@ public class ParametersTest extends E2ETest {
     }
 
     private ConfigurationContext.Configurer getConfigurer(Tenant tenant) {
-        ConfigurationContext.Configurer configurer = tenantRepository.configurationContext().asConfigurer(tenant);
+        ConfigurationContext.Configurer configurer = configurationContext.asConfigurer(tenant);
         return configurer;
     }
 

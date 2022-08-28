@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api.organization;
 
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.security.Permission;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,16 @@ import java.util.stream.Stream;
 
 @RestController
 public class EmployeeController {
-    private final TenantRepository tenantRepository;
+    private final OrganizationContext organizationContext;
 
-    public EmployeeController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public EmployeeController(OrganizationContext organizationContext) {
+        this.organizationContext = organizationContext;
     }
 
     @GetMapping("/organizations/{organizationId}/employees")
     public List<User> listEmployees(@PathVariable Integer organizationId,
                                     @RequestAttribute("tenant") Tenant tenant) {
-        return tenantRepository.organizationContext().asOrganization(tenant).organizations().findByIdentity(organizationId)
+        return organizationContext.asOrganization(tenant).organizations().findByIdentity(organizationId)
                 .map(organization -> organization.employees().list())
                 .orElseGet(Stream::empty)
                 .collect(Collectors.toList());
@@ -33,7 +34,7 @@ public class EmployeeController {
     @Transactional
     public void removeEmployee(@PathVariable Integer organizationId, @PathVariable Integer userId,
                                @RequestAttribute("tenant") Tenant tenant) {
-        tenantRepository.organizationContext().asOrganization(tenant).organizations().findByIdentity(organizationId)
+        organizationContext.asOrganization(tenant).organizations().findByIdentity(organizationId)
                 .ifPresent(organization -> organization.removeEmployee(userId));
     }
 }

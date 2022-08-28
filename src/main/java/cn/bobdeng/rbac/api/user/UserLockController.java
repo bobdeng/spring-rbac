@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 @RestController
 public class UserLockController extends RbacController {
 
-    public UserLockController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public UserLockController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @PostMapping("/users/{id}/lock")

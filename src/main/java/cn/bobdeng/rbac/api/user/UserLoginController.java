@@ -6,6 +6,7 @@ import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.domain.rbac.LoginName;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
+import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -17,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class UserLoginController extends RbacController {
-    public UserLoginController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public UserLoginController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @PostMapping("/user_sessions")

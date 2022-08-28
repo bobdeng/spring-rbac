@@ -3,12 +3,13 @@ package cn.bobdeng.rbac.server.impl;
 import cn.bobdeng.rbac.archtype.HasMany;
 import cn.bobdeng.rbac.archtype.Many;
 import cn.bobdeng.rbac.archtype.Page;
-import cn.bobdeng.rbac.domain.*;
+import cn.bobdeng.rbac.domain.Domain;
+import cn.bobdeng.rbac.domain.Tenant;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.cbac.CbacContext;
-import cn.bobdeng.rbac.domain.config.ConfigurationContext;
-import cn.bobdeng.rbac.domain.organization.OrganizationContext;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
-import cn.bobdeng.rbac.server.dao.*;
+import cn.bobdeng.rbac.server.dao.DomainDAO;
+import cn.bobdeng.rbac.server.dao.TenantDAO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +20,14 @@ import java.util.Optional;
 public class TenantRepositoryImpl implements TenantRepository {
     private final TenantDAO tenantDAO;
     private final DomainDAO domainDAO;
-    private final ConfigurationContext configurationContext;
-    private final OrganizationContext organizationContext;
     private final RbacContext rbacContext;
     private final CbacContext cbacContext;
 
     public TenantRepositoryImpl(TenantDAO tenantDAO,
                                 DomainDAO domainDAO,
-                                ConfigurationContext configurationContext,
-                                OrganizationContext organizationContext,
                                 RbacContext rbacContext, CbacContext cbacContext) {
         this.tenantDAO = tenantDAO;
         this.domainDAO = domainDAO;
-        this.configurationContext = configurationContext;
-        this.organizationContext = organizationContext;
         this.rbacContext = rbacContext;
         this.cbacContext = cbacContext;
     }
@@ -48,16 +43,6 @@ public class TenantRepositoryImpl implements TenantRepository {
         PageRequest pageable = PageRequest.of(page, size);
         org.springframework.data.domain.Page<Tenant> result = tenantDAO.findByDescriptionNameContaining(Optional.ofNullable(name).orElse(""), pageable);
         return new Page<>(result.getContent(), result.getTotalPages(), result.getTotalElements(), result.getNumber());
-    }
-
-    @Override
-    public ConfigurationContext configurationContext() {
-        return configurationContext;
-    }
-
-    @Override
-    public OrganizationContext organizationContext() {
-        return organizationContext;
     }
 
     @Override

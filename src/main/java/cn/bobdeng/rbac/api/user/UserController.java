@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 @RestController
 public class UserController extends RbacController{
 
-    public UserController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public UserController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @PostMapping("/users")

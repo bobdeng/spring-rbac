@@ -1,11 +1,8 @@
 package cn.bobdeng.rbac;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
 import org.junit.Rule;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.NettyHook;
 import org.redisson.config.Config;
 import org.redisson.config.TransportMode;
 import org.springframework.boot.jdbc.DataSourceBuilder;

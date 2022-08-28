@@ -16,8 +16,8 @@ import java.util.List;
 @RestController
 public class RoleController extends RbacController {
 
-    public RoleController(TenantRepository tenantRepository) {
-        this.tenantRepository = tenantRepository;
+    public RoleController(TenantRepository tenantRepository, RbacContext rbacContext) {
+        super(tenantRepository, rbacContext);
     }
 
     @GetMapping("/tenants/{id}/roles")
