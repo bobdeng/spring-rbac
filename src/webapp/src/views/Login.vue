@@ -10,8 +10,12 @@
           <InputPassword v-model:value="password" id="inputPassword"/>
         </FormItem>
         <FormItem :wrapper-col="{ offset: 8, span: 16 }">
-          <Button type="primary" @click="login" id="buttonLogin" :loading="loading">登录</Button>
-          <WxLoginButton/>
+          <div style="display: flex">
+            <Space>
+              <Button type="primary" @click="login" id="buttonLogin" :loading="loading">登录</Button>
+              <WxLoginButton/>
+            </Space>
+          </div>
         </FormItem>
       </Form>
     </Card>
@@ -19,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {Card, Form, FormItem, Input, InputPassword, Button, Alert} from 'ant-design-vue';
+import {Card, Form, FormItem, Input, InputPassword, Button, Alert,Space} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import {ref} from "vue";
 import {LoginForm, server} from "../model/HttpServer";

@@ -7,8 +7,8 @@ describe('Login.cy.ts', () => {
         onAdminLoginSpy = cy.spy().as('onAdminLoginSpy')
         onUserLoginSpy = cy.spy().as('onUserLoginSpy')
         cy.intercept("GET", "/tenant", {id: 1, description: {name: "租户1"}}).as("tenant")
-        cy.mount(Login, {props: {onAdminLogin: onAdminLoginSpy, onUserLogin: onUserLoginSpy}})
         cy.intercept("GET", "/wx_config", {statusCode: 200, body: ""})
+        cy.mount(Login, {props: {onAdminLogin: onAdminLoginSpy, onUserLogin: onUserLoginSpy}})
     })
     it('playground', () => {
         cy.get("#buttonLogin").should("exist")
