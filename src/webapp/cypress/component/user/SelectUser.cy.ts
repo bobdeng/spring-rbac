@@ -9,7 +9,7 @@ describe('SelectUser.cy.ts', () => {
         cy.mount(SelectUser, {props: {actionName: "加入", onSelect: onSelectSpy}}).then(() => {
             (Cypress.vue.$.exposeProxy as any).show()
             cy.wait("@users")
-            cy.contains("张三")
+            cy.contains("王五")
             cy.contains("加入").click().then(() => {
                 expect(onSelectSpy).to.be.calledWith(1)
             })
