@@ -10,7 +10,7 @@
            @ok="newTenant"
     >
       <Form v-model:value="form">
-        <FormItem label="租户名">
+        <FormItem label="域名">
           <Input v-model:value="form.name" id="inputName"/>
         </FormItem>
       </Form>

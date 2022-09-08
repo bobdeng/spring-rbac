@@ -13,6 +13,7 @@ public class AdminPasswordNotifierImpl implements AdminPassword.Notifier, AdminP
 
     @Override
     public void notify(String password) {
+        System.out.println(password);
         this.password = password;
     }
 
