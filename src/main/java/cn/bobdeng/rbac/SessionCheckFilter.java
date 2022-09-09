@@ -12,6 +12,7 @@ import cn.bobdeng.rbac.security.SessionStore;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -30,14 +31,25 @@ public class SessionCheckFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        checkSession(httpRequest);
-        readTenant(request, httpRequest);
+        try {
+            checkSession(httpRequest);
+            readTenant(request, httpRequest);
+        } catch (Exception e) {
+            removeCookie((HttpServletResponse) response, Cookies.AUTHORIZATION);
+            removeCookie((HttpServletResponse) response, Cookies.ADMIN_AUTHORIZATION);
+        }
         try {
             sessionStore.get().ifPresent(session -> httpRequest.setAttribute("session", session));
             chain.doFilter(request, response);
         } finally {
             sessionStore.clear();
         }
+    }
+
+    private void removeCookie(HttpServletResponse response, String authorization) {
+        Cookie cookie = new Cookie(authorization, "");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 
     private void checkSession(HttpServletRequest httpRequest) {

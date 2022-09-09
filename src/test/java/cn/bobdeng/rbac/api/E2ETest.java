@@ -47,6 +47,12 @@ public abstract class E2ETest {
         webDriverHandler.removeAllCookies();
         adminLoginPage.setCookie(Cookies.AUTHORIZATION, new UserToken(user).toTokenString());
     }
+    protected void loginWithErrorToken() {
+        AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
+        adminLoginPage.open();
+        webDriverHandler.removeAllCookies();
+        adminLoginPage.setCookie(Cookies.AUTHORIZATION,"notatoken");
+    }
 
     protected void clearLogin() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
