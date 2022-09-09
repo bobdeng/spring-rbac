@@ -13,7 +13,7 @@
 <repositories>
     <repository>
         <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+       <url>https://jitpack.io</url>
     </repository>
 </repositories>
 <dependency>
@@ -75,3 +75,23 @@ wx.callback=https://test.com
 ## 系统参数
 - 读取系统参数 GET /parameters/{key}
 - 代码读取系统参数 tenant.parameters().findByIdentity(key)
+
+## Request属性
+- @RequestAttribute("tenant") Tenant tenant;租户
+- @RequestAttribute("Session") Session session; 会话
+## 上下文权限
+### 对象授权
+```java
+ContextObject contextObject = new ContextObject("objectType",objectId);
+ContextAuthority contextAuthority = ContextAuthority
+        .withUser(userId)
+        .withRoles(Arrays.asList("roleName"))
+        .withOrganizations(Arrays.asList("organizationName"))
+        .build();
+Context context = new Context(contextObject,contextAuthority)
+tenantRepository.asCbac(tenant).newContext(context);
+```
+### 检查对象授权
+```java
+@ObjectPermission(type="objectType",id="#form.id")
+```
