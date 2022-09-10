@@ -1,4 +1,4 @@
-package cn.bobdeng.rbac.server;
+package cn.bobdeng.rbac;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.stereotype.Service;
