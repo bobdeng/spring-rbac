@@ -2,6 +2,7 @@ package cn.bobdeng.rbac.api;
 
 import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.domain.rbac.AdminPassword;
+import cn.bobdeng.rbac.domain.rbac.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,17 +16,19 @@ import java.io.IOException;
 public class AdminLoginController {
     private final AdminPassword.Notifier adminPasswordNotifier;
     private final AdminPassword.Store store;
+    private PasswordEncoder passwordEncoder;
 
-    public AdminLoginController(AdminPassword.Notifier adminPasswordNotifier, AdminPassword.Store store) {
+    public AdminLoginController(AdminPassword.Notifier adminPasswordNotifier, AdminPassword.Store store, PasswordEncoder passwordEncoder) {
         this.adminPasswordNotifier = adminPasswordNotifier;
         this.store = store;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/admin_sessions")
     @Transactional
     public void adminLogin(@RequestBody AdminLoginForm adminLoginForm,
                            HttpServletResponse response) throws IOException {
-        AdminPassword adminPassword = new AdminPassword(adminPasswordNotifier, store);
+        AdminPassword adminPassword = new AdminPassword(adminPasswordNotifier, store, passwordEncoder);
         if (!adminPassword.verify(adminLoginForm.getPassword())) {
             responseError(response);
             return;
