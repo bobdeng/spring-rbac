@@ -5,6 +5,9 @@
         <MenuItem key="tenants">
           租户管理
         </MenuItem>
+        <MenuItem key="users">
+          用户管理
+        </MenuItem>
       </Menu>
     </div>
     <div style="padding: 5px;">
