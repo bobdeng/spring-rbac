@@ -21,7 +21,8 @@ export const routes = [
         children: [
             {path: "/tenants", component: Tenants, name: "tenants"},
             {path: "/tenants/:id/domains", component: Domain, name: "tenantDomains"},
-            {path: "/tenants/:id/roles", component: Role, name: "tenantRoles"}
+            {path: "/tenants/:id/roles", component: Role, name: "tenantRoles"},
+            {path: "/admin_users", component: Users, name: "admin_users"},
         ]
     },
     {

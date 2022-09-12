@@ -5,7 +5,7 @@
         <MenuItem key="tenants">
           租户管理
         </MenuItem>
-        <MenuItem key="users">
+        <MenuItem key="admin_users">
           用户管理
         </MenuItem>
       </Menu>
