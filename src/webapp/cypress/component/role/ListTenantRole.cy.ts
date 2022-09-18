@@ -4,11 +4,11 @@ import {createMemoryHistory, createRouter} from "vue-router";
 let router:any;
 
 function showOneRole() {
-    cy.intercept("GET", "/tenants/101/roles", [{
+    cy.intercept("GET", "/api/1.0/tenants/101/roles", [{
         id: 102,
         description: {name: "角色1", allows: ['role.create']}
     }]).as("listRoles")
-    cy.intercept("GET", "/functions", [])
+    cy.intercept("GET", "/api/1.0/functions", [])
     router = createRouter({
         routes: [],
         history: createMemoryHistory(),
@@ -32,7 +32,7 @@ describe('ListTenantRole.cy.ts', () => {
     });
     it('should delete role', function () {
         showOneRole();
-        cy.intercept("DELETE", "/tenants/101/roles/102", {statusCode: 200}).as("delete")
+        cy.intercept("DELETE", "/api/1.0/tenants/101/roles/102", {statusCode: 200}).as("delete")
         cy.contains("删除").trigger("click").then(() => {
             cy.contains("OK").click().then(() => {
                 cy.contains("删除成功")

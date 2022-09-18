@@ -3,7 +3,7 @@ import AddTenantRole from '../../../src/views/tenant/role/AddTenantRole.vue'
 const tenant = 100
 describe('AddTenantRole.cy.ts', () => {
     beforeEach(() => {
-        cy.intercept("GET", "/functions", {
+        cy.intercept("GET", "/api/1.0/functions", {
             statusCode: 200,
             body: JSON.stringify([
                 {
@@ -31,7 +31,7 @@ describe('AddTenantRole.cy.ts', () => {
     });
     it('should save role', function () {
         let onSuccessSpy = cy.spy().as('onSuccessSpy')
-        cy.intercept("POST", `/tenants/${tenant}/roles`, {statusCode: 200}).as("saveRole")
+        cy.intercept("POST", `/api/1.0/tenants/${tenant}/roles`, {statusCode: 200}).as("saveRole")
         cy.mount(AddTenantRole, {props: {tenant: tenant,onSuccess:onSuccessSpy}})
         cy.wait("@functions")
         cy.contains("新 增").click().then(() => {

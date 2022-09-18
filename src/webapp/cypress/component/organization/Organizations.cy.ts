@@ -3,10 +3,10 @@ import Organizations from '../../../src/views/tenant/organazation/Organizations.
 describe('Organizations.cy.ts', () => {
     it('显示组织结构树', () => {
         cy.fixture("organization/organizations", 'utf8').then((json) => {
-            cy.intercept("GET", "/organizations", json)
+            cy.intercept("GET", "/api/1.0/organizations", json)
         })
         cy.fixture("organization/employees.json").then(json => {
-            cy.intercept("GET", "/organizations/2/employees", json).as("employees")
+            cy.intercept("GET", "/api/1.0/organizations/2/employees", json).as("employees")
         })
         cy.mount(Organizations)
         cy.contains("分公司").click().then(() => {
@@ -16,7 +16,7 @@ describe('Organizations.cy.ts', () => {
 
     it('should 显示添加对话框，when点击新增', function () {
         cy.fixture("organization/organizations", 'utf8').then((json) => {
-            cy.intercept("GET", "/organizations", json)
+            cy.intercept("GET", "/api/1.0/organizations", json)
         })
         cy.mount(Organizations)
         cy.contains("添加下级单位").click().then(() => {
@@ -26,9 +26,9 @@ describe('Organizations.cy.ts', () => {
 
     it('should 刷新树，当添加成功', function () {
         cy.fixture("organization/organizations", 'utf8').then((json) => {
-            cy.intercept("GET", "/organizations", json).as("list")
+            cy.intercept("GET", "/api/1.0/organizations", json).as("list")
         })
-        cy.intercept("POST", "/organizations", {statusCode: 200}).as("newOrganization")
+        cy.intercept("POST", "/api/1.0/organizations", {statusCode: 200}).as("newOrganization")
         cy.mount(Organizations)
         cy.wait("@list")
         cy.contains("添加下级单位").click().then(() => {

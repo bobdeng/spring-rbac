@@ -1,7 +1,7 @@
 import AddUser from '../../../src/views/tenant/user/AddUser.vue'
 
 function mockServer() {
-    cy.intercept("GET", "/roles", [{id: 2, description: {name: "角色1"}}, {id: 3, description: {name: "角色2"}}])
+    cy.intercept("GET", "/api/1.0/roles", [{id: 2, description: {name: "角色1"}}, {id: 3, description: {name: "角色2"}}])
         .as("listRoles")
 
 }
@@ -20,7 +20,7 @@ describe('AddUser.cy.ts', () => {
     })
     it('should 提示成功并清空部分输入，当保存并继续', function () {
         mockServer();
-        cy.intercept('POST', "/users", {statusCode: 200}).as("newUser")
+        cy.intercept('POST', "/api/1.0/users", {statusCode: 200}).as("newUser")
         cy.mount(AddUser).then(() => {
             (Cypress.vue.$.exposeProxy as any).show()
             cy.wait("@listRoles")

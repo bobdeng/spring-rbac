@@ -4,7 +4,7 @@ import {operations} from "../Operations";
 const userId = 2;
 describe('UserLoginName.cy.ts', () => {
     it('显示用户绑定的角色', () => {
-        cy.intercept("GET", `/users/${userId}/login_name`, {
+        cy.intercept("GET", `/api/1.0/users/${userId}/login_name`, {
             id: 1,
             description: {name: "bobdeng"}
         }).as("getLoginName")
@@ -18,11 +18,11 @@ describe('UserLoginName.cy.ts', () => {
     })
 
     it('解绑账户', () => {
-        cy.intercept("GET", `/users/${userId}/login_name`, {
+        cy.intercept("GET", `/api/1.0/users/${userId}/login_name`, {
             id: 1,
             description: {name: "bobdeng"}
         }).as("getLoginName")
-        cy.intercept("DELETE", `/login_names/1`, {statusCode: 200}).as("delete")
+        cy.intercept("DELETE", `/api/1.0/login_names/1`, {statusCode: 200}).as("delete")
         cy.mount(UserLoginName).then(() => {
             (Cypress.vue.$.exposeProxy as any).show(userId)
             cy.wait("@getLoginName")
@@ -35,8 +35,8 @@ describe('UserLoginName.cy.ts', () => {
     })
 
     it('绑定账户', () => {
-        cy.intercept("GET", `/users/${userId}/login_name`, {statusCode: 200, body: undefined}).as("getLoginName")
-        cy.intercept("POST", `/login_names`, {statusCode: 200}).as("new")
+        cy.intercept("GET", `/api/1.0/users/${userId}/login_name`, {statusCode: 200, body: undefined}).as("getLoginName")
+        cy.intercept("POST", `/api/1.0/login_names`, {statusCode: 200}).as("new")
         cy.mount(UserLoginName).then(() => {
             (Cypress.vue.$.exposeProxy as any).show(userId)
             cy.wait("@getLoginName")
@@ -50,8 +50,8 @@ describe('UserLoginName.cy.ts', () => {
     })
 
     it('绑定账户失败', () => {
-        cy.intercept("GET", `/users/${userId}/login_name`, {statusCode: 200, body: undefined}).as("getLoginName")
-        cy.intercept("POST", `/login_names`, {statusCode: 400, body: "账户已存在"}).as("new")
+        cy.intercept("GET", `/api/1.0/users/${userId}/login_name`, {statusCode: 200, body: undefined}).as("getLoginName")
+        cy.intercept("POST", `/api/1.0/login_names`, {statusCode: 400, body: "账户已存在"}).as("new")
         cy.mount(UserLoginName).then(() => {
             (Cypress.vue.$.exposeProxy as any).show(userId)
             cy.wait("@getLoginName")

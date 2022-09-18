@@ -3,10 +3,10 @@ import {operations} from "../Operations";
 
 function setup() {
     cy.fixture("organization/employees.json").then(json => {
-        cy.intercept("GET", "/organizations/10/employees", json).as("employees")
+        cy.intercept("GET", "/api/1.0/organizations/10/employees", json).as("employees")
     })
     cy.fixture("user/users.json").then(json => {
-        cy.intercept("GET", "/users?name=", json).as("users")
+        cy.intercept("GET", "/api/1.0/users?name=", json).as("users")
     })
 }
 
@@ -21,7 +21,7 @@ describe('ListEmployee.cy.ts', () => {
 
     it('点击新增，显示用户列表', () => {
         setup();
-        cy.intercept("PUT","/organizations/10/employees",{statusCode:200}).as("putUser")
+        cy.intercept("PUT","/api/1.0/organizations/10/employees",{statusCode:200}).as("putUser")
         cy.mount(Employee, {props: {organization: {id: 10}}})
         cy.wait("@employees")
         cy.get("#buttonAdd").click().then(()=>{
@@ -36,7 +36,7 @@ describe('ListEmployee.cy.ts', () => {
     })
     it('should 删除成员，when点击成员的删除', function () {
         setup()
-        cy.intercept("DELETE","/organizations/10/employees/1",{statusCode:200}).as("deleteUser")
+        cy.intercept("DELETE","/api/1.0/organizations/10/employees/1",{statusCode:200}).as("deleteUser")
         cy.mount(Employee, {props: {organization: {id: 10}}})
         cy.wait("@employees")
         cy.contains("删除").click().then(()=>{

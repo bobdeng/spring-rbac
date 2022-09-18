@@ -2,13 +2,13 @@ import WxLoginButton from '../../src/components/WxLoginButton.vue'
 
 describe('WxLoginButton.cy.ts', () => {
     it('当没有配置微信登录，不显示', () => {
-        cy.intercept("GET", "/wx_config", {statusCode: 200, body: null}).as("wxConfig")
+        cy.intercept("GET", "/api/1.0/wx_config", {statusCode: 200, body: null}).as("wxConfig")
         cy.mount(WxLoginButton)
         cy.wait("@wxConfig")
         cy.contains("微信登录").should("not.exist")
     })
     it('当有配置微信登录，显示', () => {
-        cy.intercept("GET", "/wx_config", {
+        cy.intercept("GET", "/api/1.0/wx_config", {
             statusCode: 200, body: {
                 appId: "appid_123",
                 callback: "https://www.test.com/",

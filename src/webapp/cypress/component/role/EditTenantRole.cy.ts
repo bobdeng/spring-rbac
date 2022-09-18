@@ -2,7 +2,7 @@ import EditTenantRole from '../../../src/views/tenant/role/EditTenantRole.vue'
 
 describe('EditTenantRole.cy.ts', () => {
     beforeEach(() => {
-        cy.intercept("GET", "/functions", [{
+        cy.intercept("GET", "/api/1.0/functions", [{
             key: "role",
             name: "角色管理",
             children: [
@@ -12,7 +12,7 @@ describe('EditTenantRole.cy.ts', () => {
                 }
             ]
         }])
-        cy.intercept("GET", "/tenants/100/roles/101", {
+        cy.intercept("GET", "/api/1.0/tenants/100/roles/101", {
             statusCode: 200,
             body: JSON.stringify({
                 description: {
@@ -31,7 +31,7 @@ describe('EditTenantRole.cy.ts', () => {
         });
     })
     it('should save', function () {
-        cy.intercept("PATCH", "/tenants/100/roles/101", {statusCode: 200})
+        cy.intercept("PATCH", "/api/1.0/tenants/100/roles/101", {statusCode: 200})
 
         cy.mount(EditTenantRole, {props: {tenant: 100}}).then(() => {
             (Cypress.vue.$.exposeProxy as any).show("101")

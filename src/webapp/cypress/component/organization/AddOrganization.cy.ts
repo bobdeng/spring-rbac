@@ -4,7 +4,7 @@ import {operations} from "../Operations";
 describe('AddOrganization.cy.ts', () => {
     it('添加子公司保存', () => {
         let onSuccessSpy = cy.spy().as("onSuccessSpy")
-        cy.intercept("POST", "/organizations", {statusCode: 200}).as("newOrganization")
+        cy.intercept("POST", "/api/1.0/organizations", {statusCode: 200}).as("newOrganization")
         cy.mount(AddSubOrganization, {props: {onSuccess: onSuccessSpy}}).then(() => {
             (Cypress.vue.$.exposeProxy as any).show()
             cy.get("#inputName").type("子公司名称")
@@ -20,7 +20,7 @@ describe('AddOrganization.cy.ts', () => {
 
     it('保存失败提示', () => {
         let onSuccessSpy = cy.spy().as("onSuccessSpy")
-        cy.intercept("POST", "/organizations", {statusCode: 400, body: "名字重复"}).as("newOrganization")
+        cy.intercept("POST", "/api/1.0/organizations", {statusCode: 400, body: "名字重复"}).as("newOrganization")
         cy.mount(AddSubOrganization, {props: {onSuccess: onSuccessSpy}}).then(() => {
             (Cypress.vue.$.exposeProxy as any).show()
             cy.get("#inputName").type("子公司名称")

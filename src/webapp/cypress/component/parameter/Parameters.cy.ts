@@ -2,7 +2,7 @@ import Parameters from '../../../src/views/parameter/Parameters.vue'
 
 describe('Parameters.cy.ts', () => {
     beforeEach(() => {
-        cy.intercept("GET", "/parameters", [{id: "param.key1", description: {name: "参数名称", value: "100"}}])
+        cy.intercept("GET", "/api/1.0/parameters", [{id: "param.key1", description: {name: "参数名称", value: "100"}}])
             .as("list")
     })
     it('列出所有参数', () => {
@@ -12,7 +12,7 @@ describe('Parameters.cy.ts', () => {
     })
 
     it('should save所有参数', function () {
-        cy.intercept("PUT", "/parameters", {statusCode: 200}).as("save")
+        cy.intercept("PUT", "/api/1.0/parameters", {statusCode: 200}).as("save")
         cy.mount(Parameters)
         cy.wait("@list")
         cy.get("#buttonSave").click().then(() => {

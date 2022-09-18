@@ -25,7 +25,7 @@ describe('AddTenantDialog.cy.ts', () => {
     })
     it('should save tenant', function () {
         let onSuccessSpy = cy.spy().as('onSuccessSpy')
-        cy.intercept('POST', "/tenants", {
+        cy.intercept('POST', "/api/1.0/tenants", {
             statusCode: 200, body: undefined
         }).as("newTenant")
         cy.mount(AddTenantDialog, {props: {onSuccess: onSuccessSpy}})
@@ -39,7 +39,7 @@ describe('AddTenantDialog.cy.ts', () => {
     });
 
     it('should error when save fail', function () {
-        cy.intercept('POST', "/tenants", {
+        cy.intercept('POST', "/api/1.0/tenants", {
             statusCode: 400, body: "租户名重复"
         }).as("newTenant")
         cy.mount(AddTenantDialog)
@@ -52,7 +52,7 @@ describe('AddTenantDialog.cy.ts', () => {
     });
 
     it('should error when save fail with fields error', function () {
-        cy.intercept('POST', "/tenants", {
+        cy.intercept('POST', "/api/1.0/tenants", {
             statusCode: 400, body: [{"field": "name", "error": "名字不能为空"},{"field": "name", "error": "第二个错误"}]
         }).as("newTenant")
         cy.mount(AddTenantDialog)

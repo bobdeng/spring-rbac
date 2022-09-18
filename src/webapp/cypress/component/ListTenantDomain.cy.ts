@@ -2,7 +2,7 @@ import ListTenantDomain from '../../src/views/tenant/domain/ListTenantDomain.vue
 import {createMemoryHistory, createRouter, RouteRecordName, RouteRecordNormalized} from "vue-router";
 let router:any;
 function showOneDomain() {
-    cy.intercept("GET", "/tenants/101/domains", [{id: 102, description: {domain: "www.test.com"}}]).as("listDomain")
+    cy.intercept("GET", "/api/1.0/tenants/101/domains", [{id: 102, description: {domain: "www.test.com"}}]).as("listDomain")
     router = createRouter({
         routes: [],
         history: createMemoryHistory(),
@@ -25,7 +25,7 @@ describe('ListTenantDomain.cy.ts', () => {
         })
     })
     it('should show delete confirm dialog when click delete', function () {
-        cy.intercept("DELETE", "/domains/102", {
+        cy.intercept("DELETE", "/api/1.0/domains/102", {
             statusCode: 200, body: undefined
         }).as('deleteDomain')
         showOneDomain();

@@ -5,7 +5,7 @@ describe('Tenants.cy.ts', () => {
     it('show no data when no tenants', () => {
         //server.listTenants = () => Promise.resolve([])
         cy.intercept({
-            method: "GET", url: "/tenants"
+            method: "GET", url: "/api/1.0/tenants"
         }, []).as("listTenantsNameEmpty")
         cy.mount(ListTenant)
         cy.get(".ant-empty").should("exist")
@@ -13,17 +13,17 @@ describe('Tenants.cy.ts', () => {
 
     it('show  data when has tenants', () => {
         cy.intercept({
-            method: "GET", url: "/tenants?name="
+            method: "GET", url: "/api/1.0/tenants?name="
         }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
         cy.mount(ListTenant)
         cy.get("#tableTenants").find("tbody").find("tr").should("have.length", 1)
     })
     it('should search', function () {
         cy.intercept({
-            method: "GET", url: "/tenants?name="
+            method: "GET", url: "/api/1.0/tenants?name="
         }, []).as("listTenantsNameEmpty")
         cy.intercept({
-            method: "GET", url: "/tenants?name=%E7%A7%9F%E6%88%B7"
+            method: "GET", url: "/api/1.0/tenants?name=%E7%A7%9F%E6%88%B7"
         }, [{id: 101, description: {name: "租户1"}}]).as("listTenants")
         cy.mount(ListTenant)
         cy.get(".ant-empty").should("exist")
@@ -37,7 +37,7 @@ describe('Tenants.cy.ts', () => {
 
     it('should goto list tenants domain when click domain link', function () {
         cy.intercept({
-            method: "GET", url: "/tenants?name="
+            method: "GET", url: "/api/1.0/tenants?name="
         }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
         let router = createRouter({
             routes: [],
@@ -55,7 +55,7 @@ describe('Tenants.cy.ts', () => {
 
     it('should goto roles when click 角色 link',  function () {
         cy.intercept({
-            method: "GET", url: "/tenants?name="
+            method: "GET", url: "/api/1.0/tenants?name="
         }, [{id: 101, description: {name: "租户1"}}]).as("listTenantsNameEmpty")
         let router = createRouter({
             routes: [],
