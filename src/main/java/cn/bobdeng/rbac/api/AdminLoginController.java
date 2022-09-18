@@ -24,7 +24,7 @@ public class AdminLoginController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/admin_sessions")
+    @PostMapping("/api/1.0/admin_sessions")
     @Transactional
     public void adminLogin(@RequestBody AdminLoginForm adminLoginForm,
                            HttpServletResponse response) throws IOException {

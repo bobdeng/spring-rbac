@@ -11,10 +11,6 @@ public class NewDomainPage extends BasePage {
         super(webDriverHandler);
     }
 
-    public void open(Tenant tenant) {
-        webDriverHandler.open("/rbac/admin/console/domain/new_domain?tenantId=" + tenant.identity());
-    }
-
     public void inputDomain(String domain) {
         inputById(domain, "inputName");
     }

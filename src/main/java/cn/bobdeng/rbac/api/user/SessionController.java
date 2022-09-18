@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SessionController {
-    @GetMapping("session")
+    @GetMapping("api/1.0/session")
     public Profile getSession(@RequestAttribute(value = "session", required = false) Session session) {
         if (session == null) {
             throw new ObjectNotFoundException();

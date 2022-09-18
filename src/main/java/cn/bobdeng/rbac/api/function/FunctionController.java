@@ -16,7 +16,7 @@ public class FunctionController {
         this.functionRepository = functionRepository;
     }
 
-    @GetMapping("/functions")
+    @GetMapping("/api/1.0/functions")
     public List<FunctionVO> listFunctions() {
         return new Functions(functionRepository).functions()
                 .stream().map(FunctionVO::new).collect(Collectors.toList());

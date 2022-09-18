@@ -18,7 +18,7 @@ public class UserProfileTest extends E2ETest {
     public void 当没有登录读取Session返回404() {
         clearLogin();
         JsonPage jsonPage = new JsonPage(webDriverHandler);
-        jsonPage.open("/session");
+        jsonPage.open("/api/1.0/session");
         assertEquals("没有发现记录", jsonPage.content());
     }
 
@@ -27,7 +27,7 @@ public class UserProfileTest extends E2ETest {
         userWithTenantFixture.init();
         userLogin(userWithTenantFixture.user());
         JsonPage jsonPage = new JsonPage(webDriverHandler);
-        jsonPage.open("/session");
+        jsonPage.open("/api/1.0/session");
         assertTrue(jsonPage.content().contains("张三"));
     }
 
@@ -36,16 +36,15 @@ public class UserProfileTest extends E2ETest {
         userWithTenantFixture.init();
         adminLogin();
         JsonPage jsonPage = new JsonPage(webDriverHandler);
-        jsonPage.open("/session");
+        jsonPage.open("/api/1.0/session");
         assertTrue(jsonPage.content().contains("系统管理员"));
     }
+
     @Test
-    public void 当Token错误(){
+    public void 当Token错误() {
         loginWithErrorToken();
         JsonPage jsonPage = new JsonPage(webDriverHandler);
-        jsonPage.open("/session");
+        jsonPage.open("/api/1.0/session");
         assertEquals("没有发现记录", jsonPage.content());
-        Cookie cookie = webDriverHandler.getCookie(Cookies.AUTHORIZATION);
-        assertNull(cookie);
     }
 }

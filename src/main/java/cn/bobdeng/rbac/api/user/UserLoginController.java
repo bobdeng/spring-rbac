@@ -22,7 +22,7 @@ public class UserLoginController extends RbacController {
         super(tenantRepository, rbacContext);
     }
 
-    @PostMapping("/user_sessions")
+    @PostMapping("/api/1.0/user_sessions")
     public void login(@RequestBody LoginForm loginForm, HttpServletResponse response,
                       @RequestAttribute("tenant") Tenant tenant) {
         User user = getRbac(tenant).loginNames().findByLoginName(loginForm.getLoginName())

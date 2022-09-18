@@ -48,6 +48,7 @@ public class UserPermissionTest extends E2ETest {
         userLogin(userWithTenantFactory.user());
         UserPermissionsPage page = new UserPermissionsPage(webDriverHandler);
         page.open();
+        System.out.println(WebDriverHandler.WEBDRIVER.getPageSource());
         assertTrue(page.hasText("user.create"));
     }
 }

@@ -20,7 +20,7 @@ public class UserPasswordController extends RbacController {
         super(tenantRepository, rbacContext);
     }
 
-    @PatchMapping("/users/{id}/password")
+    @PatchMapping("/api/1.0/users/{id}/password")
     @Permission(allows = {"user.reset_pass"})
     @Transactional
     public ResetPasswordResult resetPassword(@PathVariable int id,
@@ -31,7 +31,7 @@ public class UserPasswordController extends RbacController {
         return new ResetPasswordResult(randomPassword.getRawPassword());
     }
 
-    @PutMapping("/password")
+    @PutMapping("/api/1.0/password")
     @Transactional
     public void setPassword(@RequestAttribute("session") Session session,
                             @RequestBody SetPasswordForm form,

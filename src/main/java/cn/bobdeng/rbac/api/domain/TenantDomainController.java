@@ -18,7 +18,7 @@ public class TenantDomainController {
         this.tenantRepository = tenantRepository;
     }
 
-    @GetMapping("/tenants/{id}/domains")
+    @GetMapping("/api/1.0/tenants/{id}/domains")
     public List<Domain> listDomainOfTenant(@PathVariable int id) {
         return tenantRepository.findByIdentity(id)
                 .map(Tenant::domains)

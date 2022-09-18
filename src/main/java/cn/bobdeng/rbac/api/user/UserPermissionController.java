@@ -17,7 +17,7 @@ public class UserPermissionController extends RbacController {
         super(tenantRepository, rbacContext);
     }
 
-    @GetMapping("/permissions")
+    @GetMapping("/api/1.0/permissions")
     public List<String> myPermissions(@RequestAttribute("tenant") Tenant tenant,
                                       @RequestAttribute("session") Session session) {
         return getRbac(tenant).users().findByIdentity(session.userId())

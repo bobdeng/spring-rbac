@@ -16,7 +16,7 @@ public class UserLockController extends RbacController {
         super(tenantRepository, rbacContext);
     }
 
-    @PostMapping("/users/{id}/lock")
+    @PostMapping("/api/1.0/users/{id}/lock")
     @Transactional
     @Permission(allows = {"user.lock"})
     public void lockUser(@PathVariable int id, @RequestAttribute("tenant") Tenant tenant) {
@@ -24,7 +24,7 @@ public class UserLockController extends RbacController {
         rbac.users().findByIdentity(id).ifPresent(User::lock);
     }
 
-    @DeleteMapping("/users/{id}/lock")
+    @DeleteMapping("/api/1.0/users/{id}/lock")
     @Transactional
     @Permission(allows = {"user.lock"})
     public void unlockUser(@PathVariable int id, @RequestAttribute("tenant") Tenant tenant) {

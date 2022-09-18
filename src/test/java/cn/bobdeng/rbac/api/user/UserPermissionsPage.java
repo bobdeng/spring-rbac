@@ -9,6 +9,6 @@ public class UserPermissionsPage extends BasePage {
     }
 
     public void open() {
-        webDriverHandler.open("/permissions");
+        webDriverHandler.open("/api/1.0/permissions");
     }
 }

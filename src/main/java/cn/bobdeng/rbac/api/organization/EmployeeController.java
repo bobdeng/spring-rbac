@@ -23,7 +23,7 @@ public class EmployeeController {
         this.rbacContext = rbacContext;
     }
 
-    @GetMapping("/organizations/{organizationId}/employees")
+    @GetMapping("/api/1.0/organizations/{organizationId}/employees")
     public List<User> listEmployees(@PathVariable Integer organizationId,
                                     @RequestAttribute("tenant") Tenant tenant) {
         return organizationContext.asOrganization(tenant).organizations().findByIdentity(organizationId)
@@ -34,7 +34,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/organizations/{organizationId}/employees/{userId}")
+    @DeleteMapping("/api/1.0/organizations/{organizationId}/employees/{userId}")
     @Permission(allows = "organization.employee")
     @Transactional
     public void removeEmployee(@PathVariable Integer organizationId, @PathVariable Integer userId,
@@ -43,7 +43,7 @@ public class EmployeeController {
                 .ifPresent(organization -> organization.removeEmployee(userId));
     }
 
-    @PutMapping("/organizations/{organizationId}/employees")
+    @PutMapping("/api/1.0/organizations/{organizationId}/employees")
     @Permission(allows = "organization.employee")
     @Transactional
     public void addEmployee(@PathVariable int organizationId,

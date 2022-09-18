@@ -92,7 +92,7 @@ public class RoleTest extends E2ETest {
     @Test
     public void should_show_error_when_role_not_found() throws Exception {
         JsonPage jsonPage = new JsonPage(webDriverHandler);
-        jsonPage.open("/tenants/" + (tenant.identity() - 100) + "/roles/12");
+        jsonPage.open("/api/1.0/tenants/" + (tenant.identity() - 100) + "/roles/12");
         assertEquals("没有发现记录", jsonPage.content());
     }
 

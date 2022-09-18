@@ -24,7 +24,7 @@ public class FunctionsTest extends E2ETest {
 
     private Function[] getFunctions() throws Exception {
         JsonPage jsonPage = new JsonPage(webDriverHandler);
-        jsonPage.open("/functions");
+        jsonPage.open("/api/1.0/functions");
         String content = jsonPage.content();
         System.out.println(content);
         Function[] functions = new Gson().fromJson(content, Function[].class);

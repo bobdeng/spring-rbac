@@ -20,7 +20,7 @@ public class RoleController extends RbacController {
         super(tenantRepository, rbacContext);
     }
 
-    @GetMapping("/tenants/{id}/roles")
+    @GetMapping("/api/1.0/tenants/{id}/roles")
     @Admin
     public List<Role> listRolesOfTenant(@PathVariable int id) {
         return tenantRepository.findByIdentity(id)
@@ -29,26 +29,26 @@ public class RoleController extends RbacController {
                 .orElse(Collections.emptyList());
     }
 
-    @GetMapping("/roles")
+    @GetMapping("/api/1.0/roles")
     public List<Role> listRoles(@RequestAttribute("tenant") Tenant tenant) {
         return getRbac(tenant).listRoles();
     }
 
-    @PostMapping("/tenants/{id}/roles")
+    @PostMapping("/api/1.0/tenants/{id}/roles")
     @Admin
     public void newRole(@RequestBody NewRoleForm form, @PathVariable int id) {
         tenantRepository.findByIdentity(id)
                 .ifPresent(tenant -> getRbac(tenant).newRole(form.getDescription()));
     }
 
-    @PatchMapping("/tenants/{tenantId}/roles/{roleId}")
+    @PatchMapping("/api/1.0/tenants/{tenantId}/roles/{roleId}")
     @Admin
     public void save(@RequestBody NewRoleForm form, @PathVariable Integer tenantId, @PathVariable Integer roleId) {
         tenantRepository.findByIdentity(tenantId)
                 .ifPresent(tenant -> getRbac(tenant).saveRole(new Role(roleId, form.getDescription())));
     }
 
-    @DeleteMapping("/tenants/{tenantId}/roles/{roleId}")
+    @DeleteMapping("/api/1.0/tenants/{tenantId}/roles/{roleId}")
     @Admin
     @Transactional
     public void delete(@PathVariable Integer tenantId, @PathVariable Integer roleId) {
@@ -56,7 +56,7 @@ public class RoleController extends RbacController {
                 .ifPresent(tenant -> getRbac(tenant).deleteRole(roleId));
     }
 
-    @GetMapping("/tenants/{tenantId}/roles/{roleId}")
+    @GetMapping("/api/1.0/tenants/{tenantId}/roles/{roleId}")
     @Admin
     public Role get(@PathVariable Integer tenantId, @PathVariable Integer roleId) {
         return tenantRepository.findByIdentity(tenantId)

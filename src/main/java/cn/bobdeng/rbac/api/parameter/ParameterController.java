@@ -20,13 +20,13 @@ public class ParameterController {
         this.configurationContext = configurationContext;
     }
 
-    @GetMapping("/parameters")
+    @GetMapping("/api/1.0/parameters")
     @Transactional
     public List<Parameter> parameters(@RequestAttribute("tenant") Tenant tenant) {
         return configurationContext.asConfigurer(tenant).listParameters();
     }
 
-    @PutMapping("/parameters")
+    @PutMapping("/api/1.0/parameters")
     @Transactional
     @Permission(allows = {"parameters"})
     public void setParameters(@RequestBody List<SetParameterForm> form,
@@ -35,7 +35,7 @@ public class ParameterController {
         configurationContext.asConfigurer(tenant).saveParameters(parameters);
     }
 
-    @GetMapping("/parameters/{key}")
+    @GetMapping("/api/1.0/parameters/{key}")
     @Transactional
     public String getParameter(@RequestAttribute("tenant") Tenant tenant, @PathVariable String key) {
         return configurationContext.asConfigurer(tenant).parameters().findByIdentity(key)

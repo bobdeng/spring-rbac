@@ -17,14 +17,14 @@ public class DomainController {
     }
 
 
-    @PostMapping("/domains")
+    @PostMapping("/api/1.0/domains")
     @Admin
     @Transactional
     public void newDomain(@RequestBody NewDomainForm form) {
         new Domains(domainRepository).newDomain(new DomainDescription(form.getName(), form.getTenant()));
     }
 
-    @DeleteMapping("/domains/{id}")
+    @DeleteMapping("/api/1.0/domains/{id}")
     @Admin
     public void deleteDomain(@PathVariable Integer id) {
         new Domains(domainRepository).delete(id);

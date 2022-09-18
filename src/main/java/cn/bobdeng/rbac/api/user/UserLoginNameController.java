@@ -18,7 +18,7 @@ public class UserLoginNameController extends RbacController {
         super(tenantRepository, rbacContext);
     }
 
-    @GetMapping("/users/{id}/login_name")
+    @GetMapping("/api/1.0/users/{id}/login_name")
     @Transactional
     public LoginName getUserLoginName(@RequestAttribute("tenant") Tenant tenant,
                                       @PathVariable Integer id) {
@@ -26,14 +26,14 @@ public class UserLoginNameController extends RbacController {
         return rbac.loginNames().findByUser(id).orElse(null);
     }
 
-    @DeleteMapping("/login_names/{id}")
+    @DeleteMapping("/api/1.0/login_names/{id}")
     @Transactional
     @Permission(allows = {"user.login_name"})
     public void deleteLoginName(@PathVariable Integer id, @RequestAttribute("tenant") Tenant tenant) {
         getRbac(tenant).loginNames().delete(id);
     }
 
-    @PostMapping("/login_names")
+    @PostMapping("/api/1.0/login_names")
     @Transactional
     @Permission(allows = {"user.login_name"})
     public void newLoginName(@RequestBody NewLoginNameForm form, @RequestAttribute("tenant") Tenant tenant) {

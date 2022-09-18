@@ -17,7 +17,7 @@ public class UserController extends RbacController{
         super(tenantRepository, rbacContext);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/api/1.0/users")
     @Transactional
     @Permission(allows = {"user.create"})
     public void newUser(@RequestBody NewUserForm form, @RequestAttribute("tenant") Tenant tenant) {
@@ -28,7 +28,7 @@ public class UserController extends RbacController{
         rbac.addLoginName(new LoginNameDescription(form.getLoginName(), user.identity()));
     }
 
-    @GetMapping("/users")
+    @GetMapping("/api/1.0/users")
     @Transactional
     public List<User> listUser(@RequestAttribute("tenant") Tenant tenant,
                                @RequestParam(value = "name", required = false) String name) {

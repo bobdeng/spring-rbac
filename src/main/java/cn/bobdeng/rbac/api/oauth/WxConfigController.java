@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public record WxConfigController(WxConfig wxConfig,WxLoginStateGenerator wxLoginStateGenerator) {
-    @GetMapping("/wx_config")
+    @GetMapping("/api/1.0/wx_config")
     public WxConfigResult getWxConfig(HttpServletResponse response) {
         if (wxConfig.isEnabled()) {
             return new WxConfigResult(wxConfig,wxLoginStateGenerator.generate());

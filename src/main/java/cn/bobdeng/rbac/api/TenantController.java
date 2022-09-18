@@ -16,21 +16,21 @@ public class TenantController {
     }
 
 
-    @PostMapping("/tenants")
+    @PostMapping("/api/1.0/tenants")
     @Admin
     public Integer newTenant(@RequestBody() NewTenantForm form) {
         Tenant tenant = new Tenants(tenantRepository).add(new TenantDescription(form.getName()));
         return tenant.identity();
     }
 
-    @GetMapping("/tenants")
+    @GetMapping("/api/1.0/tenants")
     @Admin
     public List<Tenant> listTenants(@RequestParam(value = "name", required = false) String name) {
         final Page<Tenant> tenants = tenantRepository.findByName(name, 0, 100);
         return tenants.getElements();
     }
 
-    @GetMapping("/tenant")
+    @GetMapping("/api/1.0/tenant")
     public Tenant getTenant(@RequestAttribute("tenant") Tenant tenant) {
         return tenant;
     }

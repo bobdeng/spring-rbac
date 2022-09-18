@@ -93,7 +93,7 @@ export const server = {
     return await ajax(() => axios.get(`${apiPrefix}tenants`, requestConfig));
   },
   async newTenant(param: { name: string }) {
-    return await ajax(() => axios.post("${apiPrefix}tenants", param, config))
+    return await ajax(() => axios.post(`${apiPrefix}tenants`, param, config))
   },
   async listDomains(tenantId: string) {
     return await ajax(() => axios.get(`${apiPrefix}tenants/${tenantId}/domains`, config))
@@ -111,7 +111,7 @@ export const server = {
     return await ajax(() => axios.get(`${apiPrefix}roles`, config));
   },
   async listFunctions(): Promise<Function[]> {
-    return await ajax(() => axios.get("${apiPrefix}functions", config)) as Function[];
+    return await ajax(() => axios.get(`${apiPrefix}functions`, config)) as Function[];
   },
   async newTenantRole(param: { allows: string[]; name: string; tenant: any }) {
     return await ajax(() => axios.post(`${apiPrefix}tenants/${param.tenant}/roles`, param, config))
@@ -132,10 +132,10 @@ export const server = {
     return await ajax(() => axios.get(`${apiPrefix}users?name=${keyword}`, config));
   },
   async newUser(form: { password: string; loginName: string; roles: any[]; name: string }) {
-    return await ajax(() => axios.post("${apiPrefix}users", form, config))
+    return await ajax(() => axios.post(`${apiPrefix}users`, form, config))
   },
   async getTenant() {
-    return await ajax(() => axios.get("${apiPrefix}tenant", config))
+    return await ajax(() => axios.get(`${apiPrefix}tenant`, config))
   },
   async resetPassword(param: { userId: any }) {
     return await ajax(() => axios.patch(`${apiPrefix}users/${param.userId}/password`, {}, config))

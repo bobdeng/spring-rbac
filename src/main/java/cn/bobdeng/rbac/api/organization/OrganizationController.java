@@ -18,13 +18,13 @@ public class OrganizationController {
         this.organizationContext = organizationContext;
     }
 
-    @GetMapping("/organizations")
+    @GetMapping("/api/1.0/organizations")
     @Transactional
     public List<Organization> list(@RequestAttribute("tenant") Tenant tenant) {
         return organizationContext.asOrganization(tenant).all();
     }
 
-    @PostMapping("/organizations")
+    @PostMapping("/api/1.0/organizations")
     @Transactional
     @Permission(allows = "organization.create")
     public void create(@RequestAttribute("tenant") Tenant tenant,
