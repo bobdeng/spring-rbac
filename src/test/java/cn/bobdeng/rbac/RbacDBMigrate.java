@@ -7,11 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 @Service
-public class DBMigrate {
+public class RbacDBMigrate {
     private Flyway flyway;
     private final DataSource dataSource;
 
-    public DBMigrate(DataSource dataSource) {
+    public RbacDBMigrate(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
