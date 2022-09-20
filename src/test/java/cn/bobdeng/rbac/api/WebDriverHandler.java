@@ -1,13 +1,16 @@
 package cn.bobdeng.rbac.api;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Rule;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.Network;
@@ -24,23 +27,18 @@ import java.util.stream.Stream;
 @Service
 public class WebDriverHandler {
     public static WebDriver WEBDRIVER;
-    private int port = 8080;
-    @Autowired(required = false)
-    private ServletWebServerApplicationContext webServerAppCtxt;
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.SKIP, new File(""));
+    @Autowired
+    Environment environment;
 
     @PostConstruct
     private void init() {
         if (WEBDRIVER == null) {
             chrome.start();
             WEBDRIVER = chrome.getWebDriver();
-            //WEBDRIVER = createWebDriver();
-        }
-        if (webServerAppCtxt != null) {
-            this.port = webServerAppCtxt.getWebServer().getPort();
         }
     }
 
@@ -78,11 +76,16 @@ public class WebDriverHandler {
     }
 
     public String getLocalhostUrl() {
-        return "http://localhost:" + this.port;
+        return "http://localhost:" + getPort();
     }
 
     private String getDomain() {
-        return "host.docker.internal:" + port;
+        return "host.docker.internal:" + getPort();
+    }
+
+    @Nullable
+    private String getPort() {
+        return environment.getProperty("local.server.port");
     }
 
     public void removeAllCookies() {
