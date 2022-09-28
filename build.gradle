@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    api('com.github.bobdeng:rbac-domains:1.0.5')
+    api('com.github.bobdeng:rbac-domains:1.0.8')
     api("org.springframework.boot:spring-boot-starter")
     api 'org.springframework.boot:spring-boot-starter-hateoas'
     api 'org.springframework.boot:spring-boot-starter-jersey'
@@ -36,6 +36,7 @@ dependencies {
     api 'org.apache.commons:commons-lang3:3.12.0'
     api("com.google.guava:guava:31.1-jre")
     api('io.jsonwebtoken:jjwt:0.9.1')
+    api 'com.github.jsqlparser:jsqlparser:4.5'
     api 'com.squareup.okhttp3:okhttp:4.10.0'
     api 'com.google.code.gson:gson:2.9.0'
     api 'org.projectlombok:lombok:1.18.24'
