@@ -3,6 +3,7 @@ package cn.bobdeng.rbac.api.user;
 import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
+import cn.bobdeng.rbac.security.SessionStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,13 @@ import static cn.bobdeng.rbac.api.user.PermissionTest.assertPermissionAnnotation
 class UserLoginControllerTest extends E2ETest {
     @Autowired
     UserWithTenantFixture userWithTenantFixture;
+    @Autowired
+    SessionStore sessionStore;
 
     @BeforeEach
     public void setup() {
         userWithTenantFixture.init();
+        sessionStore.setTenant(userWithTenantFixture.getTenant());
         clearLogin();
     }
 

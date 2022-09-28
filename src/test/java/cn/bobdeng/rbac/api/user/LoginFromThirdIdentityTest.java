@@ -4,6 +4,7 @@ import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.api.*;
 import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.rbac.User;
+import cn.bobdeng.rbac.security.SessionStore;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDAO;
 import cn.bobdeng.rbac.server.dao.ThirdIdentityDO;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,8 @@ public class LoginFromThirdIdentityTest extends E2ETest {
     @Autowired
     ThirdIdentityDAO thirdIdentityDAO;
     private Tenant tenant;
+    @Autowired
+    SessionStore sessionStore;
     private HttpServletResponse response;
     private ArgumentCaptor<Cookie> argumentCaptor;
 
@@ -38,6 +41,7 @@ public class LoginFromThirdIdentityTest extends E2ETest {
         clearTable.clearTable("t_rbac_third_identity");
         userWithTenantFixture.init();
         tenant = userWithTenantFixture.getTenant();
+        sessionStore.setTenant(tenant);
         response = mock(HttpServletResponse.class);
         argumentCaptor = ArgumentCaptor.forClass(Cookie.class);
     }

@@ -9,6 +9,7 @@ import cn.bobdeng.rbac.domain.rbac.Role;
 import cn.bobdeng.rbac.domain.rbac.RoleDescription;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.UserDescription;
+import cn.bobdeng.rbac.security.SessionStore;
 import cn.bobdeng.rbac.server.dao.RoleDAO;
 import cn.bobdeng.rbac.server.dao.RoleDO;
 import cn.bobdeng.rbac.server.dao.UserRoleDAO;
@@ -30,6 +31,8 @@ public class RoleTest extends E2ETest {
     UserRoleDAO userRoleDAO;
     @Autowired
     TenantRepository tenantRepository;
+    @Autowired
+    SessionStore sessionStore;
     private Tenant tenant;
 
     @BeforeEach
@@ -38,6 +41,7 @@ public class RoleTest extends E2ETest {
         clearTable.clearTable("t_rbac_tenant");
         clearTable.clearTable("t_rbac_role");
         tenant = tenantRepository.save(new Tenant(new TenantDescription("租户1")));
+        sessionStore.setTenant(tenant);
     }
 
     @Test

@@ -23,14 +23,16 @@ import java.util.stream.Stream;
 public class TenantInterceptor extends EmptyInterceptor implements HibernatePropertiesCustomizer {
     private final SessionStore sessionStore;
     private final List<FieldInterceptor> interceptors;
+    private final TableHasNoTenantId tableHasNoTenantId;
 
-    public TenantInterceptor(SessionStore sessionStore) {
+    public TenantInterceptor(SessionStore sessionStore, TableHasNoTenantId tableHasNoTenantId) {
         this.sessionStore = sessionStore;
         interceptors = Arrays.asList(
                 new FieldInterceptor(() -> sessionStore.getTenant().identity(), "tenantId"),
                 new FieldInterceptor(SystemDate::now, "createdAt"),
                 new FieldInterceptor(() -> sessionStore.get().map(Session::userId).orElse(null), "createdBy"));
 
+        this.tableHasNoTenantId = tableHasNoTenantId;
     }
 
     @Override
@@ -42,9 +44,6 @@ public class TenantInterceptor extends EmptyInterceptor implements HibernateProp
             return false;
         }
         interceptors.forEach(interceptor -> interceptor.intercept(propertyNames, state));
-        System.out.println(String.join(",", propertyNames));
-        System.out.println(Stream.of(state).map(Object::toString).collect(Collectors.joining(",")));
-
         return true;
     }
 
@@ -53,11 +52,7 @@ public class TenantInterceptor extends EmptyInterceptor implements HibernateProp
         if (sessionStore.getTenant() == null || !sql.startsWith("select")) {
             return sql;
         }
-        System.out.println(sessionStore.getTenant().identity());
-        String newSQL = new SQLInterceptor(sql).intercept(sessionStore.getTenant());
-        log.debug("SQL before intercept:" + sql);
-        log.debug("SQL after intercept:" + sql);
-        return newSQL;
+        return new SQLInterceptor(sql).intercept(sessionStore.getTenant(), tableHasNoTenantId.tables());
     }
 
     @Override

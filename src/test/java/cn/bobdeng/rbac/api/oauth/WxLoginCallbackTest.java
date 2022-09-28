@@ -8,6 +8,7 @@ import cn.bobdeng.rbac.api.UserToken;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.domain.rbac.User;
 import cn.bobdeng.rbac.domain.rbac.ThirdDescription;
+import cn.bobdeng.rbac.security.SessionStore;
 import cn.bobdeng.rbac.utils.HttpClient;
 import cn.bobdeng.rbac.utils.HttpRequest;
 import cn.bobdeng.rbac.utils.HttpResponse;
@@ -36,12 +37,15 @@ public class WxLoginCallbackTest extends E2ETest {
     private String code = "888999";
     private String state = "state000999";
     private String accessToken = "xxxbbbssss";
+    @Autowired
+    SessionStore sessionStore;
 
     @BeforeEach
     public void setup() throws IOException {
         clearLogin();
         clearTable.clearTable("t_rbac_third_identity");
         userWithTenantFixture.init();
+        sessionStore.setTenant(userWithTenantFixture.getTenant());
         mockHttpClient.setHttpClient(mock(HttpClient.class));
 
         when(mockHttpClient.getHttpClient().execute(getAccessTokenRequest())).thenReturn(accessTokenResponse());

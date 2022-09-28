@@ -19,16 +19,13 @@ public class SQLInterceptor {
     private static final Set<String> TABLE_HAS_NO_TENANT_ID = Set.of("t_rbac_tenant",
             "t_rbac_domain",
             "t_rbac_password",
-            "t_rbac_user_role",
-            "t_invite_code",
-            "t_invite_accept",
-            "t_promotion_subcontract");
+            "t_rbac_user_role");
 
     public SQLInterceptor(String sql) {
         this.sql = sql;
     }
 
-    public String intercept(Tenant tenant) {
+    public String intercept(Tenant tenant, Set<String> tablesIgnored) {
         Statement stmt;
         try {
             stmt = CCJSqlParserUtil.parse(this.sql);
@@ -38,8 +35,8 @@ public class SQLInterceptor {
         Select select = (Select) stmt;
         PlainSelect selectBody = (PlainSelect) select.getSelectBody();
         FromItem fromItem = selectBody.getFromItem();
-        String tableName = fromItem.toString().replace(fromItem.getAlias().getName(), "").trim();
-        if (TABLE_HAS_NO_TENANT_ID.contains(tableName)) {
+        String tableName = fromItem.toString().substring(0, fromItem.toString().indexOf(' ')).trim();
+        if (TABLE_HAS_NO_TENANT_ID.contains(tableName) || tablesIgnored.contains(tableName)) {
             return sql;
         }
         addTenantConditionIfHasSelect(tenant, selectBody, fromItem.getAlias().toString().trim());
