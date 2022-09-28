@@ -12,7 +12,7 @@ class HttpClientImplTest extends E2ETest {
     public void should_return_result() throws IOException {
         HttpClientImpl httpClient = new HttpClientImpl();
         httpClient.init();
-        HttpRequest request = new HttpRequest(webDriverHandler.getLocalhostUrl() + "/test_http_client");
+        HttpRequest request = new HttpRequest(webDriverHandler.getBaseUrl() + "/test_http_client");
         HttpResponse response = httpClient.execute(request);
         assertEquals(200, response.getCode());
         assertEquals("hello", response.getBody());
@@ -22,7 +22,7 @@ class HttpClientImplTest extends E2ETest {
     public void should_return_404_result() throws IOException {
         HttpClientImpl httpClient = new HttpClientImpl();
         httpClient.init();
-        HttpRequest request = new HttpRequest(webDriverHandler.getLocalhostUrl() + "/test_http_client_not_found");
+        HttpRequest request = new HttpRequest(webDriverHandler.getBaseUrl() + "/test_http_client_not_found");
         HttpResponse response = httpClient.execute(request);
         assertEquals(404, response.getCode());
     }

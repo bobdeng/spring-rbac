@@ -1,19 +1,18 @@
 package cn.bobdeng.rbac.api;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Rule;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BrowserWebDriverContainer;
-import org.testcontainers.containers.Network;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -21,31 +20,45 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.stream.Stream;
 
 @Service
+@Slf4j
 public class WebDriverHandler {
+    public WebDriver webDriver;
     public static WebDriver WEBDRIVER;
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.SKIP, new File(""));
+    @Value("${webdriver:local}")
+    public String webDriverType;
     @Autowired
     Environment environment;
 
     @PostConstruct
-    private void init() {
-        if (WEBDRIVER == null) {
-            chrome.start();
-            WEBDRIVER = chrome.getWebDriver();
+    public void setup() {
+        WEBDRIVER = getWebDriver();
+    }
+
+    public WebDriver getWebDriver() {
+        if (webDriver == null) {
+            if (webDriverType.equals("docker")) {
+                Testcontainers.exposeHostPorts(Integer.parseInt(port()));
+                chrome.start();
+                this.webDriver = chrome.getWebDriver();
+            } else {
+                webDriver = createWebDriver();
+            }
         }
+        return webDriver;
     }
 
 
     public WebDriver createWebDriver() {
         try {
-            System.setProperty("webdriver.edge.driver", getChromeDriverBinaryPath());
+            String chromeDriverBinaryPath = getChromeDriverBinaryPath();
+            System.setProperty("webdriver.chrome.driver", chromeDriverBinaryPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,36 +81,48 @@ public class WebDriverHandler {
     }
 
     public void open(String url) {
-        WEBDRIVER.get(getBaseUrl() + url);
+        getWebDriver().get(getBaseUrl() + url);
     }
 
     public String getBaseUrl() {
         return "http://" + getDomain();
     }
 
-    public String getLocalhostUrl() {
-        return "http://localhost:" + getPort();
-    }
 
     private String getDomain() {
-        return "host.docker.internal:" + getPort();
+        if (isDocker()) {
+            return getDockerAddress() + ":" + port();
+        }
+        return "localhost:" + port();
     }
 
-    @Nullable
-    private String getPort() {
+    private String port() {
         return environment.getProperty("local.server.port");
     }
 
+    private boolean isDocker() {
+        return this.webDriverType.equals("docker");
+    }
+
+    private String getDockerAddress() {
+        String OS = System.getProperty("os.name").toLowerCase();
+        if (OS.contains("mac")) {
+            return "host.docker.internal";
+        }
+        return "host.testcontainers.internal";
+    }
+
     public void removeAllCookies() {
-        WEBDRIVER.manage().deleteAllCookies();
+        getWebDriver().manage().deleteAllCookies();
     }
 
     public Cookie getCookie(String cookieName) {
-        return WEBDRIVER.manage().getCookieNamed(cookieName);
+        return getWebDriver().manage().getCookieNamed(cookieName);
     }
 
     public void addCookie(String cookieName, String cookieValue) {
         Cookie cookie = new Cookie(cookieName, cookieValue, "/");
-        WEBDRIVER.manage().addCookie(cookie);
+        getWebDriver().manage().addCookie(cookie);
     }
+
 }

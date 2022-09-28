@@ -57,6 +57,10 @@ export class WxConfig {
   }
 }
 
+export interface Role {
+  id: number
+}
+
 const config: AxiosRequestConfig = {
   validateStatus: () => true
 }
@@ -182,5 +186,11 @@ export const server = {
   },
   async setParameters(values: any) {
     return await ajax(() => axios.put(`${apiPrefix}parameters`, values, config))
+  },
+  async listUserRoles(userId: number): Promise<Role[]> {
+    return await ajax(() => axios.get(`${apiPrefix}users/${userId}/roles`, config))
+  },
+  async setUserRole(userId: number | undefined, roles: any) {
+    return await ajax(() => axios.put(`${apiPrefix}users/${userId}/roles`, {roles: roles}, config))
   }
 }

@@ -2,6 +2,7 @@
   <div>
     <AddUser ref="newUserModal"/>
     <UserLoginName ref="loginName"/>
+    <SetUserRoles ref="roles"/>
     <Spin :spinning="loading">
       <div style="display: flex">
         <Space>
@@ -22,6 +23,7 @@
             <Button type="link" @click="()=>lockUser(record)" v-if="record.description.status==='Normal'">锁定</Button>
             <Button type="link" @click="()=>unlockUser(record)" v-else>解锁</Button>
             <Button type="link" @click="()=>showLoginName(record)">登录名</Button>
+            <Button type="link" @click="()=>showSetRoles(record)">角色</Button>
           </template>
         </template>
       </Table>
@@ -38,6 +40,7 @@ import {server} from "../../../model/HttpServer";
 import {useRouter} from "vue-router";
 import AddUser from "./AddUser.vue";
 import UserLoginName from "./UserLoginName.vue";
+import SetUserRoles from "./SetUserRoles.vue";
 
 const columns = ref([
   {
@@ -53,13 +56,14 @@ const columns = ref([
   {
     title: '操作',
     key: 'action',
-    width: "300px"
+    width: "400px"
   }
 ])
 const users = ref([])
 const loading = ref(false)
 const router = useRouter()
 const newUserModal = ref()
+const roles = ref()
 const keyword = ref("")
 const loginName = ref()
 
@@ -120,6 +124,9 @@ const unlockUser = async (user: any) => {
   } finally {
     loading.value = false;
   }
+}
+const showSetRoles = async (user: any) => {
+  roles.value.show(user.id)
 }
 
 function showLoginName(user: any) {

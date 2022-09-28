@@ -17,10 +17,15 @@ public class ListUserPage extends BasePage {
     }
 
     public void inputLoginName(String bobdeng) {
-        inputById(bobdeng,"inputLoginName");
+        inputById(bobdeng, "inputLoginName");
     }
 
     public void clickBind() {
         clickById("buttonAdd");
+    }
+
+    public void clickSetRole() {
+        waitUntil(() -> hasText("角色"), 1000);
+        clickContent("角色");
     }
 }

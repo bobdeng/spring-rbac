@@ -24,6 +24,7 @@ public class EmployeeFixture {
     public void set(Integer organizationId, User user) {
         employeeDAO.save(EmployeeDO.builder()
                 .id(user.identity())
+                .tenantId(user.tenant().identity())
                 .organizationId(organizationId)
                 .build());
     }

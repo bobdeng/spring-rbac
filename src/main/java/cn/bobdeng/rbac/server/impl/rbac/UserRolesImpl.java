@@ -36,4 +36,9 @@ public class UserRolesImpl implements User.UserRoles {
                 .build());
         return entity;
     }
+
+    @Override
+    public void deleteAll() {
+        userRoleDAO.deleteAllByUserId(user.identity());
+    }
 }

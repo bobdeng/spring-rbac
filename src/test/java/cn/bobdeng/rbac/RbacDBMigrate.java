@@ -25,6 +25,7 @@ public class RbacDBMigrate {
         flyway = Flyway.configure()
                 .locations("classpath:rbac/db/migrations")
                 .dataSource(dataSource)
+                .table("rbac_flyway_schema_history")
                 .baselineOnMigrate(true)
                 .load();
     }

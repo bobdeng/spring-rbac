@@ -108,7 +108,7 @@ public class ParametersTest extends E2ETest {
     @Test
     public void 读取参数接口() throws IOException {
         Response response = okHttpClient.newCall(new Request.Builder()
-                .get().url(webDriverHandler.getLocalhostUrl() + "/api/1.0/parameters/param.key1")
+                .get().url(webDriverHandler.getBaseUrl() + "/api/1.0/parameters/param.key1")
                 .build()).execute();
         assertEquals(200, response.code());
         String content = response

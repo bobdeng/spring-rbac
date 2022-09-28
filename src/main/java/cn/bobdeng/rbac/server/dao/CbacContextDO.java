@@ -9,12 +9,14 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "t_cbac_context")
+@ToString
 public class CbacContextDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

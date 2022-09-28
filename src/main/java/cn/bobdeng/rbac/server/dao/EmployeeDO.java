@@ -18,6 +18,7 @@ public class EmployeeDO {
     @Id
     @Getter
     private Integer id;
+    private Integer tenantId;
     private Integer organizationId;
 
     public Employee toEntity(RbacContext.Users users, Function<Integer, Organization> organizationFetcher) {

@@ -3,7 +3,10 @@ package cn.bobdeng.rbac.api;
 import cn.bobdeng.rbac.ClearTable;
 import cn.bobdeng.rbac.Cookies;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
+import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.rbac.User;
+import cn.bobdeng.rbac.security.Session;
+import cn.bobdeng.rbac.security.SessionStore;
 import okhttp3.OkHttpClient;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.Cookie;
@@ -28,6 +31,10 @@ public abstract class E2ETest {
     @Autowired
     protected ClearTable clearTable;
     protected OkHttpClient okHttpClient;
+    @Autowired
+    SessionStore sessionStore;
+    @Autowired
+    TenantRepository tenantRepository;
 
     @PostConstruct
     public void init() {
@@ -46,12 +53,15 @@ public abstract class E2ETest {
         adminLoginPage.open();
         webDriverHandler.removeAllCookies();
         adminLoginPage.setCookie(Cookies.AUTHORIZATION, new UserToken(user).toTokenString());
+        sessionStore.setTenant(user.tenant());
+        sessionStore.set(new Session(new UserToken(user), tenantRepository));
     }
+
     protected void loginWithErrorToken() {
         AdminLoginPage adminLoginPage = new AdminLoginPage(webDriverHandler);
         adminLoginPage.open();
         webDriverHandler.removeAllCookies();
-        adminLoginPage.setCookie(Cookies.AUTHORIZATION,"notatoken");
+        adminLoginPage.setCookie(Cookies.AUTHORIZATION, "notatoken");
     }
 
     protected void clearLogin() {
