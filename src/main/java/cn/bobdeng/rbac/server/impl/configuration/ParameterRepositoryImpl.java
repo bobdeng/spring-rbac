@@ -4,20 +4,20 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.config.*;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-public class ParametersImpl implements Parameters {
-    private final Tenant tenant;
+@Service
+public class ParameterRepositoryImpl implements ParameterRepository {
     private final ParameterDAO parameterDAO;
     private final ExternalParameters externalParameters;
 
-    public ParametersImpl(Tenant tenant, ParameterDAO parameterDAO, ExternalParameters externalParameters) {
-        this.tenant = tenant;
+    public ParameterRepositoryImpl(ParameterDAO parameterDAO, ExternalParameters externalParameters) {
         this.parameterDAO = parameterDAO;
         this.externalParameters = externalParameters;
     }
@@ -28,8 +28,7 @@ public class ParametersImpl implements Parameters {
 
     @Override
     public Stream<Parameter> list() {
-        Map<String, ParameterDO> parameters = parameterDAO.findAllByTenantId(tenant.identity())
-                .stream()
+        Map<String, ParameterDO> parameters = StreamSupport.stream(parameterDAO.findAll().spliterator(), false)
                 .collect(Collectors.toMap(ParameterDO::getKey, it -> it));
         return parameterNameStream()
                 .map(name -> Optional.ofNullable(parameters.get(name.getKey()))
@@ -42,23 +41,17 @@ public class ParametersImpl implements Parameters {
     }
 
     @Override
-    public Parameter save(Parameter entity) {
-        ParameterName parameterName = getParameterName(entity.identity());
-        Integer id = parameterDAO.findByKeyAndTenantId(entity.identity(), tenant.identity()).map(ParameterDO::getId)
+    public void save(Parameter entity) {
+        Integer id = parameterDAO.findByKey(entity.identity()).map(ParameterDO::getId)
                 .orElse(null);
-        return parameterDAO.save(new ParameterDO(id, entity, tenant)).toEntity(parameterName);
-    }
-
-    private ParameterName getParameterName(String key) {
-        return parameterNameStream().filter(it -> it.getKey().equals(key))
-                .findFirst().orElseThrow();
+        parameterDAO.save(new ParameterDO(id, entity));
     }
 
     @Override
-    public Optional<Parameter> findByIdentity(String id) {
+    public Optional<Parameter> findByName(String id) {
         return parameterNameStream().filter(it -> it.getKey().equals(id))
                 .findFirst()
-                .map(name -> parameterDAO.findByKeyAndTenantId(name.getKey(), tenant.identity())
+                .map(name -> parameterDAO.findByKey(name.getKey())
                         .map(parameterDO -> parameterDO.toEntity(name))
                         .orElseGet(() -> getDefaultParameter(name))
                 );

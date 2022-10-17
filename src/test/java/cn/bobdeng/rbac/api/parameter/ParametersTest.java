@@ -7,7 +7,7 @@ import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.config.BaseParameters;
 import cn.bobdeng.rbac.domain.config.ConfigurationContext;
 import cn.bobdeng.rbac.domain.config.Parameter;
-import cn.bobdeng.rbac.domain.organization.OrganizationContext;
+import cn.bobdeng.rbac.security.SessionStore;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
 import okhttp3.Request;
@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,6 +31,8 @@ public class ParametersTest extends E2ETest {
     TenantRepository tenantRepository;
     @Autowired
     ConfigurationContext configurationContext;
+    @Autowired
+    SessionStore sessionStore;
 
     @BeforeEach
     public void setup() {
@@ -66,7 +69,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.save();
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
-        List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
+        List<ParameterDO> parameters = StreamSupport.stream(parameterDAO.findAll().spliterator(), false).toList();
         assertEquals(BaseParameters.list().size() + 1, parameters.size());
     }
 
@@ -80,7 +83,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.save();
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
-        List<ParameterDO> parameters = parameterDAO.findAllByTenantId(userWithTenantFixture.getTenant().identity());
+        List<ParameterDO> parameters = StreamSupport.stream(parameterDAO.findAll().spliterator(), false).toList();
         assertEquals(BaseParameters.list().size() + 1, parameters.size());
     }
 
@@ -88,20 +91,20 @@ public class ParametersTest extends E2ETest {
     public void 读取参数当参数已经保存() {
         Tenant tenant = userWithTenantFixture.getTenant();
         parameterDAO.save(new ParameterDO(tenant.identity(), "param.key1", "99"));
-        ConfigurationContext.Configurer configurer = getConfigurer(tenant);
-        Parameter parameter = configurer.parameters().findByIdentity("param.key1").get();
+        ConfigurationContext.Configurer configurer = getConfigurer();
+        Parameter parameter = configurer.getParameterByName("param.key1").get();
         assertEquals("99", parameter.description().getValue());
     }
 
-    private ConfigurationContext.Configurer getConfigurer(Tenant tenant) {
-        ConfigurationContext.Configurer configurer = configurationContext.asConfigurer(tenant);
+    private ConfigurationContext.Configurer getConfigurer() {
+        ConfigurationContext.Configurer configurer = configurationContext.configurer();
         return configurer;
     }
 
     @Test
     public void 读取参数当参数未保存() {
         Tenant tenant = userWithTenantFixture.getTenant();
-        Parameter parameter = getConfigurer(tenant).parameters().findByIdentity("param.key1").get();
+        Parameter parameter = getConfigurer().getParameterByName("param.key1").get();
         assertEquals("102", parameter.description().getValue());
     }
 

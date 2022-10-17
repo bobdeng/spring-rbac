@@ -37,14 +37,30 @@ public class TenantInterceptor extends EmptyInterceptor implements HibernateProp
 
     @Override
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) throws CallbackException {
-        if (sessionStore.getTenant() == null) {
+        log.info("on save " + entity.getClass().getName());
+        if (tryInteceptor(state, propertyNames)) {
             return false;
+        }
+        return true;
+    }
+
+    private boolean tryInteceptor(Object[] state, String[] propertyNames) {
+        if (sessionStore.getTenant() == null) {
+            return true;
         }
         if (interceptors.stream().noneMatch(it -> it.needInterceptor(propertyNames))) {
-            return false;
+            return true;
         }
         interceptors.forEach(interceptor -> interceptor.intercept(propertyNames, state));
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
+        if (tryInteceptor(currentState, propertyNames)) {
+            return false;
+        }
+        return super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
     }
 
     @Override

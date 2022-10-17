@@ -1,6 +1,5 @@
 package cn.bobdeng.rbac.server.dao;
 
-import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.config.Parameter;
 import cn.bobdeng.rbac.domain.config.ParameterDescription;
 import cn.bobdeng.rbac.domain.config.ParameterName;
@@ -24,10 +23,9 @@ public class ParameterDO {
     @Column(name = "param_value")
     private String value;
 
-    public ParameterDO(Integer id, Parameter entity, Tenant tenant) {
+    public ParameterDO(Integer id, Parameter entity) {
         this.key = entity.identity();
         this.value = entity.getDescription().getValue();
-        this.tenantId = tenant.identity();
         this.id = id;
     }
 

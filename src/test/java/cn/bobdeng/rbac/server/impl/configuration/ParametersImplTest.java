@@ -5,7 +5,6 @@ import cn.bobdeng.rbac.domain.config.BaseParameters;
 import cn.bobdeng.rbac.domain.config.Parameter;
 import cn.bobdeng.rbac.server.dao.ParameterDAO;
 import cn.bobdeng.rbac.server.dao.ParameterDO;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ParametersImplTest {
-    private ParametersImpl parameters;
+    private ParameterRepositoryImpl parameters;
     private ParameterDAO parameterDao;
     private Tenant tenant;
 
@@ -27,7 +26,7 @@ class ParametersImplTest {
         tenant = new Tenant(100, null);
         parameterDao = mock(ParameterDAO.class);
         ExternalParameters externalParameters = mock(ExternalParameters.class);
-        parameters = new ParametersImpl(tenant, parameterDao, externalParameters);
+        parameters = new ParameterRepositoryImpl(parameterDao, externalParameters);
     }
 
     @Test
@@ -35,21 +34,19 @@ class ParametersImplTest {
         List<Parameter> list = parameters.list().toList();
         assertEquals(BaseParameters.list().size(), list.size());
         assertEquals("none", list.get(0).getDescription().getValue());
-        assertEquals("none", parameters.findByIdentity(BaseParameters.PASSWORD_POLICY).get().getDescription().getValue());
+        assertEquals("none", parameters.findByName(BaseParameters.PASSWORD_POLICY).get().getDescription().getValue());
     }
 
     @Test
     public void should_return_setted_value_when_set() {
         ParameterDO weak = new ParameterDO(tenant.identity(), BaseParameters.PASSWORD_POLICY, "weak");
-        when(parameterDao.findByKeyAndTenantId(BaseParameters.PASSWORD_POLICY, tenant.identity()))
+        when(parameterDao.findByKey(BaseParameters.PASSWORD_POLICY))
                 .thenReturn(Optional.of(weak));
-        when(parameterDao.findAllByTenantId(tenant.identity())).thenReturn(
-                Arrays.asList(weak)
-        );
+        when(parameterDao.findAll()).thenReturn(Arrays.asList(weak));
         List<Parameter> list = parameters.list().toList();
         assertEquals(BaseParameters.list().size(), list.size());
         assertEquals("weak", list.get(0).getDescription().getValue());
-        assertEquals("weak", parameters.findByIdentity(BaseParameters.PASSWORD_POLICY).get().getDescription().getValue());
+        assertEquals("weak", parameters.findByName(BaseParameters.PASSWORD_POLICY).get().getDescription().getValue());
     }
 
 }

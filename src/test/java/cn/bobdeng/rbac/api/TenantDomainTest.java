@@ -47,7 +47,7 @@ public class TenantDomainTest extends E2ETest {
         listTenantDomainPage.clickButton("删除");
         listTenantDomainPage.clickButton("OK");
         listTenantDomainPage.waitUntilNoSpin();
-        listTenantDomainPage.waitUntil(() -> listTenantDomainPage.hasNoData(), 1000);
+        listTenantDomainPage.waitUntil(listTenantDomainPage::hasNoData, 1000);
     }
 
     @Test
