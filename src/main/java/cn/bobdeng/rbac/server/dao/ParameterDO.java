@@ -21,6 +21,7 @@ public class ParameterDO {
     @Column(name = "param_key")
     private String key;
     @Column(name = "param_value")
+    @Getter
     private String value;
 
     public ParameterDO(Integer id, Parameter entity) {

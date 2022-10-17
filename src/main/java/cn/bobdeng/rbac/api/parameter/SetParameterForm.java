@@ -10,6 +10,6 @@ public class SetParameterForm {
     private String value;
 
     public Parameter toEntity() {
-        return new Parameter(key,new ParameterDescription(value,key));
+        return new Parameter(key, new ParameterDescription("", value));
     }
 }

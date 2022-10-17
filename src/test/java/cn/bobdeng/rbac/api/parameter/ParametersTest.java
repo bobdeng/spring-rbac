@@ -70,7 +70,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
         List<ParameterDO> parameters = StreamSupport.stream(parameterDAO.findAll().spliterator(), false).toList();
-        assertEquals(BaseParameters.list().size() + 1, parameters.size());
+        assertEquals("99", parameters.get(0).getValue());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class ParametersTest extends E2ETest {
         parametersPage.waitUntilNoButtonSpin();
         parametersPage.waitUntil(() -> parametersPage.hasText("保存成功"), 1000);
         List<ParameterDO> parameters = StreamSupport.stream(parameterDAO.findAll().spliterator(), false).toList();
-        assertEquals(BaseParameters.list().size() + 1, parameters.size());
+        assertEquals(1, parameters.size());
     }
 
     @Test
