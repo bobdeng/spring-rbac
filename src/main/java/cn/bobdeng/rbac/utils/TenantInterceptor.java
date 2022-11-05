@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -68,7 +69,19 @@ public class TenantInterceptor extends EmptyInterceptor implements HibernateProp
         if (sessionStore.getTenant() == null || !sql.startsWith("select")) {
             return sql;
         }
+        String[] wheres = sql.split("where");
+        if (hasWhere(wheres) && hasTenantPredicate(wheres)) {
+            return sql;
+        }
         return new SQLInterceptor(sql).intercept(sessionStore.getTenant(), tableHasNoTenantId.tables());
+    }
+
+    private boolean hasTenantPredicate(String[] wheres) {
+        return Pattern.compile("\\w+\\.tenant_id\\s*=").matcher(wheres[1]).find();
+    }
+
+    private boolean hasWhere(String[] wheres) {
+        return wheres.length > 1;
     }
 
     @Override
