@@ -77,7 +77,7 @@ public class TenantInterceptor extends EmptyInterceptor implements HibernateProp
     }
 
     private boolean hasTenantPredicate(String[] wheres) {
-        return Pattern.compile("\\w+\\.tenant_id\\s*=").matcher(wheres[1]).find();
+        return Pattern.compile("\\w+\\.tenant_id\\s*").matcher(wheres[1]).find();
     }
 
     private boolean hasWhere(String[] wheres) {

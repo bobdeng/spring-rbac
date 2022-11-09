@@ -88,6 +88,12 @@ class TenantInterceptorTest {
     }
 
     @Test
+    public void should_not_auto_add_tenant_id_when_has_tenant_field_and_has_tenant_greatter_than_condition() {
+        String sql = tenantInterceptor.onPrepareStatement("select regulargue0_.id as id1_13_0_, regulargue0_.content as content2_13_0_, regulargue0_.created_at as created_3_13_0_, regulargue0_.created_by as created_4_13_0_, regulargue0_.goods_id as goods_id5_13_0_, regulargue0_.host_id as host_id6_13_0_, regulargue0_.tenant_id as tenant_i7_13_0_ from t_regular_guest_promotion regulargue0_ where regulargue0_.tenant_id > 0");
+        assertEquals(sql.toLowerCase(), "select regulargue0_.id as id1_13_0_, regulargue0_.content as content2_13_0_, regulargue0_.created_at as created_3_13_0_, regulargue0_.created_by as created_4_13_0_, regulargue0_.goods_id as goods_id5_13_0_, regulargue0_.host_id as host_id6_13_0_, regulargue0_.tenant_id as tenant_i7_13_0_ from t_regular_guest_promotion regulargue0_ where regulargue0_.tenant_id > 0");
+    }
+
+    @Test
     public void dont_auto_add_tenant_id_when_has_table_has_no_tenant_id() {
         String sql = tenantInterceptor.onPrepareStatement("select a.id from t_invite_code a");
         assertEquals(sql.toLowerCase(), "select a.id from t_invite_code a");
