@@ -48,4 +48,6 @@ public class AdminLoginPage extends BasePage {
     public void loginByWeixin() {
         clickContent("微信登录");
     }
+
+
 }

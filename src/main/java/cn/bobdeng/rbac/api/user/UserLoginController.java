@@ -8,21 +8,19 @@ import cn.bobdeng.rbac.domain.Tenant;
 import cn.bobdeng.rbac.domain.TenantRepository;
 import cn.bobdeng.rbac.domain.rbac.RbacContext;
 import cn.bobdeng.rbac.domain.rbac.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/api/1.0/user_sessions")
 public class UserLoginController extends RbacController {
     public UserLoginController(TenantRepository tenantRepository, RbacContext rbacContext) {
         super(tenantRepository, rbacContext);
     }
 
-    @PostMapping("/api/1.0/user_sessions")
+    @PostMapping
     public void login(@RequestBody LoginForm loginForm, HttpServletResponse response,
                       @RequestAttribute("tenant") Tenant tenant) {
         User user = getRbac(tenant).loginNames().findByLoginName(loginForm.getLoginName())
@@ -30,6 +28,14 @@ public class UserLoginController extends RbacController {
                 .filter(it -> it.verifyPassword(loginForm.getPassword()))
                 .orElseThrow(() -> new RuntimeException("用户名或密码错误"));
         Cookie cookie = new Cookie(Cookies.AUTHORIZATION, new UserToken(user).toTokenString());
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+
+    @DeleteMapping
+    public void logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie(Cookies.AUTHORIZATION, "");
+        cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
     }

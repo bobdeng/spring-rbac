@@ -4,11 +4,19 @@ import cn.bobdeng.rbac.api.E2ETest;
 import cn.bobdeng.rbac.api.UserWithTenantFixture;
 import cn.bobdeng.rbac.api.pages.AdminLoginPage;
 import cn.bobdeng.rbac.security.SessionStore;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static cn.bobdeng.rbac.api.user.PermissionTest.assertPermissionAnnotation;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserLoginControllerTest extends E2ETest {
     @Autowired
@@ -59,5 +67,16 @@ class UserLoginControllerTest extends E2ETest {
     @Test
     public void should_has_permission_annotation() {
         assertPermissionAnnotation(UserController.class, "newUser", new String[]{"user.create"});
+    }
+
+    @Test
+    public void should_remove_cookies_when_logout() throws IOException {
+        Response response = okHttpClient.newCall(new Request.Builder()
+                .delete()
+                .url(webDriverHandler.getBaseUrl() + "/api/1.0/user_sessions")
+                .build()).execute();
+        assertTrue(response.isSuccessful());
+        List<String> cookies = response.headers().values("Set-Cookie");
+        assertEquals("Authorization=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/", cookies.get(0));
     }
 }
